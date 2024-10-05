@@ -1,0 +1,229 @@
+/* $background-color: #2A2E37;
+$search-bg-color: #242628;
+$icon-color: #00FEDE;
+$transition: all .5s ease; */mysearch
+
+
+body {
+  background: #2A2E37;
+}
+
+.filter-search{
+  position:absolute;
+}
+.density-holder{
+  position: absolute;
+  top: 40vh;
+  left: 20vw;
+  width: 60vw;
+  height: 15vh;
+  margin: 40px auto 0;
+  padding: 10px;
+  background-color: transparent; 
+  /* border: 1px red solid; */
+}
+
+.density-slider{
+  width: 100%;
+  position: relative;
+}
+.form-label{
+  color: white;
+  font-size: 1.3em;
+}
+
+.tag-holder{
+  position: absolute;
+  top: 22vh;
+  left: 20vw;
+  width: 60vw;
+  height: 15vh;
+  margin: 40px auto 0;
+  padding: 10px;
+  background-color: transparent; 
+}
+
+.filter-results-view{
+  top:100px;
+  /* bottom:100px; */
+  position:absolute;
+  left:100px;
+  right:100px;
+  /* margin-left:100px;
+  margin-right:100px; */
+  /* width:100%; */
+  background-color:white;
+  /* height:100%; */
+  border-radius:20px;
+  box-shadow: 0 20px 20px 0 rgba(245, 244, 244, 0.6);
+  height:100%;
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottim: 10px;
+}
+
+.tag-holder span{
+  margin-top: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.6em;
+}
+.tags {
+  margin-top: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.6em;
+
+}
+
+.selectBox {
+  
+    /* border:1px red solid; */
+    width: 100px;
+    height: 100px;
+    margin: 40px auto 0;
+    top:30vh;
+    left:20vw;
+    background-color: #0b549e;
+    position: absolute;
+    overflow: hidden;
+    transition: all 0.5s ease;
+
+
+}
+
+.mysearch2 {
+    /* border:1px red solid; */
+    width: 100px;
+    height: 100px;
+    margin: 40px auto 0;
+    top:35vh;
+    left:20vw;
+    background-color: #242628;
+    position: absolute;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.mysearch {
+    /* border:1px red solid; */
+  width: 100px;
+  height: 100px;
+  margin: 40px auto 0;
+  top:10vh;
+  left:20vw;
+  background-color: #242628;
+  background-color: black;
+  position: absolute;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.mysearch:before {
+  content: "";
+  display: block;
+  width: 3px;
+  height: 100%;
+  position: relative;
+  /* background-color: #00FEDE; */
+  background-color: #8e0e0e;
+  transition: all 0.5s ease;
+}
+.mysearch.open {
+  width: 420px;
+}
+.mysearch.open:before {
+  height: 60px;
+  margin: 20px 0 20px 30px;
+  position: absolute;
+   /* width: 120px; */
+}
+
+.mysearch-box {
+  width: 100%;
+  width: 100;
+  height: 100%;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  color: #fff;
+  padding: 20px 100px 20px 45px;
+  font-size: 40px;
+}
+.mysearch-box:focus {
+  outline: none;
+}
+
+.mysearch-button {
+  width: 100px;
+  height: 100px;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.mysearch-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  /* border: 3px solid #00FEDE; */
+  border: 3px solid #dde0df;
+  display: block;
+  position: relative;
+  margin-left: 5px;
+  transition: all 0.5s ease;
+}
+.mysearch-icon:before {
+  content: "";
+  width: 3px;
+  height: 15px;
+  position: absolute;
+  right: -2px;
+  top: 30px;
+  display: block;
+  /* background-color: #00FEDE; */
+  border: 3px solid #bbc0c0;
+  transform: rotate(-45deg);
+  transition: all 0.5s ease;
+}
+.mysearch-icon:after {
+  content: "";
+  width: 3px;
+  height: 15px;
+  position: absolute;
+  right: -12px;
+  top: 40px;
+  display: block;
+  /* background-color: #00FEDE; */
+  border: 3px solid #bbc0c0;
+  transform: rotate(-45deg);
+  transition: all 0.5s ease;
+}
+.open .mysearch-icon {
+  margin: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 60px;
+}
+.open .mysearch-icon:before {
+  transform: rotate(52deg);
+  right: 22px;
+  top: 23px;
+  height: 18px;
+}
+.open .mysearch-icon:after {
+  transform: rotate(-230deg);
+  right: 22px;
+  top: 13px;
+  height: 18px;
+}
+
+
+#filter-bg{
+  width:80vw;
+  height:80vh;
+  background-color: white;
+}

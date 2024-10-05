@@ -1,0 +1,41 @@
+
+
+
+#messenger{
+    position: fixed;
+    width: 35vw;
+    height: 8vh;
+    left:1vw;
+    bottom: 1vh;
+    background-color: var(--navbar-dark-primary);
+    border-radius: 5px;
+    font-size: 0.8rem;
+    opacity: 0.95;
+    color: green;
+    padding-left: 30px;
+    vertical-align:middle;
+    overflow-y: scroll;
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+
+#loader-messager{
+
+    position: fixed;
+    width: 90vw;
+    height: 99vh;
+    left:1vw;
+    bottom: 1vh;
+    /* background-color: white; */
+    border-radius: 5px;
+    font-size: 1.0rem;
+    opacity: 1.0;
+    color: green;
+    font-weight: 200;
+    padding-left: 30px;
+    vertical-align:middle;
+    overflow-y: scroll;
+    font-family: 'Courier New', Courier, monospace;
+    
+
+}

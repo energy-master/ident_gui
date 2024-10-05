@@ -1,0 +1,215 @@
+
+/* Location of box */
+#player-{
+    position: fixed;
+    width: 35vw;
+    height: 15vh;
+    left:1vw;
+    bottom: 10vh;
+    /* background-color: var(--navbar-dark-primary); */
+    border-radius: 5px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    color: black;
+    padding-left: 30px;
+    vertical-align:middle;
+    overflow-y: scroll;
+    border: 1px solid black;
+    /* font-family: 'Courier New', Courier, monospace; */
+    overflow-y: scroll;
+}
+
+
+/*
+*
+*   Player CSS
+*/
+
+.music-container{
+    /* opacity: 0.8; */
+    left:16vw;
+    width: 35vw;
+    bottom: 1vh;
+    background-color: white;
+    border-radius: 15px;
+    /* box-shadow: 0 20px 20px 0 rgba(252,169,169,0.6); */
+    display: flex;
+    padding: 20px;
+    position: fixed;
+
+
+}
+
+.music-container-div{
+    /* opacity: 0.8; */
+    /* left:1vw; */
+    width: 100%;
+    /* bottom: 10vh; */
+    background-color: white;
+    border-radius: 15px;
+    /* box-shadow: 0 20px 20px 0 rgba(252,169,169,0.6); */
+    display: flex;
+    padding: 20px;
+    position: relative;
+ 
+
+
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn{
+    background-color: white;
+    border: 0px;
+    color: #dfdbdf;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 20px;
+}
+
+.action-btn-big{
+    background-color: white;
+    border: 0px;
+    color: #cdc2d0;
+    /* color: rgb(7, 78, 7); */
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 20px;
+}
+
+.action-btn-big-selected{
+    background-color: white;
+    border: 0px;
+    /* color: #cdc2d0; */
+    color: rgb(7, 78, 7);
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 20px;
+}
+
+.action-btn:focus{
+    outline: 0;
+}
+.action-btn-big:focus{
+    outline: 0;
+}
+
+
+.music-info{
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top:0;
+    left:20px;
+    width: calc(100% - 40px);
+    opacity: 0;
+    transform: translateY(0%);
+    padding: 10px 10px 10px 150px;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+
+}
+
+.music-container.play .music-info {
+    opacity: 1;
+    transform: translateY(-100%);
+
+}
+
+.music-info h4{
+    font-size: 1.0em;
+    margin: 0;
+    color: #848184;
+    margin-bottom: 5px;
+
+}
+
+
+#application-time-progress-container{
+
+    background: white;
+    color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+    /* margin: 10px 0; */
+    height: 10px;
+    width: 100%;
+    border: 1px solid rgb(181, 180, 180);
+    
+    margin: 40px; 
+    
+
+}
+
+#application-time-progress{
+    background-color: blue;
+    border-radius: 5px;
+    height: 100%;
+    width:0%;
+    transition: width 1s linear;
+}
+
+#application-data-cover{
+    background-color: blue;
+    border-radius: 5px;
+    height: 100%;
+    width:10%;
+    transition: width 1s linear;
+}
+
+
+
+.progress-container{
+     /* padding-top: 10px; */
+    /* background-color: rgb(233, 231, 231); */
+    background: white;
+    color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+    /* margin: 10px 0; */
+    height: 4px;
+    width: 100%;
+    /* padding-bottom: 30px; */
+    
+}
+
+.progress{
+   
+    background-color: blue;
+    border-radius: 5px;
+    height: 100%;
+    width:0%;
+    transition: width 0.1s linear;
+}
+
+
+
+
+.clock-container{
+    opacity: 0.8;
+    left:16vw;
+    width: 20vw;
+    bottom: 20vh;
+    background-color: white;
+    border-radius: 15px;
+    /* box-shadow: 0 20px 20px 0 rgba(252,169,169,0.6); */
+   
+    padding: 10px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+.clock{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+}

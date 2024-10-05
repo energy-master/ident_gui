@@ -1,0 +1,113 @@
+
+
+
+table{
+    width: 100%;
+}
+.accordion{
+
+
+
+}
+.accordion-button:not(.collapsed) {
+    /* font-size: 1.0em; */
+    color: var(--navbar-light-primary);
+    background-color: var(--navbar-dark-primary);
+}
+.accordion-button.collapsed {
+    color: var(--navbar-light-primary);
+    background-color: var(--navbar-dark-primary);
+    border: none;
+}
+.accordion-button{
+    color: var(--navbar-light-primary);
+}
+
+#app-data-window-holder{
+    position: fixed;
+    width: 70%;
+    overflow-x: hidden;
+    top:4vh;
+    /* height: 90vh; */
+    right:10vw;
+    border-radius: 20px;
+    /* opacity: 0.8; */
+    max-height: 90vh;
+   
+}
+
+
+#app-data-window{
+    position: relative;
+    /* position: fixed;
+    width: 700px;
+    overflow-x: hidden;
+    top:4vh;
+    height: 90vh;
+    right:30vw;
+    border-radius: 20px;
+    opacity: 0.8; */
+   
+
+}
+.accordion-body { 
+            font-size: 1.0em;
+    color: #141414;
+   
+    /* background-color: red; */
+        } 
+
+.accordion-header {
+    background-color: pink;
+    background: pink;
+    color: green;
+   
+
+}
+
+
+
+.list-view{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top:5px;
+    background-color:white;
+    padding:5px;
+    border-radius: 15px;
+    box-shadow: 0 20px 20px 0 rgba(245, 244, 244, 0.6);
+    font-size: 1.0em;
+    color: #848184;
+    /* border: red 1px solid; */
+}
+
+
+.list-view .selected{
+    /* margin-left: 5px;
+    margin-right: 5px;
+    margin-top:5px;
+    background-color:white;
+    padding:5px;
+    border-radius: 15px;
+    box-shadow: 0 20px 20px 0 rgba(245, 244, 244, 0.767);
+    font-size: 1.0em; */
+    color: #141414;
+    border: rgb(1, 53, 1) 1px solid;
+    
+}
+.selected{
+    /* margin-left: 5px;
+    margin-right: 5px;
+    margin-top:5px;
+    background-color:white;
+    padding:5px;
+    border-radius: 15px;
+    box-shadow: 0 20px 20px 0 rgba(245, 244, 244, 0.767);
+    font-size: 1.0em; */
+    color: #141414;
+    border: rgb(1, 53, 1) 1px solid;
+    
+}
+
+.list-view.selected .action-btn-big{
+     color: rgb(7, 78, 7);
+}

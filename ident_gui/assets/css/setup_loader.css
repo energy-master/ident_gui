@@ -1,0 +1,14 @@
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* height:50vh;
+  width: 50vw; */
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: var(--navbar-dark-primary);
+  z-index:30000;
+  border: red 1pt solid;
+}
+
