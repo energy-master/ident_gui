@@ -1663,7 +1663,8 @@ function build_acoustic_header() {
             //alert("Audio merge and analysis complete.")
        
            //BuildGroupAnalysis();
-            build_report_links(calling_window_id, analysis_id)
+            build_report_links(calling_window_id, analysis_id);
+            merge_audio(calling_window_id, analysis_id, audio_files);
 
        });
 
@@ -1695,7 +1696,7 @@ function build_acoustic_header() {
                 <td>
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_entropy_f_report('${analysis_id}')">
-                <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Profile </span>
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Frequency Profile </span>
                 </div>
                   
                 
@@ -1734,11 +1735,7 @@ function build_acoustic_header() {
            application_data.track_analysis.audio_file_url = data['product_filepath'];
            application_data.track_analysis.mp3_file_url = data['mp3'];
 
-           // Build track analysis data view
-
-           //alert("Audio merge and analysis complete.")
-       
-        //    BuildGroupAnalysis();
+            show_report_downloads(calling_window_id);
        });
     }
 

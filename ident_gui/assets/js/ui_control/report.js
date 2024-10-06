@@ -144,3 +144,47 @@ function build_entropy_f_plot(times, energies){
 
 }
 
+function show_report_downloads(calling_window_id){
+
+
+     /*
+        * href for ss_ids
+       */
+     track_analysis_snap_ids = []
+     for (var ij = 0; ij < application_data.track_analysis.acoustic_snapshots.length; ij++) {
+         track_analysis_snap_ids.push(application_data.track_analysis.acoustic_snapshots[ij].snapshot_id);
+     }
+
+     var ss_link = JSON.stringify(track_analysis_snap_ids);
+     var data = new Blob([ss_link]);
+     // var a = document.getElementById('a');
+     var data_href = URL.createObjectURL(data);
+
+    var html = `
+     <div class="center-message">
+    <table>
+    <tr>
+    <td>
+    <a href="${data_href}" type='text/csv' download='ss_data.csv'><button  class="action-btn">
+<i class="fas fa-file-download"></i>
+</button></a>
+</td>
+<td>
+    <a href="${application_data.track_analysis.audio_file_url}"  download='custom_wav.wav'><button  class="action-btn">
+<i class="fas fa-file-download"></i>
+</button></a>
+</td>
+<td>
+    <a href="${application_data.track_analysis.mp3_file_url}" download='custom_mp3.mp3'><button  class="action-btn">
+<i class="fas fa-file-download"></i>
+</button></a>
+</td>
+</tr>
+</table>
+</div>
+`;
+
+
+var el = document.getElementById(`download_${calling_window_id}`);
+el.innerHTML = html;
+}
