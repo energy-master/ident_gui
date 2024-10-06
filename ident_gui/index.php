@@ -275,6 +275,7 @@ position: fixed;
     <script src="assets/js/ui/new_filter.js"></script>
     <script src="assets/js/ui_control/toolbar_calls.js"></script>
 
+    <!-- Connect to buttons-->
 
 
 

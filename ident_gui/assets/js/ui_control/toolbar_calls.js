@@ -22,6 +22,8 @@ function BuildToolbar() {
   <a href="#" id="acoustic-data"><i class="fas fa-headphones-alt"></i></a>
     <a href="#" id="study-label"><i class="fas fa-pen"></i></a>
         <a href="#" id="study-tags"><i class="fas fa-tag"></i></a>
+         <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
+          <a href="#" id="study-connect"><i class="fas fa-network-wired"></i></a>
  
 </div>
     
@@ -52,6 +54,8 @@ el = document.getElementById("target");
 el.onclick = function(){ToolbarClick('target')};
 
 
+el = document.getElementById("sample-upload");
+el.onclick = function(){ToolbarClick('sample-upload')};
 
 
 window_tracker = {}
@@ -115,6 +119,18 @@ function ToolbarClick(data_type) {
         //ShowStudyLabels(content_id);
         //BuildAppDataAcoustic(content_id);
         ShowTarget(content_id);
+    }
+    if (data_type == "sample-upload") {
+        var window_id = createWindow("IDent Upload", "sample-upload");
+        var el = document.getElementById(window_id);
+        el.style.width = '25vw';
+        el.style.height = '15vw';
+        el.style.bottom = '0px';
+        el.style.left = '300px';
+      
+        var content_id = `${window_id}_content`;
+        ShowUpload(content_id);
+        
     }
 }
 
