@@ -966,12 +966,13 @@ function BuildVesselData() {
                 
                  <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
                 <i class="fas fa-download fa-sm text-white-50" id = "run_button"></i><span id="run-text"> Build Study Report </span></div>
-                   
+                </td>   
+
                 </tr>
             </table>
             </div>
-            <div> </div>
-            <div> </div>
+            <div id = "reports_${content_id}"> </div>
+            <div id = "download_${content_id}" > </div>
                 
                 `;
 
@@ -1637,8 +1638,8 @@ function build_acoustic_header() {
         var post_data = {
             'source_files': snap_ids,//.slice(0,2),
             'analysis_id': analysis_id,
-            'min_f' : 20,
-            'max_f' : 1000
+            'report_min_f' : 20,
+            'report_max_f' : 1000
         }
 
 
@@ -1659,10 +1660,10 @@ function build_acoustic_header() {
 
            // Build track analysis data view
             console.log(data)
-            alert("Audio merge and analysis complete.")
+            //alert("Audio merge and analysis complete.")
        
            //BuildGroupAnalysis();
-
+            build_report_links(calling_window_id, analysis_id)
 
        });
 
@@ -1672,9 +1673,63 @@ function build_acoustic_header() {
 
     }
 
-    function merge_audio(){
+    function build_report_links(calling_window_id, analysis_id){
+
+        var el = document.getElementById(`reports_${calling_window_id}`);
+
+        var html = `
+         <div class="center-message">
+             <table>
+
+                <tr>
+                <td>
+                
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_entropy_report('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Profile </span>
+                </div>
+                  
+                
+                </td>
+                </tr>
+
+             </table>
+             </div>
+        `;
+
+        el.innerHTML = html;
+
+    }
+
+    function merge_audio(calling_window_id, analysis_id, audio_files){
 
        
+        var post_data = {
+            'source_files': audio_files,//.slice(0,2),
+            'analysis_id': analysis_id
+        }
+    
+        var audio_url = "";
+        if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
+            audio_url = audio_merge_api;
+        }
+        else {
+            audio_url = audio_merge_api_rsa;
+        }
+
+         //console.log(JSON.stringify(post_data));
+         $.post(audio_url, JSON.stringify(post_data), function (data) {
+          
+         
+       
+           application_data.track_analysis.audio_file_url = data['product_filepath'];
+           application_data.track_analysis.mp3_file_url = data['mp3'];
+
+           // Build track analysis data view
+
+           //alert("Audio merge and analysis complete.")
+       
+        //    BuildGroupAnalysis();
+       });
     }
 
 

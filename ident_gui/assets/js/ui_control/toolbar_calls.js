@@ -24,6 +24,7 @@ function BuildToolbar() {
         <a href="#" id="study-tags"><i class="fas fa-tag"></i></a>
          <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
           <a href="#" id="study-connect"><i class="fas fa-network-wired"></i></a>
+           <a href="#" id="study-report"><i class="fas fa-file"></i></a>
  
 </div>
     
@@ -36,6 +37,13 @@ function BuildToolbar() {
     dragElement(document.getElementById("tool-bar"));
 
 }
+
+
+
+
+
+el = document.getElementById("study-report");
+el.onclick = function () { ToolbarClick('study-report') };
 
 
 el = document.getElementById("acoustic-data");
@@ -130,6 +138,19 @@ function ToolbarClick(data_type) {
       
         var content_id = `${window_id}_content`;
         ShowUpload(content_id);
+        
+    }
+
+    if (data_type == "study-report") {
+        var window_id = createWindow("IDent Study Analysis", "study-report");
+        var el = document.getElementById(window_id);
+        el.style.width = '400px';
+        el.style.height = '200px';
+        el.style.bottom = '0px';
+        el.style.left = '300px';
+        
+        var content_id = `${window_id}_content`;
+        BuildReportStudy(content_id);
         
     }
 }
