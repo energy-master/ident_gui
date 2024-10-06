@@ -946,6 +946,55 @@ function BuildVesselData() {
         
     }
 
+    function BuildReportStudy(content_id) {
+        
+        var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
+        console.log(custom_start_ms,custom_end_ms)
+        if (custom_start_ms < custom_end_ms) {
+            html = "";
+           
+
+                
+                html += `
+                <div class="center-message">
+                    <table><tr id="">
+            
+
+                
+                <td>
+               
+                
+                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
+                <i class="fas fa-download fa-sm text-white-50" id = "run_button"></i><span id="run-text"> Build Study Report </span></div>
+                   
+                </tr>
+            </table>
+            </div>
+            <div> </div>
+            <div> </div>
+                
+                `;
+
+               
+
+                
+                var el = document.getElementById(content_id);
+                el.innerHTML = html;
+        
+        }
+        else {
+            console.log('dsjfskdfjskl');
+            var el = document.getElementById(content_id);
+            el.innerHTML = html;
+            return;
+
+        }
+
+       
+           
+        
+    }
+
 
 function ShowStudyLabels(target_window_id) {
 
@@ -1535,6 +1584,98 @@ function build_acoustic_header() {
     var custom_start_id = 0;
     var custom_end_id = 0;
 
+
+    function run_report(calling_window_id)
+    {
+        // collect data for call
+
+        if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
+            alert("need start and end");
+            return (0);
+        }
+
+        var start_t_ms = custom_start_ms;
+        var end_time_ms = custom_end_ms;
+
+        application_data.acoustic_player.set_seeking();
+        if (application_data.acoustic_player.playing == true) {
+            application_data.acoustic_player.pause();
+        }
+
+        application_data.application_clock.application_time = start_t_ms;
+        clock_tick();
+        application_data.acoustic_player.stop_seeking();
+
+
+        var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+        console.log(valid_snaps);
+
+
+        var vessel = null;
+        var vessel_track = null;
+   
+        application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
+        console.log(application_data.track_analysis);
+
+
+        audio_files = [];
+        snap_ids = [];
+
+        for (var $i = 0; $i < valid_snaps.length; $i++) {
+            //console.log(valid_snaps[$i]);
+            audio_files.push(valid_snaps[$i].audio_filepath);
+            console.log(valid_snaps[$i]);
+            snap_ids.push(valid_snaps[$i].snapshot_id)
+        }
+        console.log(audio_files);
+        console.log(snap_ids);
+
+        var report_run_url = "https://vixen.hopto.org/rs/api/v1/data/studyreport";
+
+        var analysis_id = Math.floor(Math.random() * 99999);
+
+        var post_data = {
+            'source_files': snap_ids,//.slice(0,2),
+            'analysis_id': analysis_id,
+            'min_f' : 20,
+            'max_f' : 1000
+        }
+
+
+        //console.log(JSON.stringify(post_data));
+        $.post(report_run_url, JSON.stringify(post_data), function (data) {
+            
+           //var html = `<i class="fas fa-plus"></i>`;
+           //el.innerHTML = html;
+           // var el = document.getElementById('custom-analysis-create-button');
+           // el.innterHTML =  `<i class="fas fa-plus"></i>`;
+
+           //console.log("custom build");
+           //we have the output file    
+           //console.log(data['product_filepath']);
+           // save to track analysis
+           //application_data.track_analysis.audio_file_url = data['product_filepath'];
+           //application_data.track_analysis.mp3_file_url = data['mp3'];
+
+           // Build track analysis data view
+            console.log(data)
+            alert("Audio merge and analysis complete.")
+       
+           //BuildGroupAnalysis();
+
+
+       });
+
+
+        
+
+
+    }
+
+    function merge_audio(){
+
+       
+    }
 
 
     function custom_epoch_analysis() {
