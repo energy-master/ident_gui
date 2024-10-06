@@ -1674,7 +1674,7 @@ function build_acoustic_header() {
     }
 
     function build_report_links(calling_window_id, analysis_id){
-
+       
         var el = document.getElementById(`reports_${calling_window_id}`);
 
         var html = `
@@ -1685,6 +1685,16 @@ function build_acoustic_header() {
                 <td>
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_entropy_report('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Profile </span>
+                </div>
+                  
+                
+                </td>
+                </tr>
+                 <tr>
+                <td>
+                
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_entropy_f_report('${analysis_id}')">
                 <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Profile </span>
                 </div>
                   

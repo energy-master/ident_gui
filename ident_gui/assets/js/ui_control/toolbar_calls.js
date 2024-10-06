@@ -145,7 +145,7 @@ function ToolbarClick(data_type) {
         var window_id = createWindow("IDent Study Analysis", "study-report");
         var el = document.getElementById(window_id);
         el.style.width = '400px';
-        el.style.height = '200px';
+        el.style.height = '500px';
         el.style.bottom = '0px';
         el.style.left = '300px';
         
