@@ -23,6 +23,7 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
     <link rel="stylesheet" href="../assets/lib/font-awesome-5.15.4/css/all.min.css"> 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
    <!-- Bootstrap CSS -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="../brahma/vendor/jquery/jquery.min.js"></script>
     <script src="../brahma/vendor/jquery/jquery.js"></script>
@@ -129,27 +130,63 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
         bottom: 20px;
     }
 
+    .label-button{
+        position: absolute;
+        bottom:5px;
+        right:20px;
+        z-index: 2000;
+        width:300px;
+        height: 100px;
+        background: white;
+        padding:5px;
+        border-radius: 5px;
+    }
+
     </style>
     
 </head>
 <body>
     <script type="text/javascript" src="js/heatmap/build/heatmap.js"></script>
     <script src="../brahma/vendor/jquery/jquery.min.js"></script>
-    
+
+    <div class = "label-button" id="custom-label-upload" style="display:none">
    
+        <div class="row">
+                 <div class="container">
+                     <div class="mb-12" >
+                        <label for="formFile" class="form-label"></label>
+                        <input class="form-control" type="file" id="upload_file" name="upload_file">
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="mb-12">
+                    <button type="submit" id="label-upload" class="btn btn-primary mb-3">Integrate Labels</button>
+                </div>
+            </div>
+        </div>
+    
+
+    </div>
+
+    <!-- 
+    <div class="col-auto">
+    <button type="submit" id="label-upload" class="btn btn-primary mb-3">Integrate Labels</button>
+     -->
    
     <div id='heatmap-container' style='position: relative; top: 5vh; height: 90vh; widht: 100vw'>
         <canvas id="heatMap" style="position:absolute; left: 0; top: 0"></canvas>
     </div>
     <div id="spec_img">
 
-    </div>
+    </div> 
 
 
     <div id="player"></div>
     <div class="play-button" id="play"> <i class="fas fa-play "></i></div>
     <div class="time-display" id="time_display"></div>
-    <div class="frame-number" id="frame_number"></div>
+    <div class="frame-number" id="frame_number_txt"></div>
     <div id = "progress-bar-window">
 
         <div class="progress">
@@ -191,7 +228,7 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
 
     </script>
     <script type="text/javascript" src="js/game_render.js"></script>
-  
+    
     <!-- <script src="../assets/js/ui/player.js"></script>
     <script>
         BuildPlayerLive();
