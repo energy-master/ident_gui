@@ -254,8 +254,9 @@ function UpdateCustomTimestamps(state=1)
     el.style.color = "red";
     if (state == 1) {
         var start_t = time_string(custom_start_ms)[2];
-    var end_t = time_string(custom_end_ms)[1];
-        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}`;
+        var end_t = time_string(custom_end_ms)[1];
+        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}   <div class="list-view"  style="cursor:pointer"><button type="button" class="btn btn-primary" onclick="clear_checkboxes()">New Study</button>
+     </div>`;
         el.style.color = "green";    
     }
     el.innerHTML = html;
@@ -1308,6 +1309,8 @@ function build_acoustic_header() {
      </div>
         `;
     }
+
+
     function build_snapshot_view(snapshot, idx, sig_label) {
 
 
