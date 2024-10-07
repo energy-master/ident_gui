@@ -964,9 +964,12 @@ function BuildVesselData() {
                 <td>
                
                 
-                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
                 <i class="fas fa-download fa-sm text-white-50" id = "run_button"></i><span id="run-text"> Build Study Report </span></div>
                 </td>   
+                <td>
+                <div id="report_run_ticker"></div>
+                </td>
 
                 </tr>
             </table>
@@ -1604,6 +1607,8 @@ function gis_study_select(time_ms) {
 
     function run_report(calling_window_id)
     {
+
+        show_loader_div('report_run_ticker');
         // collect data for call
 
         if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
@@ -1681,7 +1686,7 @@ function gis_study_select(time_ms) {
            //BuildGroupAnalysis();
             build_report_links(calling_window_id, analysis_id);
             merge_audio(calling_window_id, analysis_id, audio_files);
-
+            hide_loader_div('report_run_ticker');
        });
 
 

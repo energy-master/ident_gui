@@ -698,7 +698,7 @@ color: #fff;
 
 #main_hdr_l {
   position:absolute;
-  left:16vw;
+  left:15vw;
   /* top : 0px; */
   height: 80px;
   padding: 10px;
@@ -717,7 +717,7 @@ color: #fff;
   position:absolute;
   /* left:65vw; */
   right:16vw;
-  width:30vw;
+  width:35vw;
   /* top : 0px; */
   height: 80px;
   padding: 10px;
