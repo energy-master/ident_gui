@@ -1,4 +1,6 @@
 
+// october pres version
+
 var snapshot_data = null;
 var run_api_url = "https://vixen.hopto.org/rs/api/v1/run/bulk";
 
@@ -67,6 +69,8 @@ function UpdateRender() {
 }
 
 function detector(data) {
+
+    //more complex hit here
 
     // console.log(data);
     var decision_made = false;
@@ -450,34 +454,21 @@ function play_control() {
 
 function play_live() {
 
-    //active_frame += 1
-    //get active frame from application clock
-
-
     var app_time_ms = getCookie('clock');
 
     console.log('app time ' + app_time_ms);
+    
     active_frame = get_frame_from_time(app_time_ms);
     console.log('active frame : ' + active_frame);
     console.log('number frames ' + number_frames);
-    //console.log(active_frame);
-    //console.log(number_frames);
-    // if (active_frame > number_frames)
-    // {
-    //     active_frame = 0;
-    //     delete_hits();
-    // }
+   
     var el = document.getElementById("frame_number_txt");
     el.innerText = active_frame;
 
-    //console.log(demo_frame_times[active_frame]);
+    
     var el = document.getElementById("time_display");
     el.innerText = demo_frame_times[active_frame] + `  < ${demo_avg_energy[active_frame]} >  ${number_features}`;
-    //console.log(number_frames);
-    // if (active_frame > number_frames)
-    // {
-    //     active_frame = 0;
-    // }
+   
     UpdateRender();
     update_stats();
 

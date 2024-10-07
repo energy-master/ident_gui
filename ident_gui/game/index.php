@@ -1,4 +1,5 @@
 <?php
+// october pres verision
 session_start();
 $snapshot_id = $_GET['snapshot_id'];
 $snapshot_location = $_GET['location'];
@@ -200,6 +201,7 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
   <select class="center" id="market_selector">
     <option value="none">-select target-</option>
     <option value="harbour_porpoise">harbour porpoise</option>
+    <option value="vessel_alpha">vessel alpha</option>
   
   </select>
 
