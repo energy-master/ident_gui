@@ -306,7 +306,7 @@ function tick()
     
     document.dispatchEvent(clockTickEvent);
     //application_data.application_clock.update_time_stamp(1);
-
+    setCookie('clock',application_data.application_clock.application_time , 1);
     // only update at this point if acoustic is NOT playing.
     if (application_data.acoustic_player.playing == false) {
         application_data.application_clock.application_time += application_time_inc * time_acceleration * 1000;

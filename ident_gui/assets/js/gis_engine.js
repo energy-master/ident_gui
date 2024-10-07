@@ -145,8 +145,14 @@ function create_flag(position, description, color_, mmsi) {
 
 
 function onClick(e,mmsi, time_ms) {
+    
+    
+    // update custom study time?!
+    gis_study_select(time_ms);
+    
     // alert(time_ms);
     
+
     application_data.ais_vessel_data.active_vessel = mmsi;
     console.log(application_data.ais_vessel_data.active_vessel);
     console.log(vessel_huds);

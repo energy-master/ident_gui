@@ -1331,7 +1331,7 @@ function build_acoustic_header() {
             checked = "checked";
         }
 
-        console.log(snapshot.timeframe_start_js);
+        //console.log(snapshot.timeframe_start_js);
         //.toUTCString()
         //console.log(snapshot);
         var spec_filename = snapshot.spec_location;
@@ -1508,6 +1508,22 @@ function build_acoustic_header() {
         }
 
 
+    }
+
+
+function gis_study_select(time_ms) {
+         if (time_ms < custom_start_ms) {
+            custom_start_ms = time_ms;
+            // custom_start_id = ss_id;
+        }
+        if (time_ms > custom_end_ms) {
+            custom_end_ms = time_ms;
+            // custom_end_id = ss_id;
+        }
+
+    
+  UpdateCustomTimestamps();
+    
     }
 
     function ss_select(ss_id) {
@@ -1697,6 +1713,17 @@ function build_acoustic_header() {
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_entropy_f_report('${analysis_id}')">
                 <i class="fas fa-download fa-sm text-white-50"></i><span> Entropy Frequency Profile </span>
+                </div>
+                  
+                
+                </td>
+                
+                </tr>
+                <tr>
+                 <td>
+                
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_frequency_report('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Study Frequency Profile </span>
                 </div>
                   
                 

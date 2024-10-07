@@ -23,7 +23,7 @@ function build_side_menu() {
     html += `
 
         <div id="nav-bar">
-       <input id="nav-toggle" type="checkbox"/>
+       <input id="nav-toggle" type="checkbox" checked/>
         <div id="nav-header">
         
      
