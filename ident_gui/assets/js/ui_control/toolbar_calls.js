@@ -14,19 +14,20 @@ function BuildToolbar() {
     
     
     
-  <div class="icon-bar" id="tool-bar">
-  <!-- <a href="#"><h4><span style="color:red">i</span></h4></a> -->
-  <div class="list-title" href="#"><i class="fas fa-arrows-alt"></i></div>
-  <a  href="#"><i class="fa fa-home"></i></a>
-   <a href="#" id="target"><i class="fas fa-bullseye"></i></a>
-  <a href="#" id="acoustic-data"><i class="fas fa-headphones-alt"></i></a>
-    <a href="#" id="study-label"><i class="fas fa-pen"></i></a>
+    <div class="icon-bar" id="tool-bar">
+   
+    <div class="list-title" href="#"><i class="fas fa-arrows-alt"></i></div>
+
+        <a  href="#"><i class="fa fa-home"></i></a>
+        <a href="#" id="acoustic-data"><i class="fas fa-headphones-alt"></i></a>
+        <a href="#" id="target"><i class="fas fa-bullseye"></i></a>
+        <a href="#" id="study-label"><i class="fas fa-pen"></i></a>
         <a href="#" id="study-tags"><i class="fas fa-tag"></i></a>
-         <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
-          <a href="#" id="study-connect"><i class="fas fa-network-wired"></i></a>
-           <a href="#" id="study-report"><i class="fas fa-file"></i></a>
+        <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
+        <a href="#" id="study-connect"><i class="fas fa-network-wired"></i></a>
+        <a href="#" id="study-report"><i class="fas fa-file"></i></a>
  
-</div>
+    </div>
     
     `;
 

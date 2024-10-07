@@ -255,7 +255,7 @@ function UpdateCustomTimestamps(state=1)
     if (state == 1) {
         var start_t = time_string(custom_start_ms)[2];
         var end_t = time_string(custom_end_ms)[1];
-        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}   <div class="list-view"  style="cursor:pointer"><button type="button" class="btn btn-primary" onclick="clear_checkboxes()">New Study</button>
+        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}   <div class="list-view"  style="cursor:pointer; font-size:9px;"><button type="button" class="btn-sm btn-primary " onclick="clear_checkboxes()">New Study</button></div>
      </div>`;
         el.style.color = "green";    
     }

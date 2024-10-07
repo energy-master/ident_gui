@@ -636,8 +636,8 @@ label[for=nav-footer-toggle] {
  .icon-bar {
   width: 70px; /* Set a specific width */
   background-color:  var(--navbar-dark-secondary);
-  position: absolute;
-  right:1%;
+  position: fixed;
+  right:2px;
   top:20vh;
 }
 
@@ -652,7 +652,9 @@ label[for=nav-footer-toggle] {
 
 .icon-bar a:hover {
   background-color: #000; /* Add a hover color */
+ 
    background-color: var(--navbar-dark-primary);
+   
    color: white;
 }
 
