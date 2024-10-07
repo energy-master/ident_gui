@@ -1,4 +1,4 @@
-
+// October version
 // global snapshot data structure for model run
 var snapshot_data = null;
 var run_api_url = "https://vixen.hopto.org/rs/api/v1/run/model";
@@ -203,6 +203,7 @@ function decision_process(text) {
     for (var line = 0; line < lines.length-1; line++) {
         //console.log( "line " + lines[line]);
         var local_lines = lines[line].split(',');
+        console.log(local_lines)
         var local_decision = {
             'version': local_lines[0],
             'target': local_lines[2],
@@ -233,6 +234,7 @@ function build_decision_data(data, base_name) {
 
 
             processed_decisions = decision_process(text);
+            console.log(processed_decisions);
             show_decisions(processed_decisions);
 
 
