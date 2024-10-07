@@ -1,3 +1,5 @@
+<!-- october version-->
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -552,6 +554,7 @@ echo "<script>var snapshot_id = '$snapshot_id';</script>";
             <select id="environment_selector" class="form-select text-primary" aria-label="Default select example">
                 <option value="none" selected>Select Target</option>
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
+                <option value ="vessel_alpha">Vessel Alpha</option>
                 <!-- <option value ="vixen_bot179733">vixen_bot179733_DAVE</option>
                 <option value="vixen_bot179733">vixen_bot179733</option>
                 <option value="vixen_bot318806">vixen_bot318806</option> -->
@@ -565,7 +568,7 @@ echo "<script>var snapshot_id = '$snapshot_id';</script>";
                  
                         <div class="card mb-4">
               <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="filter_features()">
-                <i class="fas fa-download fa-sm text-white-50" id = "features_button"></i><span id="run-text"> Show Features </span></div>
+                <i class="fas fa-download fa-sm text-white-50" id = "features_button"></i><span id="features-text"> Show Features </span></div>
                 <div id="run-command"></div>
                         </div>
            
