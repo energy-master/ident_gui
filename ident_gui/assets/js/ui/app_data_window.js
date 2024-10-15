@@ -1737,6 +1737,16 @@ function gis_study_select(time_ms) {
                 
                 </td>
                 </tr>
+                <tr>
+                 <td>
+                
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_kurtosis_profile('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Kurtosis Study </span>
+                </div>
+                  
+                
+                </td>
+                </tr>
 
              </table>
              </div>
