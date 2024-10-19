@@ -1705,7 +1705,7 @@ function gis_study_select(time_ms) {
         var html = `
          <div class="center-message">
              <table>
-
+                <!--
                 <tr>
                 <td>
                 
@@ -1727,16 +1727,28 @@ function gis_study_select(time_ms) {
                 </td>
                 
                 </tr>
+                -->
                 <tr>
                  <td>
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_frequency_report('${analysis_id}')">
-                <i class="fas fa-download fa-sm text-white-50"></i><span> Study Frequency Profile </span>
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Static F - P Study </span>
                 </div>
                   
                 
                 </td>
                 </tr>
+                <tr>
+                 <td>
+                
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_frequency_temporal_report('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Dynamic F - P Study</span>
+                </div>
+                  
+                
+                </td>
+                </tr>
+                <!--
                 <tr>
                  <td>
                 
@@ -1747,7 +1759,7 @@ function gis_study_select(time_ms) {
                 
                 </td>
                 </tr>
-
+                -->
              </table>
              </div>
         `;

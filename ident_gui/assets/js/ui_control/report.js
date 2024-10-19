@@ -18,7 +18,7 @@ function show_kurtosis_profile(analysis_id) {
             console.log(times);
             console.log(energies);
             //build_entropy_plot(times, energies);
-                var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/kurt_5_${analysis_id}.csv`
+                var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/kurt_1_${analysis_id}.csv`
                 console.log(url);
                 d3.csv(url)
                     .then((data) => {
@@ -197,6 +197,19 @@ function show_frequency_report(analysis_id) {
         });
 }
 
+function show_frequency_temporal_report(analysis_id){
+
+    var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/${analysis_id}_fp.mp4`;
+    var title = `tile_${Math.floor(Math.random() * 99999)}`;
+    //var title = `${location} | ${time_start} --> ${time_end}`;
+    //var title_s = "Spectrogram"
+    const windowFeatures = "left=200,top=400,width=1600,height=800";
+    var w=window.open(url, title,windowFeatures);
+    
+
+
+}
+
 
 function build_line_plot(times, energies, plot_title){
 
@@ -255,7 +268,7 @@ function build_multiple_plot(times, data, plot_title){
     var title = `tile_${Math.floor(Math.random() * 99999)}`;
     //var title = `${location} | ${time_start} --> ${time_end}`;
     //var title_s = "Spectrogram"
-    const windowFeatures = "left=200,top=400,width=600,height=400";
+    const windowFeatures = "left=200,top=400,width=1600,height=800";
     var w=window.open("", title,windowFeatures);
     w.document.body.innerHTML += `<div><canvas style="position:relative; width:100%, height:100%" id="chart_one"></canvas></div>`;
 
