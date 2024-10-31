@@ -534,11 +534,11 @@ label[for=nav-footer-toggle] {
   background-color: var(--navbar-dark-secondary);
   background-color: white;
   text-align: left;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #f6f4f4;
   width:30vw;
-  height: 40vh;
-  left: 30vw;
-  top:30vh;
+  height: 150px;
+  /* left: 30vw; */
+  /* top:30vh; */
   resize: both;
   overflow: auto;
   opacity: 0.9;
@@ -637,8 +637,9 @@ label[for=nav-footer-toggle] {
   width: 70px; /* Set a specific width */
   background-color:  var(--navbar-dark-secondary);
   position: fixed;
-  right:2px;
-  top:20vh;
+  left:2px;
+  top:10vh;
+  font-size: 6px;
 }
 
 .icon-bar a {
@@ -700,7 +701,7 @@ color: #fff;
 
 #main_hdr_l {
   position:absolute;
-  left:15vw;
+  left:5vw;
   /* top : 0px; */
   height: 80px;
   padding: 10px;

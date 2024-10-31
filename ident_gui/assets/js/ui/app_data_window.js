@@ -947,6 +947,16 @@ function BuildVesselData() {
         
     }
 
+
+    function BuildInfoWindow(content_id){
+        var html = `<div class="center-message">`;
+
+        html += `<div style="width:100%; height:100%"><img src="assets/img/rsa_logo.png"  height="50" alt="RSA logo."></div></div> `;
+
+        var el = document.getElementById(content_id);
+        el.innerHTML = html;
+    }
+
     function BuildReportStudy(content_id) {
         
         var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
@@ -969,7 +979,7 @@ function BuildVesselData() {
                 <i class="fas fa-download fa-sm text-white-50" id = "run_button"></i><span id="run-text"> Build Study Report </span></div>
                 </td>   
                 <td>
-                <div id="report_run_ticker"></div>
+                <div id="report_run_ticker_${content_id}"></div>
                 </td>
 
                 </tr>
@@ -1173,7 +1183,64 @@ function ShowTarget(target_window_id) {
 
     }
 
-    // this is called on update
+    //m
+function ShowUpload(target_window_id){
+
+    var html = `
+    <p>
+   
+    
+   
+   
+<!--<form action="cgi-bin/upload_data.php" method="post" enctype="multipart/form-data">-->
+   <div class="container">
+  
+    <div class="mb-3">
+  <label for="formFile" class="form-label">Default file input example</label>
+  <input class="form-control" type="file" id="upload_file" name="upload_file">
+    </div>
+     <div class="col-auto">
+    <button type="submit" id="data-upload" class="btn btn-primary mb-3">Run Data</button>
+  </div>
+
+
+    </div>
+ <!---</form>-->
+    `;
+
+    var el = document.getElementById(target_window_id);
+    el.innerHTML = html;
+
+    el = document.getElementById('data-upload');
+    el.onclick = function(){
+        var ident_id = 213;//Math.floor(Math.random() * 1000)
+        var file_data = $('#upload_file').prop('files')[0];   
+        var form_data = new FormData();                  
+        form_data.append('upload_file', file_data);
+        form_data.append('ident_id', ident_id);
+        //alert(form_data);                             
+        $.ajax({
+            url: 'cgi-bin/upload_data.php', // <-- point to server-side PHP script 
+            dataType: 'text',  // <-- what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,//'multipart/form-data',
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(php_script_response){
+                alert(php_script_response); // <-- display response from the PHP script, if any
+                upload_data_afterrun(ident_id)
+            }
+         });
+    };
+
+}
+function upload_data_afterrun(run_id){
+    //load game vis
+    window.open(`game/index.php?snapshot_id=${run_id}&location=upload`,`${Math.floor(Math.random() * 99999)}`,'width=1000,height=700');
+
+}
+    // this is called on update *** live ***
     function BuildAppDataAcoustic(target_window_id) {
 
         label_data_download().then((data) => {
@@ -1198,13 +1265,22 @@ function ShowTarget(target_window_id) {
                     var ss_end_ms = _snapshot.timeframe_end_ms;
                     var sig_start_ms = parseFloat(sigs[j].start_time_ms);
                     var sig_end_ms = parseFloat(sigs[j].end_time_ms);
-                    if (_sid == "595319575884544847440835") {
-                        console.log("active")
-                        console.log(`${ss_start_ms} >= ${sig_start_ms}`);
-                        console.log(`${ss_end_ms} <= ${sig_end_ms}`);
+                    listener_location = sigs[j].listener_location;
+                    if (listener_location == '67149847') {
+                        if (_sid == "213547676998594081709676") {
+                            console.log(sigs[j]['id'])
+                            console.log(`${ss_start_ms} >= ${sig_start_ms}`);
+                            console.log(`${ss_end_ms} <= ${sig_end_ms}`);
+                        }
                     }
+                    // if (_sid == "213547676998594081709676") {
+                    //     console.log("active")
+                    //     console.log(`${ss_start_ms} >= ${sig_start_ms}`);
+                    //     console.log(`${ss_end_ms} <= ${sig_end_ms}`);
+                    // }
+
                     if ((ss_start_ms <= sig_start_ms) && (ss_end_ms >= sig_end_ms)) {
-                        if (_sid == "595319575884544847440835") {
+                        if (_sid == "213547676998594081709676") {
                             console.log(sigs[j]['id'])
                             console.log(`${ss_start_ms} >= ${sig_start_ms}`);
                             console.log(`${ss_end_ms} <= ${sig_end_ms}`);
@@ -1305,7 +1381,7 @@ function clear_checkboxes() {
 
 function build_acoustic_header() {
     return `
-     <div class="list-view"  style="cursor:pointer"><button type="button" class="btn btn-primary" onclick="clear_checkboxes()">Reset Custom Analysis</button>
+     <div class="list-view"  style="cursor:pointer"><button type="button" class="btn btn-primary" onclick="clear_checkboxes()">Reset / Custom Analysis</button>
      </div>
         `;
     }
@@ -1611,7 +1687,7 @@ function gis_study_select(time_ms) {
     function run_report(calling_window_id)
     {
 
-        show_loader_div('report_run_ticker');
+        show_loader_div(`report_run_ticker_${calling_window_id}`);
         // collect data for call
 
         if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
@@ -1689,7 +1765,7 @@ function gis_study_select(time_ms) {
            //BuildGroupAnalysis();
             build_report_links(calling_window_id, analysis_id);
             merge_audio(calling_window_id, analysis_id, audio_files);
-            hide_loader_div('report_run_ticker');
+            hide_loader_div(`report_run_ticker_${calling_window_id}`);
        });
 
 
@@ -2800,7 +2876,7 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
     }
 
-
+    // the are the labels we add use to tag!!!
     const fetchUserLabels = () => {
 
         return new Promise((resolve, reject) => {
@@ -2816,6 +2892,7 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
                 //console.log(data['data']);
                 label_data = data['data'];
                 if (success) {
+                    // console.log(label_data);
                     resolve(label_data);
                 } else {
                     eject(Error("Error in data download."));

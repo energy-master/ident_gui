@@ -202,7 +202,7 @@ function createWindow(title, data_type) {
     var html = `
     
     
-        <div id = "${win_id}" class = "draggable_window">
+        <div id = "${win_id}" class = "draggable_window" style="position:absolute">
             <div id="${win_id}_hdr" class = "draggable_window_hdr"><span style="color:red">IDent</span> Data Window [ ${title} ]<div class=close-icon onClick="closeWindow('${win_id}')">X</div></div>
             <div id="${win_id}_content" class="window-content"></div>
             <div class="window-bottom-border"></div>
