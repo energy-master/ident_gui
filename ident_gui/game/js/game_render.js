@@ -5,7 +5,7 @@ var snapshot_data = null;
 var run_api_url = "https://vixen.hopto.org/rs/api/v1/run/bulk";
 
 play_state = 0;
-console.log('game render v2');
+console.log('game render v3');
 
 demo_frames = {};
 active_frame = 0;
@@ -15,8 +15,6 @@ number_features = 0;
 demo_avg_energy = [];
 rolling_energy_frame_number = 0;
 rolling_time_frame_number = 0;
-
-
 
 var target= "harbour porpoise";
 var activation_energy = 0.9;
@@ -70,7 +68,7 @@ function UpdateRender() {
 
 function detector(data) {
 
-    //more complex hit here
+    //****more complex hit here*****
 
     // console.log(data);
     var decision_made = false;
@@ -661,8 +659,9 @@ function add_hit(hit, search=false) {
         console.log(frame_label_hit_b);
         if ((frame_label_hit_b==false) && (frame_label_hit_b != null)) {
             console.log(newRow);
-            newRow.style.background = 'red';
+            newRow.style.background = 'blue';
             newRow.style.color = 'white';
+            return;
         }
 
     }

@@ -117,6 +117,7 @@ function ToolbarClick(data_type) {
             el.style.width = '60vw';
             el.style.top = '10vw';
             el.style.left = '10vw';
+             el.style.height = '300px';
             var content_id = `${window_id}_content`;
             BuildAppDataAcoustic(content_id);
              

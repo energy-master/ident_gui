@@ -131,7 +131,7 @@ position: fixed;
   <!-- <br><br> -->
    <div id="main_hdr_r">
 
-<div class="header-data" id = "custom-data">No Study Data</div>
+<div class="header-data" id = "custom-data">No Study Data Selected.</div>
    
   
 </div>
@@ -153,7 +153,7 @@ position: fixed;
 <!-- 
     <div id="place-holder"></div> -->
     <div  id="nav-bar-holder-2"></div>
-    <div  id="nav-bar-holder-1"></div>
+    <!-- <div  id="nav-bar-holder-1"></div> -->
  
     <div  id="overview-data-window"></div>
     <div  class="gis_engine_window" id="gis_engine"> </div>
@@ -196,7 +196,7 @@ position: fixed;
                 </form>
 </form>
         </div> 
-
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -276,7 +276,7 @@ position: fixed;
     <script src="assets/js/ui_control/toolbar_calls.js"></script>
 
     <!-- Connect to buttons-->
-
+    <script src="assets/js/ui_control/report.js"></script>
 
 
 

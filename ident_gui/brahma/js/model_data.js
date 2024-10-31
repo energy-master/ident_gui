@@ -27,7 +27,6 @@ const run_bot = (snapshot_id, bot_id, user, location_str, base_name, activation_
         $.post(run_api_url, JSON.stringify(post_data),function (data) {
 
          
-            
             success = true;
             
             if (success) {
