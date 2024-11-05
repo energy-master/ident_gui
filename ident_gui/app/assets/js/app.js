@@ -15,6 +15,31 @@ var status_title = {
 }
 
 
+// showDiv(id)
+// hideDiv(id)
+
+param_show = false;
+
+ele = document.getElementById('param-toggle');
+console.log(ele);
+ele.addEventListener("click", function () {
+    
+    if (param_show==false) {
+        showDiv('params'); 
+        param_show = true;
+        return;
+    }
+    if (param_show==true) {
+        hideDiv('params'); 
+        param_show = false;
+        return;
+    }
+
+   
+    
+
+}); 
+
 el = document.getElementById('data-upload');
 el.addEventListener("click", run_ident); 
 

@@ -70,6 +70,11 @@
  
 }
 
+
+.title-container {
+    display: flex;
+}
+
 .title_{
     font-size: 18px;
 }
@@ -106,54 +111,99 @@ position: fixed;
 }
 body,html {
     height: 100%;
+    padding: 10px;
 }
     </style>
     
   </head>
   <body>
- <br><br>
-    <div class="container-fluid h-10">
+<!-- <div style="left:5px; top: 5px;position: absolute">
+   <img src="../assets/img/rsa_logo.png"  height="50" alt="RSA logo.">
+</div> -->
+    <!-- <div class="container-fluid h-10"> -->
       
-    <div class="row justify-content-center align-items-center h-100">
-        <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
-            
+      <div class="container-fluid"></div>
+        <div class="row justify-content-center align-items-center">
+          
+          <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
+
+          <!-- <div class="row">
            
-            <!-- <form action=""> -->
-                <!-- <div class="container">
-    <div class="col-xl-12 col-md-12 mb-12"> -->
-          <!-- <h4>MARLIN<span style="color:red">ai</span></h4> -->
-       
-            <h2>IDent<span style="color:red">.</span></h2>
-           <br>
-                            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="col">
+            <h1>IDent<span style="color:red">.</span></h1>
+            </div>
+             <div class="col float-right">
+            <img src="../assets/img/rsa_logo.png"  height="50" alt="RSA logo.">
+            </div>
+          </div> -->
+          <div class="title-container">
+            <div style="padding-right: 20px;"><img src="../assets/img/rsa_logo.png"  height="50" alt="RSA logo."></div>
+            
+          </div>
+          <br>
+
+                            <div class="card border-left-primary shadow">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
+                                        <div><h1>IDent<span style="color:red">.</span></h1></div>
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                Acoustic Data Upload</div>
-                                         
+                                       
                                               <div class="mb-3">
   <label for="formFile" class="form-label">Upload acoustic data.</label>
   <!-- <label for="usr">Upload a valid wav file.</label> -->
   <input class="form-control" type="file" id="upload_file" name="upload_file" style="width:300px">
     </div>
   <div class="mb-3">
-     <label for="environment_selector">Select Target</label>
+     <!-- <label for="environment_selector">Select Target</label> -->
       <select id="environment_selector" class="form-select text-primary" aria-label="Default select example" style="width:300px">
                 
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
                
              </select>  
              </div>
+
+  <div class="mb-3">
+<div class="text-xs text-primary mb-1" style="cursor:pointer" id="param-toggle"> Toggle Parameters +/-</div>
+ 
+
+  </div>
+
+  <div id="params" style="display: none;">
+             <div class="row">
+              <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">Activation Energy</label>
            <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.9">
         
              </div>
+             </div>
+              <div class="ol-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
                  <label for="threshold-energy-lelve">80% Threshold</label>
            <input type="text" class="form-control" id="threshold-energy-level" style="width:100px" value="1.0">
              </div>
+             </div>
+
+             <div class="ol-xs-12 col-md-3 col-sm-6">
+              <div class="mb-3">
+                <label for="activation-level">70% Threshold</label>
+           <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.9">
+        
+             </div>
+             </div>
+
+                <div class="col-xs-12 col-md-3 col-sm-6">
+              <div class="mb-3">
+                <label for="activation-level">Number Features</label>
+           <input type="text" class="form-control" id="activation-level" style="width:100px" value="100">
+        
+             </div>
+             </div>
+
+             </div>
+        </div>
             <!-- <div class="mb-3">
   <br>
      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
@@ -161,7 +211,7 @@ body,html {
     <input type="text" class="form-control" id="description-text">
    
   </div> -->
-             <br> 
+            
                                             
                                 <div class="col-auto">
     <button type="submit" id="data-upload" class="btn btn-primary mb-3">Upload & Search</button>
@@ -220,6 +270,7 @@ body,html {
 </div>
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="../assets/js/utils.js"></script>
         <script src="../assets/js/application_str.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
