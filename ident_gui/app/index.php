@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MARLIN</title>
+    <title>MARLIN IDent.</title>
     <!--W3 CSS -->
      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
     <!-- Bootstrap CSS -->
@@ -111,8 +111,8 @@ body,html {
     
   </head>
   <body>
- 
-    <div class="container-fluid h-50">
+ <br><br>
+    <div class="container-fluid h-10">
       
     <div class="row justify-content-center align-items-center h-100">
         <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
@@ -136,11 +136,20 @@ body,html {
   <label for="formFile" class="form-label">Upload acoustic data.</label>
   <input class="form-control" type="file" id="upload_file" name="upload_file">
     </div>
+  <div class="mb-3">
       <select id="environment_selector" class="form-select text-primary" aria-label="Default select example">
                 
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
                
              </select>  
+             </div>
+            <!-- <div class="mb-3">
+  <br>
+     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                               Acoustic Data Description</div>
+    <input type="text" class="form-control" id="description-text">
+   
+  </div> -->
              <br> 
                                             
                                 <div class="col-auto">
@@ -155,13 +164,17 @@ body,html {
                         </div>
   
     </div>
-        
+    
+
+
     <div class="row justify-content-center align-items-center ">
     <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
-
+      <p></p>
+   
     <div class="card border-left-primary shadow h-100 py-2">
     <div class="card-body">
-      <div id="run-table"></div>
+       <h4>Saved Runs</h4>
+      <div id="run-table" style= "max-height:300px; overflow-y: scroll;"></div>
     </div>
     </div>
     
@@ -264,7 +277,9 @@ body,html {
                 // BuildAppDataWindow(); // holder for all app data
                 //BuildUserDataWindow(); 
                 //show_data_selection();
-                
+                grab_ident_runs();
+                tick_interval = 2000;
+                var play_thread_id = setInterval(grab_ident_runs, tick_interval);
             }
             else{
                 alert("Error. Response [404]")
