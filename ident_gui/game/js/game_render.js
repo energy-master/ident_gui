@@ -385,8 +385,9 @@ if (snapshot_location_ == "upload"){
     el.style.display = "none";
     
     el = document.getElementById('custom-label-upload');
-    el.style.display = "block";
+    // el.style.display = "block";
 
+    show_upload_spec();
 
 
 }
@@ -401,7 +402,7 @@ if (snapshot_location_ == "upload"){
 
 // }
 
-tick_interval = 500;
+tick_interval = 20;
 // setInterval(play, tick_interval);
 // console.log("done");
 // tick();
@@ -747,6 +748,17 @@ function build_show_hits() {
 
 }
 
+function show_upload_spec() {
+ 
+    img_url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${snapshot_id}.png`;
+    var page_html = `<img src=${img_url}></img>`;
+    var title = `spectrogram_${Math.floor(Math.random() * 99999)}`;
+    const windowFeatures = "left=200,top=100,width=700,height=500";
+    w=window.open("", title,windowFeatures);
+    w.document.body.innerHTML = page_html;
+
+
+}
 
 var stats = {
 
@@ -1015,6 +1027,7 @@ function build_show_stats() {
 
 
 }
+
 build_show_stats();
 tolerance = 500;
 
