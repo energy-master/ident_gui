@@ -134,14 +134,25 @@ body,html {
                                          
                                               <div class="mb-3">
   <label for="formFile" class="form-label">Upload acoustic data.</label>
-  <input class="form-control" type="file" id="upload_file" name="upload_file">
+  <!-- <label for="usr">Upload a valid wav file.</label> -->
+  <input class="form-control" type="file" id="upload_file" name="upload_file" style="width:300px">
     </div>
   <div class="mb-3">
-      <select id="environment_selector" class="form-select text-primary" aria-label="Default select example">
+     <label for="environment_selector">Select Target</label>
+      <select id="environment_selector" class="form-select text-primary" aria-label="Default select example" style="width:300px">
                 
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
                
              </select>  
+             </div>
+              <div class="mb-3">
+                <label for="activation-level">Activation Energy</label>
+           <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.9">
+        
+             </div>
+               <div class="mb-3">
+                 <label for="threshold-energy-lelve">80% Threshold</label>
+           <input type="text" class="form-control" id="threshold-energy-level" style="width:100px" value="1.0">
              </div>
             <!-- <div class="mb-3">
   <br>
@@ -173,7 +184,8 @@ body,html {
    
     <div class="card border-left-primary shadow h-100 py-2">
     <div class="card-body">
-       <h4>Saved Runs</h4>
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                               My Runs</div><br>
       <div id="run-table" style= "max-height:300px; overflow-y: scroll;"></div>
     </div>
     </div>
