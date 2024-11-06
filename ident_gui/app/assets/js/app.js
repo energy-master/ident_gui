@@ -64,6 +64,25 @@ el = document.getElementById('data-upload');
 el.addEventListener("click", run_ident); 
 
 
+function toggle_run_data(div_id) {
+    console.log(div_id);
+    elem = document.getElementById(div_id);
+    if (elem.style.display == "none") {
+        elem.style.display = "block";
+        active_run_ids.push(div_id);
+        return;
+    }
+     if (elem.style.display == "block") {
+        elem.style.display = "none";
+        var index = active_run_ids.indexOf(div_id);
+        if (index !== -1) {
+        active_run_ids.splice(index, 1);
+        }
+        return;
+    }
+
+}
+
 var waiting_run = false;
 var waiting_id = 0;
 var waiting_data = {}
@@ -230,6 +249,9 @@ function grab_ident_runs(){
 
 }
 
+
+var active_run_ids = []
+
 function build_ident_run_table(data, notes = []) {
     
     var html = ``; 
@@ -278,7 +300,7 @@ function build_ident_run_table(data, notes = []) {
                     data_notes = notes[note]['notes'];
                 }
             }
-
+            var img_html = '';
             var toggle_html = '';
             var html_view = ``;
             var results_html = ``;
@@ -292,16 +314,24 @@ function build_ident_run_table(data, notes = []) {
                 
                 [results]
             </a>`;
-                toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}">+/-</div>`;
+                toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
                 run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
+                img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
             }
 
             if (data[i]['status'] in status_title) {
                 status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
             }
 
-  
-        
+            console.log(active_run_ids)
+            var run_style = `style="display:none"`;
+            console.log(`run_data_${data[i]['run_id']}`);
+            if (active_run_ids.includes(`run_data_${data[i]['run_id']}`)) {
+                console.log('found');
+                run_style = `style="display:block"`;
+            }
+            
+
 
             html += `<tr>
         
@@ -323,7 +353,13 @@ function build_ident_run_table(data, notes = []) {
             ${toggle_html}
         </td>
         
-        </tr>`
+        </tr>
+        <tr id="run_data_${data[i]['run_id']}" ${run_style}>
+        <td colspan=9>
+            ${img_html}
+        </td>
+        </tr>
+        `
         }
 
         html += `</table>`

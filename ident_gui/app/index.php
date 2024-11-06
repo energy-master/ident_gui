@@ -250,7 +250,7 @@ body,html {
     <div class="card-body">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="cursor:pointer" id="run-toggle">
                                                My Runs +/-</div><br>
-      <div id="run-table" style= "max-height:300px; overflow-y: scroll; display:none;"></div>
+      <div id="run-table" style= "max-height:800px; overflow-y: scroll; display:none;"></div>
 
     </div>
     </div>
