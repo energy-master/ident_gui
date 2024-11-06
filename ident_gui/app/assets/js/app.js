@@ -19,6 +19,26 @@ var status_title = {
 // hideDiv(id)
 
 param_show = false;
+run_table_show = false;
+ele = document.getElementById('run-toggle');
+console.log(ele);
+ele.addEventListener("click", function () {
+    
+    if (run_table_show ==false) {
+        showDiv('run-table'); 
+        run_table_show = true;
+        return;
+    }
+    if (run_table_show ==true) {
+        hideDiv('run-table'); 
+        run_table_show  = false;
+        return;
+    }
+
+   
+    
+
+});
 
 ele = document.getElementById('param-toggle');
 console.log(ele);
@@ -43,12 +63,25 @@ ele.addEventListener("click", function () {
 el = document.getElementById('data-upload');
 el.addEventListener("click", run_ident); 
 
+
+var waiting_run = false;
+var waiting_id = 0;
+var waiting_data = {}
+
 function run_ident() {
+    
     el.style.color = 'red';
     
     var base_id = Math.floor(Math.random() * 1000);
     var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
     
+    waiting_run = true;
+    waiting_id = ident_id;
+    waiting_data = {
+        'run_id' : ident_id,
+        'status' : "Submitted: Waiting for server..."
+    }
+
     var file_data = null;
     file_data = $('#upload_file').prop('files')[0];   
     if ((file_data == undefined)) {
@@ -57,10 +90,11 @@ function run_ident() {
     }
    // console.log(file_data);
     
+    number_features = document.getElementById('number_features').value;
     var ele = document.getElementById('activation-level');
     activation_energy = ele.value;
     
-    _80_activation_energy = document.getElementById('threshold-energy-level').value;
+    _80_activation_energy = document.getElementById('above_e_threshold').value;
     var form_data = new FormData();
              
     form_data.append('upload_file', file_data);
@@ -70,9 +104,27 @@ function run_ident() {
     form_data.append('user_uid', user['user_uid']);
     form_data.append('activation-level', activation_energy);
     form_data.append('80-activation-level', _80_activation_energy);
+    form_data.append('number_features', number_features);
 
     alert(`Your job has been submitted - ${user['user_uid']} `); 
     
+    // send data notes here. Can't wait below as it may take too long. Must assume data is uploaded. Maybe x check after success.
+    // audit data
+    var notes = document.getElementById('data-notes').value;
+    post_data = {
+        'user_uid': user['user_uid'],
+        'notes': notes,
+        'data_id' : base_id
+    }
+
+    notes_url = 'https://vixen.hopto.org/rs/api/v1/data/datanotes/';
+    $.post(notes_url, JSON.stringify(post_data), function (data) {
+
+    });
+
+   
+   
+
     //alert(form_data);   
     el.style.color = 'blue';
     $.ajax({
@@ -94,19 +146,36 @@ function run_ident() {
 };
 
 
+
+
+
 function run_ident_wout_upload(base_id){
 
+    
 
-    var ident_id = base_id + "_" +  Math.floor(Math.random() * 1000); // 213;
+
+
+    alert(`Job submitted for [${base_id}]`)
+    var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
+    
+    waiting_run = true;
+    waiting_id = ident_id;
+    waiting_data = {
+        'run_id' : ident_id,
+        'status' : "Submitted: Waiting for server..."
+    }
+
+    number_features = document.getElementById('number_features').value;
+
     var ele = document.getElementById('activation-level');
     activation_energy = ele.value;
-    _80_activation_energy = document.getElementById('threshold-energy-level').value;
+    _80_activation_energy = document.getElementById('above_e_threshold').value;
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
     form_data.append('user_uid', user['user_uid']);
     form_data.append('activation-level', activation_energy);
     form_data.append('80-activation-level', _80_activation_energy);
-
+    form_data.append('number_features', number_features);
     $.ajax({
         url: '../cgi-bin/run_ident_wout_upload.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -143,53 +212,104 @@ function grab_ident_runs(){
     //console.log(JSON.stringify(post_data));
     $.post(report_run_url, JSON.stringify(post_data), function (data) {
             
+        
+        //get data notes
+        var notes_post_data = {
+              "user_uid": user.user_uid
+        }
+        notes_run_url = "https://vixen.hopto.org/rs/api/v1/data/getdatanotes";
+        $.post(notes_run_url, JSON.stringify(post_data), function (data_notes) {
+            // console.log(data_notes['data']);
+            build_ident_run_table(data['data'], data_notes['data']);
+        });
+
+
        
-        //console.log(data)
-        build_ident_run_table(data['data']);
 
     });
 
 }
 
-function build_ident_run_table(data) {
+function build_ident_run_table(data, notes = []) {
     
     var html = ``; 
-    html += `<table class="table table-hover"><tr><th>Run ID</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th></tr>`;
+    html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th></th></tr>`;
     
+    //  waiting_run = true;
+    // wainting_id = ident_id;
+    // waiting_data = {
+    //     'run_id' : ident_id,
+    //     'status' : "Submitted: Waiting for server..."
+    // }
 
+    if (waiting_run == true) {
+        html += `
+        <tr class="table-success">
+        <td>${waiting_id}</td>
+        <td>---</td>
+        <td>now</td>
+        <td>---</td>
+        <td>${waiting_data['status']}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        </tr>
+        `;
+    }
+    console.log(data)
+    if ('success' in data[0]) {
+        
+    }
+    else {
+        for (var i = 0; i < data.length; i++) {
 
-    for (var i = 0; i < data.length; i++){
-        //console.log(data[i]);
-        var status = data[i]['status'];
+            if (data[i]['run_id'] == waiting_id) {
+                waiting_run = false;
+                waiting_id = 0;
+                waiting_data = {};
+            }
 
-        var html_view = ``;
-        var results_html = ``;
-        var run_html = ``;
-        if (status > 12) {
+            //console.log(data[i]);
             base_id = data[i]['run_id'].split('_')[0];
+            var status = data[i]['status'];
+            var data_notes = 'no notes';
+            for (note in notes) {
+                if (notes[note]['data_id'] == base_id) {
+                    data_notes = notes[note]['notes'];
+                }
+            }
+
+            var toggle_html = '';
+            var html_view = ``;
+            var results_html = ``;
+            var run_html = ``;
+            if (status > 12) {
+                base_id = data[i]['run_id'].split('_')[0];
            
             
-            html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
-            results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
-            
+                html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
+                results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
+                
                 [results]
             </a>`;
-            run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
-        }
+                toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}">+/-</div>`;
+                run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
+            }
 
-        if (data[i]['status'] in status_title) {
-            status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
-        }
+            if (data[i]['status'] in status_title) {
+                status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
+            }
 
   
         
 
-        html += `<tr>
+            html += `<tr>
         
         <td>${data[i]['run_id']}</td>
+        <td>${data_notes}</td>
         <td>${data[i]['timestamp']}</td>
         <td>${data[i]['target']}</td>
-        <td>${status}</td>
+        <td><span class="text-bg-success">${status}</span></td>
         <td>
              ${html_view}
         </td>
@@ -199,12 +319,15 @@ function build_ident_run_table(data) {
         <td>
             ${results_html}
         </td>
+         <td>
+            ${toggle_html}
+        </td>
         
         </tr>`
+        }
+
+        html += `</table>`
     }
-
-    html += `</table>`
-
     var el = document.getElementById('run-table');
     el.innerHTML = html;
 

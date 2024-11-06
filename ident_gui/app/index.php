@@ -112,6 +112,8 @@ position: fixed;
 body,html {
     height: 100%;
     padding: 10px;
+    background-color: white;
+    color:#1F4D54;
 }
     </style>
     
@@ -123,9 +125,9 @@ body,html {
     <!-- <div class="container-fluid h-10"> -->
       
       <div class="container-fluid"></div>
-        <div class="row justify-content-center align-items-center">
+        <div class="row justify-content-left align-items-left">
           
-          <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
 
           <!-- <div class="row">
            
@@ -136,16 +138,23 @@ body,html {
             <img src="../assets/img/rsa_logo.png"  height="50" alt="RSA logo.">
             </div>
           </div> -->
-          <div class="title-container">
+          <div class="title-container" style="padding:20px">
             <div style="padding-right: 20px;"><img src="../assets/img/rsa_logo.png"  height="50" alt="RSA logo."></div>
-            
+             <div>
+              <h1 class="mb-1"> & <span style="color:#1F4D54">MARLIN</span><span style="color:red;">ai</span></h1>
           </div>
-          <br>
+          </div>
+            <!-- <div class="mb-3" style="padding-top:10px">
+ <h4 class="mb-5">artificially intelligent marine acoustic classifiers</h4>
+            </div> -->
+          
+         
 
                             <div class="card border-left-primary shadow">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
-                                        <div><h1>IDent<span style="color:red">.</span></h1></div>
+                                        <div><h1><span style="color:#1F4D54">IDent</span><span style="color:red">.</span></h1></div>
+                                        <!-- <h5 class="mb-5">artificially intelligent marine acoustic classifiers</h5> -->
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                Acoustic Data Upload</div>
@@ -155,6 +164,11 @@ body,html {
   <!-- <label for="usr">Upload a valid wav file.</label> -->
   <input class="form-control" type="file" id="upload_file" name="upload_file" style="width:300px">
     </div>
+      <div class="mb-3">
+                <!-- <label for="activation-level">Activation Energy</label> -->
+           <input type="text" class="form-control" id="data-notes" style="width:300px" value="" placeholder="data notes">
+        
+             </div>
   <div class="mb-3">
      <!-- <label for="environment_selector">Select Target</label> -->
       <select id="environment_selector" class="form-select text-primary" aria-label="Default select example" style="width:300px">
@@ -181,23 +195,23 @@ body,html {
              </div>
               <div class="ol-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
-                 <label for="threshold-energy-lelve">80% Threshold</label>
-           <input type="text" class="form-control" id="threshold-energy-level" style="width:100px" value="1.0">
+                 <label for="threshold-energy-lelve">% > E[a]</label>
+           <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="20">
              </div>
              </div>
 
-             <div class="ol-xs-12 col-md-3 col-sm-6">
+             <!-- <div class="ol-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">70% Threshold</label>
-           <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.9">
+           <input type="text" class="form-control" id="70_threshold" style="width:100px" value="0.9">
         
              </div>
-             </div>
+             </div> -->
 
                 <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">Number Features</label>
-           <input type="text" class="form-control" id="activation-level" style="width:100px" value="100">
+           <input type="text" class="form-control" id="number_features" style="width:100px" value="100">
         
              </div>
              </div>
@@ -229,14 +243,15 @@ body,html {
 
 
     <div class="row justify-content-center align-items-center ">
-    <div class="col col-sm-8 col-md-8 col-lg-8 col-xl-8">
+    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
       <p></p>
    
     <div class="card border-left-primary shadow h-100 py-2">
     <div class="card-body">
-        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                               My Runs</div><br>
-      <div id="run-table" style= "max-height:300px; overflow-y: scroll;"></div>
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="cursor:pointer" id="run-toggle">
+                                               My Runs +/-</div><br>
+      <div id="run-table" style= "max-height:300px; overflow-y: scroll; display:none;"></div>
+
     </div>
     </div>
     
@@ -269,6 +284,83 @@ body,html {
         </div> 
 </div>
    
+
+<footer class="bg-body-tertiary text-center">
+  <!-- Grid container -->
+  <div class="container p-4 pb-0">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <!-- <a
+      data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #3b5998;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a> -->
+
+      <!-- Twitter -->
+      <!-- <a
+        data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #55acee;"
+        href="#!"
+        role="button"
+        ><i class="fa-brands fa-x-twitter"></i
+      ></a> -->
+
+      <!-- Google -->
+      <!-- <a
+        data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #dd4b39;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-google"></i
+      ></a> -->
+
+      <!-- Instagram -->
+      <!-- <a
+        data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #ac2bac;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-instagram"></i
+      ></a> -->
+
+      <!-- Linkedin -->
+      <a
+        data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #0082ca;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+      <!-- Github -->
+      <!-- <a
+        data-mdb-ripple-init
+        class="btn text-white btn-floating m-1"
+        style="background-color: #333333;"
+        href="#!"
+        role="button"
+        ><i class="fab fa-github"></i
+      ></a> -->
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3 color-primary" style="background-color: white-smoke;">
+   © 2024 Copyright:
+    <a class="text-body" href="https://www.rsaqua.co.uk/"  style="color:white">RS Aqua</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="../assets/js/utils.js"></script>
         <script src="../assets/js/application_str.js"></script>
