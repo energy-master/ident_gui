@@ -188,15 +188,15 @@ body,html {
              <div class="row">
               <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
-                <label for="activation-level">Activation Energy</label>
-           <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.9">
+                <label for="activation-level">[E|a]</label>
+           <input type="text" class="form-control" id="activation-level" style="width:100px" value="0.8">
         
              </div>
              </div>
               <div class="ol-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
-                 <label for="threshold-energy-lelve">% > E[a]</label>
-           <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="20">
+                 <label for="threshold-energy-lelve">% > E|a</label>
+           <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="10">
              </div>
              </div>
 
@@ -211,7 +211,7 @@ body,html {
                 <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">Number Features</label>
-           <input type="text" class="form-control" id="number_features" style="width:100px" value="100">
+           <input type="text" class="form-control" id="number_features" style="width:100px" value="10">
         
              </div>
              </div>
