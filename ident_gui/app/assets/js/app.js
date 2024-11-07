@@ -65,15 +65,18 @@ el.addEventListener("click", run_ident);
 
 
 function toggle_run_data(div_id) {
-    console.log(div_id);
+    console.log(div_id + "_config");
     elem = document.getElementById(div_id);
+    elem2 = document.getElementById(div_id+"_config");
     if (elem.style.display == "none") {
         elem.style.display = "block";
+        elem2.style.display = "block";
         active_run_ids.push(div_id);
         return;
     }
      if (elem.style.display == "block") {
-        elem.style.display = "none";
+         elem.style.display = "none";
+         elem2.style.display = "none";
         var index = active_run_ids.indexOf(div_id);
         if (index !== -1) {
         active_run_ids.splice(index, 1);
@@ -278,7 +281,7 @@ function build_ident_run_table(data, notes = []) {
         </tr>
         `;
     }
-    console.log(data)
+    //console.log(data)
     if ('success' in data[0]) {
         
     }
@@ -300,11 +303,32 @@ function build_ident_run_table(data, notes = []) {
                     data_notes = notes[note]['notes'];
                 }
             }
+            var config_obj = '';
             var img_html = '';
             var toggle_html = '';
             var html_view = ``;
             var results_html = ``;
             var run_html = ``;
+            var config_html = '';
+            if ("0" in data[i]) {
+                config_obj = data[i]["0"];
+            }
+            if (config_obj == null){
+                config_html = '';
+            }
+            else {
+                config_obj = (data[i]["0"]);
+                //console.log(config_obj);
+                config_html = '';
+                for (const [key, value] of Object.entries(config_obj)) {
+                    
+                    config_html += `<td>${ key }</td><td>${ value }</td>`;
+                  
+                }
+                
+                
+
+            }
             if (status > 12) {
                 base_id = data[i]['run_id'].split('_')[0];
            
@@ -323,9 +347,9 @@ function build_ident_run_table(data, notes = []) {
                 status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
             }
 
-            console.log(active_run_ids)
+            //console.log(active_run_ids)
             var run_style = `style="display:none"`;
-            console.log(`run_data_${data[i]['run_id']}`);
+            //console.log(`run_data_${data[i]['run_id']}`);
             if (active_run_ids.includes(`run_data_${data[i]['run_id']}`)) {
                 console.log('found');
                 run_style = `style="display:block"`;
@@ -353,12 +377,24 @@ function build_ident_run_table(data, notes = []) {
             ${toggle_html}
         </td>
         
+
+
         </tr>
-        <tr id="run_data_${data[i]['run_id']}" ${run_style}>
+        
+        <tr id ="run_data_${data[i]['run_id']}_config" ${run_style}">
+       
+        ${config_html}
+
+        </tr>
+
+        <tr id ="run_data_${data[i]['run_id']}" ${run_style}">
         <td colspan=9>
             ${img_html}
         </td>
+        
         </tr>
+      
+
         `
         }
 

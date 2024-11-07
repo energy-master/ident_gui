@@ -433,8 +433,8 @@ body,html {
                 //BuildUserDataWindow(); 
                 //show_data_selection();
                 grab_ident_runs();
-                tick_interval = 2000;
-                var play_thread_id = setInterval(grab_ident_runs, tick_interval);
+                // tick_interval = 2000;
+                // var play_thread_id = setInterval(grab_ident_runs, tick_interval);
             }
             else{
                 alert("Error. Response [404]")
