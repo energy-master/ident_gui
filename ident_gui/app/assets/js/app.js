@@ -117,6 +117,7 @@ function run_ident() {
     activation_energy = ele.value;
     
     _80_activation_energy = document.getElementById('above_e_threshold').value;
+    structure_similarity = document.getElementById('structure_similarity').value;
     var form_data = new FormData();
              
     form_data.append('upload_file', file_data);
@@ -127,7 +128,7 @@ function run_ident() {
     form_data.append('activation-level', activation_energy);
     form_data.append('80-activation-level', _80_activation_energy);
     form_data.append('number_features', number_features);
-
+    form_data.append('structure_similarity', structure_similarity)
     alert(`Your job has been submitted - ${user['user_uid']} `); 
     
     // send data notes here. Can't wait below as it may take too long. Must assume data is uploaded. Maybe x check after success.
@@ -192,12 +193,14 @@ function run_ident_wout_upload(base_id){
     var ele = document.getElementById('activation-level');
     activation_energy = ele.value;
     _80_activation_energy = document.getElementById('above_e_threshold').value;
+    structure_similarity = document.getElementById('structure_similarity').value;
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
     form_data.append('user_uid', user['user_uid']);
     form_data.append('activation-level', activation_energy);
     form_data.append('80-activation-level', _80_activation_energy);
     form_data.append('number_features', number_features);
+    form_data.append('structure_similarity', structure_similarity)
     $.ajax({
         url: '../cgi-bin/run_ident_wout_upload.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -381,7 +384,7 @@ function build_ident_run_table(data, notes = []) {
 
         </tr>
         
-        <tr id ="run_data_${data[i]['run_id']}_config" ${run_style}">
+        <tr class="table-success" id ="run_data_${data[i]['run_id']}_config" ${run_style}">
        
         ${config_html}
 

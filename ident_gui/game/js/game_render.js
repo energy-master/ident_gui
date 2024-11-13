@@ -18,10 +18,9 @@ rolling_time_frame_number = 0;
 
 var target= "harbour porpoise";
 var activation_energy = 0.9;
-var pc_activation_energy = 20;
-var pc_50 = 10;
-var pc_75 = 10;
-
+var pc_activation_energy = 2;
+var pc_50 = 1;
+var pc_75 = 1;
 
 
 number_err = 0;
@@ -66,34 +65,92 @@ function UpdateRender() {
 
 }
 
+var stats = {
+
+    'number_iterations' : 0,
+    'number_decisions' : 0,
+    'number_correct' : 0,
+    'number_wrong' : 0,
+    'number_missed' : 0,
+    'average_energy' : 0,
+    'max_energy' : 0,
+    'threshold' : activation_energy,
+    'pc_hit' : 0
+
+}
+
+function make_decision(data) {
+    for (var i in data) {
+        console.log(activation_energy, pc_activation_energy, pc_50, pc_75);
+        console.log(stats['max_energy'], stats['average_energy'], stats['pc_above_05'],  stats['gt_75'], stats['pc_above_threshold']);
+       
+        if (stats['max_energy'] > activation_energy) {
+            // return true;
+        }
+         if (stats['pc_above_threshold'] > pc_activation_energy) {
+            return true;
+        }
+
+    }
+}
+
 function detector(data) {
 
     //****more complex hit here*****
 
     // console.log(data);
     var decision_made = false;
-    for (var i in data) {
-        if (data[i] > activation_energy) {
-            var hit = {
+
+    decision_made=make_decision(data);
+    if (decision_made == true){
+
+        var hit = {
                 'target': target,
                 'time': demo_frame_times[active_frame]
             }
-            if (frame_search_hit.includes(active_frame)) {
+
+        if (frame_search_hit.includes(active_frame)) {
 
                 }
                 else {
+            
                     stats['number_decisions'] += 1;
                     stats['pc_hit'] = ((parseFloat(stats['number_correct'])/parseFloat(stats['number_decisions'])) *  100).toFixed(2);
-      
                     decision_made = true;
                     frame_search_hit.push(active_frame);
-                    add_hit(hit, true);
+                add_hit(hit, true);
+            
                 }
 
-            break;
-        }
     }
-    console.log(decision_made);
+    
+    
+    // for (var i in data) {
+    //     if (data[i] > activation_energy) {
+    //         var hit = {
+    //             'target': target,
+    //             'time': demo_frame_times[active_frame]
+    //         }
+    //         if (frame_search_hit.includes(active_frame)) {
+
+    //             }
+    //             else {
+
+    //                 stats['number_decisions'] += 1;
+    //                 stats['pc_hit'] = ((parseFloat(stats['number_correct'])/parseFloat(stats['number_decisions'])) *  100).toFixed(2);
+                    
+    //                 decision_made = true;
+    //                 frame_search_hit.push(active_frame);
+    //                 add_hit(hit, true);
+    
+    //             }
+
+    //         break;
+    //     }
+    // }
+
+    // console.log(decision_made);
+
     if (decision_made){
         console.log('decision made');
         console.log(frame_label_hit_b);
@@ -110,7 +167,6 @@ function detector(data) {
     }
     if (!decision_made){
         if (frame_label_hit_b){
-            
             stats['number_missed'] += 1;
         }
     }
@@ -306,17 +362,20 @@ function build_render_data(dim_length, e_data){
                 //feature_idx = Math.floor(Math.random() * e_data_size);
 
             }
+            if (e_data[feature_idx] > 0.1) {
+                console.log('sat');
                 var data_pt = {
                     x: i + 10,
                     y: j + 10,
                     value: e_data[feature_idx]
                 }
-
-
-            // console.log(i, j);
+                // console.log(i, j);
             data.push(data_pt);
             feature_idx += 1;
             j += 5;
+            }
+            
+            
         }
         i += 5;
     }
@@ -760,19 +819,6 @@ function show_upload_spec() {
 
 }
 
-var stats = {
-
-    'number_iterations' : 0,
-    'number_decisions' : 0,
-    'number_correct' : 0,
-    'number_wrong' : 0,
-    'number_missed' : 0,
-    'average_energy' : 0,
-    'max_energy' : 0,
-    'threshold' : activation_energy,
-    'pc_hit' : 0
-
-}
 
 
 function reset_stats(){
@@ -1391,7 +1437,7 @@ function energy_stats(){
     stats['average_energy'] = (sum/e_vector.length).toFixed(2) || 0;
 
     hist = histogram(e_vector, 0.25);
-    console.log(hist);
+    //console.log(hist);
     stats['hist'] = hist;
     //build_energy_plot(hist);
 

@@ -177,6 +177,14 @@ body,html {
                
              </select>  
              </div>
+             <div class="mb-3">
+     <!-- <label for="environment_selector">Select Target</label> -->
+      <select id="version_selector" class="form-select text-primary" aria-label="Default select example" style="width:200px">
+                
+                <option value ="_1_0_0">1.0.0</option>
+               
+             </select>  
+             </div>
 
   <div class="mb-3">
 <div class="text-xs text-primary mb-1" style="cursor:pointer" id="param-toggle"> Toggle Parameters +/-</div>
@@ -199,6 +207,12 @@ body,html {
            <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="10">
              </div>
              </div>
+              <div class="ol-xs-12 col-md-3 col-sm-6">
+               <div class="mb-3">
+                 <label for="threshold-energy-lelve">Structure Similarity</label>
+           <input type="text" class="form-control" id="structure_similarity" style="width:100px" value="0.8">
+             </div>
+             </div>
 
              <!-- <div class="ol-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
@@ -211,7 +225,7 @@ body,html {
                 <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">Number Features</label>
-           <input type="text" class="form-control" id="number_features" style="width:100px" value="10">
+           <input type="text" class="form-control" id="number_features" style="width:100px" value="300">
         
              </div>
              </div>
@@ -237,8 +251,17 @@ body,html {
                                 </div>
                             </div>
                         </div>
+
+          <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <br>
+            <br>
+            
+
+</div>
   
     </div>
+
+ 
     
 
 
@@ -433,8 +456,8 @@ body,html {
                 //BuildUserDataWindow(); 
                 //show_data_selection();
                 grab_ident_runs();
-                // tick_interval = 2000;
-                // var play_thread_id = setInterval(grab_ident_runs, tick_interval);
+                tick_interval = 2000;
+                var play_thread_id = setInterval(grab_ident_runs, tick_interval);
             }
             else{
                 alert("Error. Response [404]")

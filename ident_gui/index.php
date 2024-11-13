@@ -41,8 +41,8 @@ echo "<script>application_id = '$application_id';</script>";
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MARLIN</title>
- <!--W3 CSS -->
+    <title>MARLIN Researh & Development</title>
+    <!--W3 CSS -->
      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -307,9 +307,10 @@ position: fixed;
     
     var filtered_data = null; // filter data structure
 
-    var user = null;
+    // var user = null;
     </script>
     <script>
+       var user = null;
       // build_side_menu();
       // build_right_menu()
       var logon = true;

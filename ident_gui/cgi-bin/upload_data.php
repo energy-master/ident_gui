@@ -7,9 +7,9 @@ echo 'The uploaded zip was too large. You must upload a file smaller than ' . in
 $base_id = $_POST['base_id'];
 
 $file_size = $_FILES["upload_file"]["size"];
-if ($file_size > 8428800){
-//if ($file_size > 52428800){
-  echo "File too large! max [50MB]";
+//if ($file_size > 8428800){
+if ($file_size > 104857600){
+  echo "File too large! max [100MB]";
   return;
 }
 
@@ -63,7 +63,8 @@ $ident_id = $_POST['ident_id'];
 $user_uid = $_POST['user_uid'];
 $activation_energy = $_POST['activation-level'];
 $activation_energy_80 = $_POST['80-activation-level'];
-
+$number_features = $_POST['number_features'];
+$structure_similarity = $_POST['structure_similarity'];
 // echo $ident_id;
 
 // if ($_FILES["upload_file"]["name"] == "Test_File_1_Sonar.wav"){
@@ -127,7 +128,7 @@ if ($uploadOk == 0) {
 
     $search_id = "harbour_porpoise";
     
-    $path_to_exe = "/home/vixen/rs/dev/marlin_hp/marlin_hp/prepare_ext.py " . $ident_id . " " . $search_id . " upload " . $user_uid . " " . $activation_energy. " " . $activation_energy_80 ."  &";
+    $path_to_exe = "/home/vixen/rs/dev/marlin_hp/marlin_hp/prepare_ext.py " . $ident_id . " " . $search_id . " upload " . $user_uid . " " . $activation_energy. " " . $activation_energy_80 ." " . $number_features . " " . $structure_similarity. "   &";
     $cmd = " nohup python3 ";
 
     $cmd = $cmd . " " . $path_to_exe;
@@ -145,6 +146,9 @@ if ($uploadOk == 0) {
     return;
   }
 }
+
+
+
 
 
 
