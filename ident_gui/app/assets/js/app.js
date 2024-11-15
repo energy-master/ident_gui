@@ -171,6 +171,59 @@ function run_ident() {
 
 
 
+function rerun_ident(base_id, run_id){
+
+    
+
+
+
+    alert(`Rerun Job submitted for [${base_id}] [${run_id}]`)
+    // var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
+    var ident_id = run_id
+    var new_game_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
+    
+    waiting_run = true;
+    waiting_id = ident_id;
+    waiting_data = {
+        'run_id' : ident_id,
+        'status' : "Submitted: Waiting for server..."
+    }
+
+    number_features = document.getElementById('number_features').value;
+
+    var ele = document.getElementById('activation-level');
+    activation_energy = ele.value;
+    _80_activation_energy = document.getElementById('above_e_threshold').value;
+    structure_similarity = document.getElementById('structure_similarity').value;
+    var form_data = new FormData();
+    form_data.append('ident_id', ident_id);
+    form_data.append('new_game_id', new_game_id);
+    form_data.append('base_id', base_id);
+    form_data.append('user_uid', user['user_uid']);
+    form_data.append('activation-level', activation_energy);
+    form_data.append('80-activation-level', _80_activation_energy);
+    form_data.append('number_features', number_features);
+    form_data.append('structure_similarity', structure_similarity);
+
+    $.ajax({
+        url: '../cgi-bin/replay.php', // <-- point to server-side PHP script 
+        dataType: 'text',  // <-- what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,//'multipart/form-data',
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        
+        success: function (php_script_response) {
+            grab_ident_runs();
+            alert(php_script_response); // <-- display response from the PHP script, if any
+            // upload_data_afterrun(ident_id)
+            alert("Your data has been uploaded and run is complete. Please access results below."); 
+        }
+        });
+}
+
+
 
 function run_ident_wout_upload(base_id){
 
@@ -261,7 +314,7 @@ var active_run_ids = []
 function build_ident_run_table(data, notes = []) {
     
     var html = ``; 
-    html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th></th></tr>`;
+    html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th></th><th></th><th></th></tr>`;
     
     //  waiting_run = true;
     // wainting_id = ident_id;
@@ -278,6 +331,7 @@ function build_ident_run_table(data, notes = []) {
         <td>now</td>
         <td>---</td>
         <td>${waiting_data['status']}</td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -306,6 +360,7 @@ function build_ident_run_table(data, notes = []) {
                     data_notes = notes[note]['notes'];
                 }
             }
+            
             var config_obj = '';
             var img_html = '';
             var toggle_html = '';
@@ -332,10 +387,15 @@ function build_ident_run_table(data, notes = []) {
                 
 
             }
+            var init_html = `
+            <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[i]['run_id']}_init_all.png" target="_blank"> init </a>
+                
+            `;
             if (status > 12) {
+                
                 base_id = data[i]['run_id'].split('_')[0];
            
-            
+                
                 html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
                 results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
                 
@@ -343,6 +403,7 @@ function build_ident_run_table(data, notes = []) {
             </a>`;
                 toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
                 run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
+                rerun_html = `<button class="btn btn-primary btn-sm" onclick="rerun_ident('${base_id}','${data[i]['run_id']}')">Replay</button>`;
                 img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
             }
 
@@ -354,7 +415,7 @@ function build_ident_run_table(data, notes = []) {
             var run_style = `style="display:none"`;
             //console.log(`run_data_${data[i]['run_id']}`);
             if (active_run_ids.includes(`run_data_${data[i]['run_id']}`)) {
-                console.log('found');
+                //console.log('found');
                 run_style = `style="display:block"`;
             }
             
@@ -374,21 +435,28 @@ function build_ident_run_table(data, notes = []) {
             ${run_html}
         </td>
         <td>
+            ${rerun_html}
+        </td>
+        <td>
             ${results_html}
         </td>
          <td>
             ${toggle_html}
         </td>
+        <td>
+           ${init_html}
+           </td>
         
 
 
         </tr>
-        
+       
         <tr class="table-success" id ="run_data_${data[i]['run_id']}_config" ${run_style}">
        
         ${config_html}
 
         </tr>
+       
 
         <tr id ="run_data_${data[i]['run_id']}" ${run_style}">
         <td colspan=9>
