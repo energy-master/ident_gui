@@ -322,15 +322,10 @@ var active_run_ids = []
 
 function build_ident_run_table(data, notes = []) {
     
+
     var html = ``; 
     html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th><th></th></th><th></th><th></th></tr>`;
-    
-    //  waiting_run = true;
-    // wainting_id = ident_id;
-    // waiting_data = {
-    //     'run_id' : ident_id,
-    //     'status' : "Submitted: Waiting for server..."
-    // }
+ 
 
     if (waiting_run == true) {
         html += `
@@ -347,98 +342,107 @@ function build_ident_run_table(data, notes = []) {
         </tr>
         `;
     }
-    //console.log(data)
+    
     if ('success' in data[0]) {
         
     }
     else {
         for (var i = 0; i < data.length; i++) {
-
-            if (data[i]['run_id'] == waiting_id) {
-                waiting_run = false;
-                waiting_id = 0;
-                waiting_data = {};
-            }
-
-            //console.log(data[i]);
-            base_id = data[i]['run_id'].split('_')[0];
-            var status = data[i]['status'];
-            var data_notes = 'no notes';
-            for (note in notes) {
-                if (notes[note]['data_id'] == base_id) {
-                    data_notes = notes[note]['notes'];
-                }
+            var parent = false;
+            d = data[i]['run_id'].split('_');
+            if (d.length == 2) {
+                base = d[0];
+                id = d[1]
+                parent = true;
             }
             
-            var config_obj = '';
-            var img_html = '';
-            var toggle_html = '';
-            var html_view = ``;
-            var results_html = ``;
-            var run_html = ``;
-            var rerun_html = ``;
-            var config_html = '';
-            if ("0" in data[i]) {
-                config_obj = data[i]["0"];
-            }
-            if (config_obj == null){
-                config_html = '';
-            }
-            else {
-                config_obj = (data[i]["0"]);
-                //console.log(config_obj);
-                config_html = '';
-                for (const [key, value] of Object.entries(config_obj)) {
-                    
-                    config_html += `<td>${ key }</td><td>${ value }</td>`;
-                  
+            if (parent == true) {
+
+                if (data[i]['run_id'] == waiting_id) {
+                    waiting_run = false;
+                    waiting_id = 0;
+                    waiting_data = {};
                 }
+
+                //console.log(data[i]);
+                base_id = data[i]['run_id'].split('_')[0];
+                var status = data[i]['status'];
+                var data_notes = 'no notes';
+                for (note in notes) {
+                    if (notes[note]['data_id'] == base_id) {
+                        data_notes = notes[note]['notes'];
+                    }
+                }
+            
+                var config_obj = '';
+                var img_html = '';
+                var toggle_html = '';
+                var html_view = ``;
+                var results_html = ``;
+                var run_html = ``;
+                var rerun_html = ``;
+                var config_html = '';
+                if ("0" in data[i]) {
+                    config_obj = data[i]["0"];
+                }
+                if (config_obj == null) {
+                    config_html = '';
+                }
+                else {
+                    config_obj = (data[i]["0"]);
+                    //console.log(config_obj);
+                    config_html = '';
+                    for (const [key, value] of Object.entries(config_obj)) {
+                    
+                        config_html += `<td>${key}</td><td>${value}</td>`;
+                  
+                    }
                 
                 
 
-            }
+                }
 
-            var init_html = `
+                var init_html = `
             <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[i]['run_id']}_init_all.png" target="_blank"> init </a>
                 
             `;
 
-            var spec_pop_out_html = '';
-            if (status > 12) {
+                var spec_pop_out_html = '';
+                if (status > 12) {
                 
-                base_id = data[i]['run_id'].split('_')[0];
+                    base_id = data[i]['run_id'].split('_')[0];
            
                 
-                html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
-                results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
+                    html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
+                    results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
                 
                 [results]
             </a>`;
                 
-                toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
-                run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
+                    toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
+                    run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
                 
-                rerun_html = `<button class="btn btn-primary btn-sm" onclick="rerun_ident('${base_id}','${data[i]['run_id']}')">Replay</button>`;
-                img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
-                spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
+                    rerun_html = `<button class="btn btn-primary btn-sm" onclick="rerun_ident('${base_id}','${data[i]['run_id']}')">Replay</button>`;
+                    img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
+                    spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
                
-            }
+                }
 
-            if (data[i]['status'] in status_title) {
-                status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
-            }
+                if (data[i]['status'] in status_title) {
+                    status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
+                }
 
-            //console.log(active_run_ids)
-            var run_style = `style="display:none"`;
-            //console.log(`run_data_${data[i]['run_id']}`);
-            if (active_run_ids.includes(`run_data_${data[i]['run_id']}`)) {
-                //console.log('found');
-                run_style = `style="display:block"`;
-            }
+                //console.log(active_run_ids)
+                var run_style = `style="display:none"`;
+                //console.log(`run_data_${data[i]['run_id']}`);
+                if (active_run_ids.includes(`run_data_${data[i]['run_id']}`)) {
+                    //console.log('found');
+                    run_style = `style="display:block"`;
+                }
             
 
 
-            html += `<tr>
+                html += `<tr>
         
         <td>${data[i]['run_id']}</td>
         <td>${data_notes}</td>
@@ -446,7 +450,7 @@ function build_ident_run_table(data, notes = []) {
         <td>${data[i]['target']}</td>
         <td><span class="text-bg-success">${status}</span></td>
         <td>
-             ${html_view}
+            
         </td>
         <td>
             ${run_html}
@@ -483,18 +487,127 @@ function build_ident_run_table(data, notes = []) {
             ${img_html}
         </td>
         
-        </tr>
+        </tr>`;
+            
       
+        for (var j = 0; j < data.length; j++) {
+        d = data[j]['run_id'].split('_');
+        
+        if (d.length > 2) {
+            
+            p_id = d[0] + '_' + d[1];
+            // console.log(p_id);
+            if (p_id == `${ data[i]['run_id'] }`)
+            {
+                var spec_pop_out_html = '';
+                var results_html = '';
+                var html_view = '';
+                var init_html = `
+                <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[j]['run_id']}_init_all.png" target="_blank"> init </a>
+                    
+                `;
+                if (data[j]['status'] > 12) {
+                html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[j]['run_id']}')">View</button>`;
+                
+                results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[j]['run_id']}.json"  download='results.json'>
+                
+                [results]
+                </a>`;
+                    
+                spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
+               
+                    
+                }
 
-        `
+
+                if (data[j]['status'] in status_title) {
+                    status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
+                }
+                else {
+                    status = data[j]['status'];
+                }
+                 
+                html += `
+            
+                <tr>
+                <td>${data[j]['run_id']}</td>
+                <td></td>
+                <td>${data[j]['timestamp']}</td>
+                <td>${data[j]['target']}</td>
+                <td>${status}</td>
+                <td>${html_view}</td>
+                <td></td>
+                <td></td>
+                <td>${results_html}</td>
+                <td>${spec_pop_out_html}</td>
+                <td></td>
+                <td></td>
+                </tr>
+            
+                `;
+                
+            }
+           
+
+
+            // var el = document.getElementById(`children_${p_id}`);
+            // console.log(el);
+            // el.innerHTML += html;
         }
-
-        html += `</table>`
     }
-    var el = document.getElementById('run-table');
-    el.innerHTML = html;
+
+                
+       
+        
+        html += `
+        </div>
+
+        `;
+            }//parent
+            
+           
+
+            } // we have data 
+
+            html += `</table>`;
+        }
+    
+        var el = document.getElementById('run-table');
+        el.innerHTML = html;
+        
+
+    // build children data
+    // for (var i = 0; i < data.length; i++) {
+    //     d = data[i]['run_id'].split('_');
+        
+    //     if (d.length > 2) {
+            
+    //         p_id = d[0] + '_' + d[1];
+    //         console.log(p_id);
+    //         var html = `
+            
+    //             <tr>
+    //             <td>
+    //                 ${data[i]['run_id']}
+    //             </td>
+    //             </tr>
+            
+    //         `;
+
+
+    //         // var el = document.getElementById(`children_${p_id}`);
+    //         // console.log(el);
+    //         // el.innerHTML += html;
+    //     }
+    // }
+
+
+
+    // add to table
+   
 
 }
+children_data = {}
 
 function build_spec_window(identifier) {
     var title = `${Math.floor(Math.random() * 99999)}`;
