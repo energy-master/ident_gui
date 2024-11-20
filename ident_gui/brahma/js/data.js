@@ -33,8 +33,10 @@ const get_games = () => {
 
 const get_all_bots = () => {
     var bots_api_url = "https://vixen.hopto.org/rs/api/v1/platform/winners";
+    // var bots_api_url = "https://vixen.hopto.org/rs/api/v1/data/features";
     return new Promise((resolve, reject) => {
         success = false;
+        console.log('getting bots');
         $.get(bots_api_url, function (data) {
 
             console.log(data);
@@ -108,9 +110,9 @@ console.log("Building Data");
 grab_toplevel_data();
 function grab_toplevel_data(){
 
-    get_games().then((value) => {
-        console.log(value); 
-    });
+    // get_games().then((value) => {
+    //     console.log(value); 
+    // });
 
     get_all_bots().then((value) => {
         console.log(value); 

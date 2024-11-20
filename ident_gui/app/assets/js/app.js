@@ -118,12 +118,15 @@ function run_ident() {
     
     _80_activation_energy = document.getElementById('above_e_threshold').value;
     structure_similarity = document.getElementById('structure_similarity').value;
+    feature_version_selector = document.getElementById('feature_version_selector').value;
+    environment_selector = document.getElementById('environment_selector').value;
     var form_data = new FormData();
-             
+    
     form_data.append('upload_file', file_data);
     form_data.append('base_id', base_id);
-    
     form_data.append('ident_id', ident_id);
+    form_data.append('environment_selector', environment_selector);
+    form_data.append('feature_version_selector', feature_version_selector);
     form_data.append('user_uid', user['user_uid']);
     form_data.append('activation-level', activation_energy);
     form_data.append('80-activation-level', _80_activation_energy);
@@ -141,12 +144,8 @@ function run_ident() {
     }
 
     notes_url = 'https://vixen.hopto.org/rs/api/v1/data/datanotes/';
-    $.post(notes_url, JSON.stringify(post_data), function (data) {
-
+        $.post(notes_url, JSON.stringify(post_data), function (data) {
     });
-
-   
-   
 
     //alert(form_data);   
     el.style.color = 'blue';
@@ -195,6 +194,8 @@ function rerun_ident(base_id, run_id){
     activation_energy = ele.value;
     _80_activation_energy = document.getElementById('above_e_threshold').value;
     structure_similarity = document.getElementById('structure_similarity').value;
+    feature_version_selector = document.getElementById('feature_version_selector').value;
+    environment_selector = document.getElementById('environment_selector').value;
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
     form_data.append('new_game_id', new_game_id);
@@ -204,6 +205,8 @@ function rerun_ident(base_id, run_id){
     form_data.append('80-activation-level', _80_activation_energy);
     form_data.append('number_features', number_features);
     form_data.append('structure_similarity', structure_similarity);
+    form_data.append('feature_version_selector', feature_version_selector);
+    form_data.append('environment_selector', environment_selector);
 
     $.ajax({
         url: '../cgi-bin/replay.php', // <-- point to server-side PHP script 
@@ -247,6 +250,9 @@ function run_ident_wout_upload(base_id){
     activation_energy = ele.value;
     _80_activation_energy = document.getElementById('above_e_threshold').value;
     structure_similarity = document.getElementById('structure_similarity').value;
+    feature_version_selector = document.getElementById('feature_version_selector').value;
+    environment_selector = document.getElementById('environment_selector').value;
+    
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
     form_data.append('user_uid', user['user_uid']);
@@ -254,6 +260,9 @@ function run_ident_wout_upload(base_id){
     form_data.append('80-activation-level', _80_activation_energy);
     form_data.append('number_features', number_features);
     form_data.append('structure_similarity', structure_similarity)
+    form_data.append('feature_version_selector', feature_version_selector)
+    form_data.append('environment_selector', environment_selector)
+
     $.ajax({
         url: '../cgi-bin/run_ident_wout_upload.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -314,7 +323,7 @@ var active_run_ids = []
 function build_ident_run_table(data, notes = []) {
     
     var html = ``; 
-    html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th></th><th></th><th></th></tr>`;
+    html += `<table class="table table-hover"><tr><th>Run ID</th><th>data notes</th><th>time</th><th>target</th><th>status</th><th></th><th></th><th></th><th><th></th></th><th></th><th></th></tr>`;
     
     //  waiting_run = true;
     // wainting_id = ident_id;
@@ -367,6 +376,7 @@ function build_ident_run_table(data, notes = []) {
             var html_view = ``;
             var results_html = ``;
             var run_html = ``;
+            var rerun_html = ``;
             var config_html = '';
             if ("0" in data[i]) {
                 config_obj = data[i]["0"];
@@ -387,10 +397,13 @@ function build_ident_run_table(data, notes = []) {
                 
 
             }
+
             var init_html = `
             <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[i]['run_id']}_init_all.png" target="_blank"> init </a>
                 
             `;
+
+            var spec_pop_out_html = '';
             if (status > 12) {
                 
                 base_id = data[i]['run_id'].split('_')[0];
@@ -401,10 +414,14 @@ function build_ident_run_table(data, notes = []) {
                 
                 [results]
             </a>`;
+                
                 toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
                 run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
+                
                 rerun_html = `<button class="btn btn-primary btn-sm" onclick="rerun_ident('${base_id}','${data[i]['run_id']}')">Replay</button>`;
                 img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
+                spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
+               
             }
 
             if (data[i]['status'] in status_title) {
@@ -440,6 +457,9 @@ function build_ident_run_table(data, notes = []) {
         <td>
             ${results_html}
         </td>
+        <td>
+        ${spec_pop_out_html}
+        </td>
          <td>
             ${toggle_html}
         </td>
@@ -473,5 +493,22 @@ function build_ident_run_table(data, notes = []) {
     }
     var el = document.getElementById('run-table');
     el.innerHTML = html;
+
+}
+
+function build_spec_window(identifier) {
+    var title = `${Math.floor(Math.random() * 99999)}`;
+    const windowFeatures = "left=200,top=100,width=700,height=500";
+    w=window.open("", title,windowFeatures);
+    
+    var page_html = `
+    <img src = "http://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${identifier}.png" width=400 heigh=300></img>
+    `;
+    w.document.body.innerHTML = page_html;
+    
+    // w.title = `${location} | ${time_start} --> ${time_end}`;
+    // w.innerHTML = html;
+    // console.log(`${location} | ${time_start} --> ${time_end}`);
+    
 
 }
