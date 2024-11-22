@@ -120,6 +120,9 @@ function run_ident() {
     structure_similarity = document.getElementById('structure_similarity').value;
     feature_version_selector = document.getElementById('feature_version_selector').value;
     environment_selector = document.getElementById('environment_selector').value;
+    version_time_from = document.getElementById('version_time_from').value;
+    version_time_to = document.getElementById('version_time_to').value;
+
     var form_data = new FormData();
     
     form_data.append('upload_file', file_data);
@@ -132,6 +135,10 @@ function run_ident() {
     form_data.append('80-activation-level', _80_activation_energy);
     form_data.append('number_features', number_features);
     form_data.append('structure_similarity', structure_similarity)
+    form_data.append('version_time_from', version_time_from)
+    form_data.append('version_time_to', version_time_to)
+
+
     alert(`Your job has been submitted - ${user['user_uid']} `); 
     
     // send data notes here. Can't wait below as it may take too long. Must assume data is uploaded. Maybe x check after success.
@@ -196,6 +203,9 @@ function rerun_ident(base_id, run_id){
     structure_similarity = document.getElementById('structure_similarity').value;
     feature_version_selector = document.getElementById('feature_version_selector').value;
     environment_selector = document.getElementById('environment_selector').value;
+
+    version_time_from = document.getElementById('version_time_from').value;
+    version_time_to = document.getElementById('version_time_to').value;
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
     form_data.append('new_game_id', new_game_id);
@@ -207,7 +217,8 @@ function rerun_ident(base_id, run_id){
     form_data.append('structure_similarity', structure_similarity);
     form_data.append('feature_version_selector', feature_version_selector);
     form_data.append('environment_selector', environment_selector);
-
+    form_data.append('version_time_from', version_time_from);
+    form_data.append('version_time_to', version_time_to);
     $.ajax({
         url: '../cgi-bin/replay.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -252,6 +263,8 @@ function run_ident_wout_upload(base_id){
     structure_similarity = document.getElementById('structure_similarity').value;
     feature_version_selector = document.getElementById('feature_version_selector').value;
     environment_selector = document.getElementById('environment_selector').value;
+    version_time_from = document.getElementById('version_time_from').value;
+    version_time_to = document.getElementById('version_time_to').value;
     
     var form_data = new FormData();
     form_data.append('ident_id', ident_id);
@@ -262,7 +275,11 @@ function run_ident_wout_upload(base_id){
     form_data.append('structure_similarity', structure_similarity)
     form_data.append('feature_version_selector', feature_version_selector)
     form_data.append('environment_selector', environment_selector)
+    form_data.append('version_time_from', version_time_from)
+    form_data.append('version_time_to', version_time_to)
 
+    console.log(form_data);
+    
     $.ajax({
         url: '../cgi-bin/run_ident_wout_upload.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -274,7 +291,7 @@ function run_ident_wout_upload(base_id){
         
         success: function (php_script_response) {
             grab_ident_runs();
-            //alert(php_script_response); // <-- display response from the PHP script, if any
+            alert(php_script_response); // <-- display response from the PHP script, if any
             // upload_data_afterrun(ident_id)
             alert("Your data has been uploaded and run is complete. Please access results below."); 
         }
@@ -394,7 +411,7 @@ function build_ident_run_table(data, notes = []) {
                     config_html = '';
                     for (const [key, value] of Object.entries(config_obj)) {
                     
-                        config_html += `<td>${key}</td><td>${value}</td>`;
+                        config_html += `<tr><td>${key}</td><td></td><td>${value}</td></tr>`;
                   
                     }
                 
@@ -402,10 +419,14 @@ function build_ident_run_table(data, notes = []) {
 
                 }
 
-                var init_html = `
-            <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[i]['run_id']}_init_all.png" target="_blank"> init </a>
+            //     var init_html = `
+            // <a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${data[i]['run_id']}_init_all.png" target="_blank"> init </a>
                 
-            `;
+            // `;
+                 var init_html = 
+           `<button class="btn btn-primary btn-sm" onclick=" build_init_window('${data[i]['run_id']}')">Init</button>`;    
+            ;
+                
 
                 var spec_pop_out_html = '';
                 if (status > 12) {
@@ -418,10 +439,11 @@ function build_ident_run_table(data, notes = []) {
                 
                 [results]
             </a>`;
-                
-                    toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
+                //build_params_window
+                    // toggle_html = `<div style= "cursor:pointer;"id="toggle_${data[i]['run_id']}" onclick="toggle_run_data('run_data_${data[i]['run_id']}')">+/-</div>`;
                     run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${base_id}')">Run Ident</button>`;
-                
+                    toggle_html = `<button class="btn btn-primary btn-sm" onclick="build_params_window('${config_html}')">Config</button>`;
+               
                     rerun_html = `<button class="btn btn-primary btn-sm" onclick="rerun_ident('${base_id}','${data[i]['run_id']}')">Replay</button>`;
                     img_html = `<img src="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${data[i]['run_id']}.png"></img>`;
                     spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
@@ -442,7 +464,7 @@ function build_ident_run_table(data, notes = []) {
             
 
 
-                html += `<tr>
+                html += `<tr class="table-success">
         
         <td>${data[i]['run_id']}</td>
         <td>${data_notes}</td>
@@ -450,7 +472,7 @@ function build_ident_run_table(data, notes = []) {
         <td>${data[i]['target']}</td>
         <td><span class="text-bg-success">${status}</span></td>
         <td>
-            
+            ${html_view}
         </td>
         <td>
             ${run_html}
@@ -477,7 +499,7 @@ function build_ident_run_table(data, notes = []) {
        
         <tr class="table-success" id ="run_data_${data[i]['run_id']}_config" ${run_style}">
        
-        ${config_html}
+        
 
         </tr>
        
@@ -514,14 +536,14 @@ function build_ident_run_table(data, notes = []) {
                 [results]
                 </a>`;
                     
-                spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[i]['run_id']}')">Spec</button>`;
+                spec_pop_out_html = `<button class="btn btn-primary btn-sm" onclick=" build_spec_window('${data[j]['run_id']}')">Spec</button>`;
                
                     
                 }
 
 
                 if (data[j]['status'] in status_title) {
-                    status = `[${data[i]['status']}] ${status_title[data[i]['status']]}`;
+                    status = `[${data[j]['status']}] ${status_title[data[j]['status']]}`;
                 }
                 else {
                     status = data[j]['status'];
@@ -547,12 +569,7 @@ function build_ident_run_table(data, notes = []) {
                 `;
                 
             }
-           
-
-
-            // var el = document.getElementById(`children_${p_id}`);
-            // console.log(el);
-            // el.innerHTML += html;
+        
         }
     }
 
@@ -625,3 +642,37 @@ function build_spec_window(identifier) {
     
 
 }
+
+function build_init_window(identifier) {
+    var title = `${Math.floor(Math.random() * 99999)}`;
+    const windowFeatures = "left=200,top=100,width=700,height=500";
+    w=window.open("", title,windowFeatures);
+    
+    var page_html = `
+    <img src = "http://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_${identifier}_init_all.png" width=400 heigh=300></img>
+    `;
+    w.document.body.innerHTML = page_html;
+    
+    // w.title = `${location} | ${time_start} --> ${time_end}`;
+    // w.innerHTML = html;
+    // console.log(`${location} | ${time_start} --> ${time_end}`);
+    
+
+}
+https://vixen.hopto.org/rs/ident_app/ident/brahma/out/f_d_80_89_init_all.png
+function build_params_window(config_html) {
+    console.log(config_html);
+    var title = `${Math.floor(Math.random() * 99999)}`;
+    const windowFeatures = "left=200,top=100,width=400,height=400";
+    w=window.open("", title,windowFeatures);
+    
+    var html = `
+    <table><tr><th></th><th><th></th></th></tr>
+    ${config_html}
+    </table>
+    `;
+
+    w.document.body.innerHTML = html;
+
+}
+

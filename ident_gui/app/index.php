@@ -211,13 +211,13 @@ body,html {
         
              </div>
              </div>
-              <div class="ol-xs-12 col-md-3 col-sm-6">
+              <div class="col-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
                  <label for="threshold-energy-lelve">% > E|a</label>
            <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="10">
              </div>
              </div>
-              <div class="ol-xs-12 col-md-3 col-sm-6">
+              <div class="col-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
                  <label for="threshold-energy-lelve">Structure Similarity</label>
            <input type="text" class="form-control" id="structure_similarity" style="width:100px" value="0.8">
@@ -235,12 +235,43 @@ body,html {
                 <div class="col-xs-12 col-md-3 col-sm-6">
               <div class="mb-3">
                 <label for="activation-level">Number Features</label>
-           <input type="text" class="form-control" id="number_features" style="width:100px" value="3000">
+           <input type="text" class="form-control" id="number_features" style="width:100px" value="8000">
         
              </div>
              </div>
 
              </div>
+             <div class="row">
+               <div class="col-xs-6 col-md-6 col-sm-6">
+              <div class="mb-3">
+                <label for="activation-level">Version Time | from</label>
+                <input type="text" class="form-control" id="version_time_from" style="width:300px" value="2024-11-15 10:15:00">
+                <input type="checkbox" id="version_time_from_apply" name="apply_time" value="yes" checked disabled>
+                <label for="version_time_apply">Apply time constraint</label><br>
+             </div>
+             </div>
+               <div class="col-xs-6 col-md-6 col-sm-6">
+              <div class="mb-3">
+                <label for="activation-level">Version Time | to</label>
+                <input type="text" class="form-control" id="version_time_to" style="width:300px" value="2025-11-22 10:17:00">
+                <input type="checkbox" id="version_time_to_apply" name="apply_time" value="yes" checked disabled>
+                <label for="version_time_apply">Apply time constraint</label><br>
+             </div>
+             </div>
+             
+             </div>
+<div class="row">
+          <div class="col-xs-4 col-md-4 col-sm-4">
+              <div class="mb-3">
+                
+                <input type="checkbox" id="" name="" value="yes" checked disabled>
+                <label for="version_time_apply">Apply parallel computing.</label><br>
+             </div>
+             </div>
+             </div>
+
+
+
         </div>
             <!-- <div class="mb-3">
   <br>
