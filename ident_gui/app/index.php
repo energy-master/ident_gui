@@ -127,7 +127,7 @@ body,html {
       <div class="container-fluid"></div>
         <div class="row justify-content-left align-items-left">
           
-          <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
+          <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
 
           <!-- <div class="row">
            
@@ -283,7 +283,8 @@ body,html {
             
                                             
                                 <div class="col-auto">
-    <button type="submit" id="data-upload" class="btn btn-primary mb-3">Upload & Search</button>
+    <button type="submit" id="data-upload-only" class="btn btn-primary mb-3">Upload</button>
+    <button type="submit" id="data-upload" class="btn btn-primary mb-3" disabled>Upload & Search</button>
   </div>          
                                          
                                         </div>
@@ -304,6 +305,22 @@ body,html {
 
  
     
+ <div class="row justify-content-center align-items-center ">
+    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <p></p>
+   
+    <div class="card border-left-primary shadow h-100 py-2">
+    <div class="card-body">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="cursor:pointer" id="data-toggle">
+                                               My Data +/-</div><br>
+      <div id="data-table" style= "max-height:800px; overflow-y: scroll; display:none;"></div>
+
+    </div>
+    </div>
+    
+    </div>
+    </div>
+
 
 
     <div class="row justify-content-center align-items-center ">
@@ -497,8 +514,10 @@ body,html {
                 //BuildUserDataWindow(); 
                 //show_data_selection();
                 grab_ident_runs();
+                show_data_uploads();
                 tick_interval = 2000;
                 var play_thread_id = setInterval(grab_ident_runs, tick_interval);
+                var data_thread_id = setInterval(show_data_uploads, tick_interval);
             }
             else{
                 alert("Error. Response [404]")

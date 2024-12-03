@@ -20,7 +20,12 @@ var status_title = {
 
 param_show = false;
 run_table_show = false;
+data_table_show = true;
+
 ele = document.getElementById('run-toggle');
+
+ele_data = document.getElementById('data-toggle');
+
 console.log(ele);
 ele.addEventListener("click", function () {
     
@@ -32,6 +37,26 @@ ele.addEventListener("click", function () {
     if (run_table_show ==true) {
         hideDiv('run-table'); 
         run_table_show  = false;
+        return;
+    }
+
+   
+    
+
+});
+
+var data_table_show = false;
+
+ele_data.addEventListener("click", function () {
+    
+    if (data_table_show ==false) {
+        showDiv('data-table'); 
+        data_table_show = true;
+        return;
+    }
+    if (data_table_show ==true) {
+        hideDiv('data-table'); 
+        data_table_show  = false;
         return;
     }
 
@@ -62,6 +87,9 @@ ele.addEventListener("click", function () {
 
 el = document.getElementById('data-upload');
 el.addEventListener("click", run_ident); 
+
+el = document.getElementById('data-upload-only');
+el.addEventListener("click", run_ident_upload_only); 
 
 
 function toggle_run_data(div_id) {
@@ -175,6 +203,90 @@ function run_ident() {
 };
 
 
+function run_ident_upload_only() {
+    alert('uploading data only.')
+    el.style.color = 'red';
+    
+    var base_id = Math.floor(Math.random() * 1000);
+    var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
+    
+    waiting_run = true;
+    waiting_id = ident_id;
+    waiting_data = {
+        'run_id' : ident_id,
+        'status' : "Submitted: Waiting for server..."
+    }
+
+    var file_data = null;
+    file_data = $('#upload_file').prop('files')[0];   
+    if ((file_data == undefined)) {
+        alert('Please submit a valid file.')
+        return;
+    }
+   // console.log(file_data);
+    
+    number_features = document.getElementById('number_features').value;
+    var ele = document.getElementById('activation-level');
+    activation_energy = ele.value;
+    
+    _80_activation_energy = document.getElementById('above_e_threshold').value;
+    structure_similarity = document.getElementById('structure_similarity').value;
+    feature_version_selector = document.getElementById('feature_version_selector').value;
+    environment_selector = document.getElementById('environment_selector').value;
+    version_time_from = document.getElementById('version_time_from').value;
+    version_time_to = document.getElementById('version_time_to').value;
+
+    var form_data = new FormData();
+    
+    form_data.append('upload_file', file_data);
+    form_data.append('base_id', base_id);
+    form_data.append('ident_id', ident_id);
+    form_data.append('environment_selector', environment_selector);
+    form_data.append('feature_version_selector', feature_version_selector);
+    form_data.append('user_uid', user['user_uid']);
+    form_data.append('activation-level', activation_energy);
+    form_data.append('80-activation-level', _80_activation_energy);
+    form_data.append('number_features', number_features);
+    form_data.append('structure_similarity', structure_similarity)
+    form_data.append('version_time_from', version_time_from)
+    form_data.append('version_time_to', version_time_to)
+
+
+    alert(`Your job has been submitted - ${user['user_uid']} `); 
+    
+    // send data notes here. Can't wait below as it may take too long. Must assume data is uploaded. Maybe x check after success.
+    // audit data
+    var notes = document.getElementById('data-notes').value;
+    post_data = {
+        'user_uid': user['user_uid'],
+        'notes': notes,
+        'data_id' : base_id
+    }
+
+    notes_url = 'https://vixen.hopto.org/rs/api/v1/data/datanotes/';
+    $.post(notes_url, JSON.stringify(post_data), function (data) {
+        // console.log(data);
+    });
+
+    //alert(form_data);   
+    el.style.color = 'blue';
+    $.ajax({
+        url: '../cgi-bin/upload_data_only.php', // <-- point to server-side PHP script 
+        dataType: 'text',  // <-- what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,//'multipart/form-data',
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        
+        success: function (php_script_response) {
+            grab_ident_runs();
+            alert(php_script_response); // <-- display response from the PHP script, if any
+            // upload_data_afterrun(ident_id)
+            //alert("Your data has been uploaded and run is complete. Please access results below."); 
+        }
+        });
+};
 
 
 function rerun_ident(base_id, run_id){
@@ -302,6 +414,64 @@ function run_ident_wout_upload(base_id){
 function upload_data_afterrun(run_id){
     //load game vis
     window.open(`../game/index.php?snapshot_id=${run_id}&location=upload`,`${Math.floor(Math.random() * 99999)}`,'width=1000,height=700');
+
+}
+
+//
+
+function show_data_uploads() {
+
+        var notes_post_data = {
+              "user_uid": user.user_uid
+        }
+        notes_run_url = "https://vixen.hopto.org/rs/api/v1/data/getdatanotes";
+        $.post(notes_run_url, JSON.stringify(notes_post_data), function (data_notes) {
+            console.log(data_notes['data']);
+            build_upload_data_table(data_notes['data']);
+        });
+
+
+       
+
+    
+
+}
+
+
+
+function build_upload_data_table(upload_data) {
+    
+
+    var html = `<table class="table table-hover">`;
+
+    html += `
+        <tr class="table-success">
+        <td>data id</td>
+        <td>upload time</td>
+        <td>notes</td>
+        </tr>
+    `;
+    
+    for (var i = 0; i < upload_data.length; i++) {
+        // console.log()
+        html += `
+        <tr>
+        
+        <td>${upload_data[i]['data_id']}</td>
+        <td>${upload_data[i]['timestamp']}</td>
+         <td>${upload_data[i]['notes']}</td>
+        </tr>
+        `;
+    }
+
+
+
+    html += `</table>`;
+
+
+    var el = document.getElementById('data-table');
+    el.innerHTML = html;
+
 
 }
 
