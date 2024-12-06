@@ -130,16 +130,16 @@ if ($uploadOk == 0) {
   if (move_uploaded_file($_FILES["upload_file"]["tmp_name"], $target_file)) {
 
 
-    $search_id = "harbour_porpoise";
-    $search_id = $_POST['environment_selector'];
-    $path_to_exe = "/home/vixen/rs/dev/marlin_hp/marlin_hp/prepare_ext.py " . $ident_id . " " . $search_id . " upload " . $user_uid . " " . $activation_energy. " " . $activation_energy_80 ." " . $number_features . " " . $structure_similarity. " " . $feature_version_selector . " " .$version_time_from . " " . $version_time_to . "   &";
-    $cmd = " nohup python3 ";
+    // $search_id = "harbour_porpoise";
+    // $search_id = $_POST['environment_selector'];
+    // $path_to_exe = "/home/vixen/rs/dev/marlin_hp/marlin_hp/prepare_ext.py " . $ident_id . " " . $search_id . " upload " . $user_uid . " " . $activation_energy. " " . $activation_energy_80 ." " . $number_features . " " . $structure_similarity. " " . $feature_version_selector . " " .$version_time_from . " " . $version_time_to . "   &";
+    // $cmd = " nohup python3 ";
 
-    $cmd = $cmd . " " . $path_to_exe;
-    //echo $cmd;
-    $result = "none";
-    $result = exec($cmd);
-    echo "Run complete.";
+    // $cmd = $cmd . " " . $path_to_exe;
+    // //echo $cmd;
+    // $result = "none";
+    // $result = exec($cmd);
+    echo "Upload complete.";
     return;
     //echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded & now running";
 
