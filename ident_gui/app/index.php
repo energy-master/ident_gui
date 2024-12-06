@@ -170,7 +170,7 @@ body,html {
         
              </div>
   <div class="mb-3">
-     <!-- <label for="environment_selector">Select Target</label> -->
+      <label for="environment_selector">Select Target</label>
       <select id="environment_selector" class="form-select text-primary" aria-label="Default select example" style="width:300px">
                 
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
@@ -179,19 +179,20 @@ body,html {
              </select>  
              </div>
              <div class="mb-3">
-     <!-- <label for="environment_selector">Select Target</label> -->
+     <label for="environment_selector">Select Version</label>
       <select id="feature_version_selector" class="form-select text-primary" aria-label="Default select example" style="width:200px">
-                
+              <option value ="2_0_0/3_0_0" selected>Current Validation</option>
               <option value ="1_0_0">1.0.0</option>
               <option value ="2_0_0">2.0.0</option>
               <option value ="3_0_0">3.0.0</option>
+              <option value ="4_0_0">4.0.0</option>
               <option value ="1_0_0/2_0_0/3_0_0">1->3</option>
               <option value ="2_0_0/3_0_0">2->3</option>
               <option value ="base_noise">Base Noise</option>
               <option value ="sonar">Sonar</option>
               <option value ="2_0_0/sonar">2.0.0 Sonar</option>
               <option value ="3_0_0/sonar">3.0.0 Sonar</option>
-              <option value ="2_0_0/sonar">Current Validation</option>
+             
                
              </select>  
              </div>
@@ -214,7 +215,7 @@ body,html {
               <div class="col-xs-12 col-md-3 col-sm-6">
                <div class="mb-3">
                  <label for="threshold-energy-lelve">% > E|a</label>
-           <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="10">
+           <input type="text" class="form-control" id="above_e_threshold" style="width:100px" value="0.1">
              </div>
              </div>
               <div class="col-xs-12 col-md-3 col-sm-6">

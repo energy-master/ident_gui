@@ -2,16 +2,24 @@
 
 
 var status_title = {
-    0: 'started',
-    1: 'building data adapter',
-    2: 'data adapter already exists',
-    3: 'saving new adapter',
-    4: 'loading existing data adapter',
-    5: 'starting run',
-    11: 'starting layer three',
-    12: 'layer three complete',
-    13: 'spectrogram built & saved',
-    10 : 'run complete'
+    0: 'Server has accepted job.',
+    1: 'building data adapter for input data. This may take a while!',
+    2: 'Data adapter already exists.',
+    3: 'Saving new data adapter.',
+    4: 'Loading existing data adapter.',
+    5: 'Starting feature run.',
+    11: 'Starting decision making.',
+    12: 'Decision making complete.',
+    13: 'Spectrogram built & saved.',
+    10: 'Run complete.',
+    4.5: 'Loading bots. This may take a while!',
+    1.1: 'Downloading data file. This may take a while!',
+    1.2: 'Building data adapter.',
+    1.3: 'About to prepare marlin_data.',
+    12.1: 'Merging multiple processor threads.',
+    12.2: 'Saving game.',
+    12.3: 'Building plots.',
+    12.4: 'Saving decisions.'
 }
 
 
@@ -294,7 +302,7 @@ function rerun_ident(base_id, run_id){
     
 
 
-
+    console.log('replay');
     alert(`Rerun Job submitted for [${base_id}] [${run_id}]`)
     // var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
     var ident_id = run_id
@@ -331,6 +339,7 @@ function rerun_ident(base_id, run_id){
     form_data.append('environment_selector', environment_selector);
     form_data.append('version_time_from', version_time_from);
     form_data.append('version_time_to', version_time_to);
+    console.log(form_data);
     $.ajax({
         url: '../cgi-bin/replay.php', // <-- point to server-side PHP script 
         dataType: 'text',  // <-- what to expect back from the PHP script, if anything
@@ -351,6 +360,71 @@ function rerun_ident(base_id, run_id){
 
 
 
+
+function run_batch_wout_upload(){
+
+    base_id = "batch";
+
+
+
+    alert(`Job submitted for [${base_id}]`)
+
+    var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
+    
+    waiting_run = true;
+    waiting_id = ident_id;
+    waiting_data = {
+        'run_id' : ident_id,
+        'status' : "Submitted: Waiting for server..."
+    }
+
+    number_features = document.getElementById('number_features').value;
+
+    var ele = document.getElementById('activation-level');
+    activation_energy = ele.value;
+    _80_activation_energy = document.getElementById('above_e_threshold').value;
+    structure_similarity = document.getElementById('structure_similarity').value;
+    feature_version_selector = document.getElementById('feature_version_selector').value;
+    environment_selector = document.getElementById('environment_selector').value;
+    version_time_from = document.getElementById('version_time_from').value;
+    version_time_to = document.getElementById('version_time_to').value;
+    
+    var form_data = new FormData();
+    form_data.append('ident_id', ident_id);
+    form_data.append('user_uid', user['user_uid']);
+    form_data.append('activation-level', activation_energy);
+    form_data.append('80-activation-level', _80_activation_energy);
+    form_data.append('number_features', number_features);
+    form_data.append('structure_similarity', structure_similarity);
+    form_data.append('feature_version_selector', feature_version_selector);
+    form_data.append('environment_selector', environment_selector);
+    form_data.append('version_time_from', version_time_from);
+    form_data.append('version_time_to', version_time_to);
+    form_data.append('batch_params', batch_string);
+
+    console.log(form_data);
+    
+    $.ajax({
+        url: '../cgi-bin/run_ident_wout_upload.php', // <-- point to server-side PHP script 
+        dataType: 'text',  // <-- what to expect back from the PHP script, if anything
+        cache: false,
+        contentType: false,//'multipart/form-data',
+        processData: false,
+        data: form_data,                         
+        type: 'post',
+        
+        success: function (php_script_response) {
+            grab_ident_runs();
+            alert(php_script_response); // <-- display response from the PHP script, if any
+            // upload_data_afterrun(ident_id)
+            alert("Your data has been uploaded and run is complete. Please access results below."); 
+        }
+        });
+}
+
+
+
+
 function run_ident_wout_upload(base_id){
 
     
@@ -358,6 +432,7 @@ function run_ident_wout_upload(base_id){
 
 
     alert(`Job submitted for [${base_id}]`)
+
     var ident_id = base_id + "_" + Math.floor(Math.random() * 1000); // 213;
     
     waiting_run = true;
@@ -426,7 +501,7 @@ function show_data_uploads() {
         }
         notes_run_url = "https://vixen.hopto.org/rs/api/v1/data/getdatanotes";
         $.post(notes_run_url, JSON.stringify(notes_post_data), function (data_notes) {
-            console.log(data_notes['data']);
+           // console.log(data_notes['data']);
             build_upload_data_table(data_notes['data']);
         });
 
@@ -437,7 +512,28 @@ function show_data_uploads() {
 
 }
 
+function data_check_click(data_id) {
+    
+    data_check_state[data_id] = !data_check_state[data_id];
+    // console.log(data_check_state);
+    batch_string = "";
+    number_batch = 0;
+    for (const [key, value] of Object.entries(data_check_state)) {
+        if (value == true) {
+            number_batch += 1;
+            var run_id = `${key}_${Math.floor(Math.random() * 99999)}`;
+            batch_string += ` ${run_id}`;
+        }
+    }
 
+    batch_string = `${number_batch} ${batch_string}`;
+    console.log(batch_string);
+
+}
+
+var data_check_state = {};
+number_batch = 0;
+batch_string = "";
 
 function build_upload_data_table(upload_data) {
     
@@ -445,21 +541,48 @@ function build_upload_data_table(upload_data) {
     var html = `<table class="table table-hover">`;
 
     html += `
-        <tr class="table-success">
+        <tr class="table">
         <td>data id</td>
         <td>upload time</td>
         <td>notes</td>
+        <td></td>
         </tr>
     `;
     
     for (var i = 0; i < upload_data.length; i++) {
-        // console.log()
+        // // console.log()
+        // var base_id = upload_data[i]['data_id'].split('_')[0];
+        var run_html = `<button class="btn btn-primary btn-sm" onclick="run_ident_wout_upload('${upload_data[i]['data_id']}')">Run Ident</button>`;
+        var check_box_html = "";
+          check_box_html = `
+                    <input type="checkbox"  value="${upload_data[i]['data_id']}" onclick = "data_check_click('${upload_data[i]['data_id']}') " >
+                 `;
+        // for (const state in data_check_state) {
+            
+        //     if (state == true){
+        //         check_box_html = `
+        //             <input type="checkbox"  value="${upload_data[i]['data_id']}" onclick = "data_check_click('${upload_data[i]['data_id']}') checked">
+        //          `;
+        //     }
+        //     else {
+        //          check_box_html = `
+        //             <input type="checkbox"  value="${upload_data[i]['data_id']}" onclick = "data_check_click('${upload_data[i]['data_id']}')">
+        //          `;
+        //     }
+        // }
+        if (data_check_state[upload_data[i]['data_id']]) {
+             check_box_html = `
+                    <input type="checkbox"  value="${upload_data[i]['data_id']}" onclick = "data_check_click('${upload_data[i]['data_id']}')" checked>
+                 `;
+        }
+        
         html += `
         <tr>
-        
+        <td>${check_box_html}</td>
         <td>${upload_data[i]['data_id']}</td>
         <td>${upload_data[i]['timestamp']}</td>
          <td>${upload_data[i]['notes']}</td>
+         <td> ${run_html} </td>
         </tr>
         `;
     }
@@ -605,7 +728,7 @@ function build_ident_run_table(data, notes = []) {
            
                 
                     html_view = `<button class="btn btn-primary btn-sm" onclick="upload_data_afterrun('${data[i]['run_id']}')">View</button>`;
-                    results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='results.json'>
+                    results_html = `<a href="https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${data[i]['run_id']}.json"  download='${data[i]['run_id']}.json'>
                 
                 [results]
             </a>`;
