@@ -298,16 +298,36 @@ function build_filter_page() {
         <div class="col-12">
         
             <div id="nav-title-working-window">Acoustic Data Location</div>
-            <select class="form-select mb-3" aria-label="Data Location" id = "location_select">
-                <option selected value="">Select Acoustic Data Location</option>
-                <option value="netley">Netley Test - Debug</option>   
-                <option value="so1">Sussex Observatory Test - Debug</option>
-                <option value="so1_server">Sussex Observatory [1] Product</option>
-                <option value="brixham">Brixham Product</option>
-                <option value="67149847">HP [67149847]</option>
-                 
-            </select>
+           `;
+    
+    html += `
+             <select class="form-select mb-3" aria-label="Data Location" id = "location_select">
+              <option selected value="">Select Acoustic Data Location</option>
+           `;
+    // alert(user.user_uid);
+   for (const [key, value] of Object.entries(marlin_locations)) {
+       var leg_users = location_permissions[key];
+       console.log(leg_users);
+       console.log(user.user_uid);
+       if (leg_users.includes(user.user_uid) ){
+          
+          html +=  `<option  value="${key}">${value}</option>`;
+       }
+     
+       
+        }
+            //     <option selected value="">Select Acoustic Data Location</option>
+            //     <option value="netley">Netley Test - Debug</option>   
+            //     <option value="so1">Sussex Observatory Test - Debug</option>
+            //     <option value="so1_server">Sussex Observatory [1] Product</option>
+            //     <option value="brixham">Brixham Product</option>
+            //     <option value="67149847">HP [67149847]</option>
 
+            html += `
+             </select>`;
+
+    
+html += `
 
   </div>
   `;
@@ -444,6 +464,9 @@ html += `
             t_el = document.getElementById('end_time_input');
             t_el.value = "2023-07-11 13:10:00 UTC";
         }
+
+        
+
     };
 
 

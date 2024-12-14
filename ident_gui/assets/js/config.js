@@ -79,7 +79,8 @@ location_keys = {
     'so1': 'Sussex Observatory 1',
     'so1_server': "SO1 Server",
     'brixham': 'Brixham',
-    '67149847' : 'HP [67149847]'
+    '67149847' : 'HP [67149847]',
+    '8639' : 'NU | Bermuda [8639]'
 
 };
 
@@ -90,7 +91,8 @@ location_keys_r = {
     'so1': 'so1',
     'so1_server': 'so1_server',
     'Brixham': 'brixham',
-    'HP [67149847]': '67149847'
+    'HP [67149847]': '67149847',
+    'NU | Bermuda [8639]' : '8639'
 
 };
 
@@ -100,7 +102,8 @@ location_geo_lat = {
     'so1': 50.719344,
     'so1_server': 50.719344,
     'brixham': 50.417133,
-    '67149847': 55.66
+    '67149847': 55.66,
+     '8639' :55.66 
     
 
 };
@@ -111,7 +114,9 @@ location_geo_long = {
     'so1': -0.548028,
     'so1_server': -0.548028,
     'brixham': -3.5145,
-    '67149847': -4.972341
+    '67149847': -4.972341,
+     '8639': -4.972341,
+    
 
 };
 
@@ -167,6 +172,26 @@ var track_interval = 60000;
 // interpolate time vars
 var inter_delta_t = 30; // seconds
 
+var marlin_locations = {
+
+    'netley' : 'Netley Test - Debug',
+    'so1': 'Sussex Observatory Test - Debug',
+    'so1_server': 'Sussex Observatory [1]',
+    'brixham': 'Brixham',
+    '67149847': 'HP [67149847]',
+    '8639' : ' NU | Bermuda'
+    
+}
+
+var location_permissions = {
+    'netley': ['0001vixen'],
+    'so1': ['0001vixen'],
+    'so1_server': ['0001vixen'],
+    'brixham': ['0001vixen'],
+    '67149847': ['0001vixen'],
+    '8639' : ['0001vixen']
+    
+}
 
 
 // colormaps
