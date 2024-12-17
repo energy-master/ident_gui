@@ -94,7 +94,14 @@ ToolbarClick('info-data');
 
 
 el = document.getElementById("sample-upload");
-el.onclick = function(){ToolbarClick('sample-upload')};
+el.onclick = function () { ToolbarClick('sample-upload') };
+
+
+
+//study-connect
+el = document.getElementById("study-connect");
+el.onclick = function () { ToolbarClick('data-labels') };
+
 function ToolbarClick(data_type) {
    
    
@@ -125,6 +132,18 @@ function ToolbarClick(data_type) {
         
     
     
+    }
+    if (data_type == "data-labels") {
+
+            var window_id = createWindow("My Labels", "label-data");
+            var el = document.getElementById(window_id);
+            el.style.width = '60vw';
+            el.style.top = '10vw';
+            el.style.left = '10vw';
+             el.style.height = '400px';
+            var content_id = `${window_id}_content`;
+            BuildAppDataLabels(content_id);
+
     }
    
     if (data_type == "study-label") {

@@ -1196,17 +1196,16 @@ function ShowUpload(target_window_id){
    <div class="container">
   
     <div class="mb-3">
-  <label for="formFile" class="">file format [ _YYYYMMDD_HHMMSS_000.wav ]. Must be over 60s.</label>
+  <label for="formFile" class="form-label">Default file input example</label>
   <input class="form-control" type="file" id="upload_file" name="upload_file">
     </div>
     
      <div class="mb-3">
- <input  id = "upload_location_string" class="form-control" type="text" placeholder="location id [string]" value="">
-
+ <input  id = "" class="form-control" type="text" placeholder="10000" value="10000">
             
      </div>
      <div class="col-auto">
-    <button type="submit" id="data-upload" class="btn btn-primary mb-3">Upload to MARLIN</button>
+    <button type="submit" id="data-upload" class="btn btn-primary mb-3">Run Data</button>
   </div>
 
 
@@ -1220,27 +1219,24 @@ function ShowUpload(target_window_id){
     el.innerHTML = html;
 
     el = document.getElementById('data-upload');
-    el.onclick = function () {
-        document.getElementById('data-upload').disabled = true;
-        
+    el.onclick = function(){
+        var ident_id = 213;//Math.floor(Math.random() * 1000)
         var file_data = $('#upload_file').prop('files')[0];   
-        var upload_location_string = document.getElementById('upload_location_string').value;
         var form_data = new FormData();                  
         form_data.append('upload_file', file_data);
-        form_data.append('upload_location_string', upload_location_string);
-        form_data.append('user_uid', user.user_uid);
+        form_data.append('ident_id', ident_id);
+        //alert(form_data);                             
         $.ajax({
-            url: 'https://marlin-network.hopto.org/cgi-bin/marlin_data_connect.php', // <-- point to server-side PHP script 
+            url: 'cgi-bin/upload_data.php', // <-- point to server-side PHP script 
             dataType: 'text',  // <-- what to expect back from the PHP script, if anything
             cache: false,
             contentType: false,//'multipart/form-data',
             processData: false,
             data: form_data,                         
             type: 'post',
-            success: function(php_script_response){ 
-                document.getElementById('data-upload').disabled = false;
+            success: function(php_script_response){
                 alert(php_script_response); // <-- display response from the PHP script, if any
-               
+                upload_data_afterrun(ident_id)
             }
          });
     };
@@ -1251,15 +1247,7 @@ function upload_data_afterrun(run_id){
     window.open(`game/index.php?snapshot_id=${run_id}&location=upload`,`${Math.floor(Math.random() * 99999)}`,'width=1000,height=700');
 
 }
-// this is called on update *** live ***
-    function BuildAppDataLabels(target_window_id) {
-        fetchSignatures().then((data) => {
-            //console.log(data);
-            console.log(target_window_id);
-            build_signature_table(data, target_window_id);
-
-        })
-    }
+    // this is called on update *** live ***
     function BuildAppDataAcoustic(target_window_id) {
 
         label_data_download().then((data) => {
@@ -3147,7 +3135,7 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
 var signature_data = {};
 
-function build_signature_table(data, t_win_id) {
+function build_signature_table(data) {
     
     signature_data = {};
 
@@ -3251,11 +3239,8 @@ function build_signature_table(data, t_win_id) {
                
             
             html += `
-            <!--<td>
+            <td>
                <td> <button type="button"class="btn btn-success" onclick="spawn_sig('${data[i]['signature_id']}')" disbled>Summary</button></td>
-            </td>-->
-               <td>
-               <td> <button type="button"class="btn btn-success" onclick="spawn_sig('${data[i]['signature_id']}')" disbled>Learn</button></td>
             </td>
 
 
@@ -3274,8 +3259,8 @@ function build_signature_table(data, t_win_id) {
             </tbody>
         </table>`;
     
-
-        var el = document.getElementById(t_win_id);
+    
+        var el = document.getElementById('signature_table');
         el.innerHTML = html;
     
     

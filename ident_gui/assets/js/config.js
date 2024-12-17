@@ -190,8 +190,10 @@ var location_permissions = {
     'brixham': ['0001vixen'],
     '67149847': ['0001vixen'],
     '8639' : ['0001vixen']
-    
 }
+
+
+
 
 
 // colormaps
