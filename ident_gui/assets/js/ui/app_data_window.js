@@ -238,6 +238,12 @@ function BuildAppDataSetup() {
 
 function ShowAppData() {
 
+    if (location_keys.hasOwnProperty(application_data.application_setup.setup_data.listener_location)) {
+    }
+    else {
+        location_keys[application_data.application_setup.setup_data.listener_location] = application_data.application_setup.setup_data.listener_location;
+    }
+
     var html = `${location_keys[application_data.application_setup.setup_data.listener_location]} | ${application_data.application_setup.setup_data.data_start_time}  <i class="fas fa-arrow-circle-right"></i> ${application_data.application_setup.setup_data.data_end_time} | Radius: ${application_data.application_setup.setup_data.track_radius} m`;
 
     var el = document.getElementById("loc-data");

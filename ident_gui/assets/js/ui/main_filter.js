@@ -109,7 +109,10 @@ function deselect_all_vessels(){
 }
 
 
-
+/*
+*
+* START SEARCH
+*/
 
 function openSearch() {
     // alert("sfs");
@@ -166,17 +169,21 @@ function openSearch() {
     console.log(vessels_all);
     var filtered_epochs = runFilterLocal(location_value, post_density, density_logic ,vessels_all, filter_start_time, filter_end_time, mmsi_search).then((data => {
         
-    //console.log(data);
+        //console.log(data);
         filtered_data = new DataSearch(data, location_value, location, post_range, filter_start_time, filter_end_time);
         buildFilterDataWindow();
         hide_loader_div('fetch-analyse');
-        
+    
     }));
 
 }
 
 
-
+/*
+*
+*   MAIN FILTER CONTROL
+*
+*/
 function build_filter_page() {
     var html = "";
     html += `
@@ -367,7 +374,7 @@ html += `
             <span class="w3-tag w3-blue w3-large" id="v-70" onclick="toggleVessel(70)" style="cursor:pointer">Cargo</span>
             <span class="w3-tag w3-blue w3-large" id="v-37" onclick="toggleVessel(37)" style="cursor:pointer">Pleasure Craft</span>
             <span class="w3-tag w3-blue w3-large" id="v-36" onclick="toggleVessel(36)" style="cursor:pointer">Sailing</span>
-            <span class="w3-tag w3-grey w3-large" style="cursor:pointer" >Harbour Porpoise</span>
+          
            
         </div>
         <br>
@@ -590,7 +597,7 @@ function fetch_data(location_value, start_time, end_time, selected_epoch_id, nam
     ///window.location.href = href;
     // 2. set selected epoch
     filtered_data.set_selected_epoch(selected_epoch_id);
-    alert(user.name);
+    // alert(user.name);
     // 3. run 
     // console.log(`Downloading data: ${location_value}, ${start_time}, ${end_time}`);
     //filter_data_download_analyse(location_value, start_time, end_time);
@@ -692,7 +699,7 @@ function show_data_selection(){
 
 /*
 *
-*   Build main filter data window
+*   Build main filtered data window
 *
 */
 

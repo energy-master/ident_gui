@@ -40,6 +40,13 @@ const runFilter = (location, density, v_types) => {
     }); // promise
 }
 
+
+/*
+*
+*   !!!! Run main filter !!!!
+*
+*/
+
 const runFilterLocal = (location, density, density_logic, v_types, filter_start_time, filter_end_time, mmsi_search) => {
 
     console.log("filter version: 2.5");
@@ -146,34 +153,11 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                     return parseInt(x); 
 
                 });
-                //console.log(epoch_vessels);
-                //return (0);
-
-                // console.log(v_types);
-                // console.log(epoch_vessels);
-
-                // if (!Number.isNaN(value)) {
-                // console.log('This string is numeric')
-                // } else {
-                // console.log('This string is not numeric')
-                // }
-
+                
 
 
 
                 var activities = epochs[i].activity;
-
-                // if (mmsi != null) {
-                //     if (mmsi in epoch_mmsis) {
-                        
-                //     }
-
-
-
-
-                // }
-
-                
                 if ((includesAny(v_types, epoch_vessels)) && (mmsi_search==null)) {
                     //console.log('here');
                     for (var j = 0; j < epochs[i].vessels.length; j++){
@@ -198,7 +182,7 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                     var number_valid = 0;
                     
                     for (var j = 0; j < activities.length; j++){
-
+                        console.log(activities)
                         //unique vessels only
                         var mmsis = [];
                         var unique_vessels = [];
@@ -310,8 +294,6 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                         valid_epochs.push(epochs[i]);
                     }
 
-                   
-
                 } // if correct vessels
                 if (v_types.length == 0) {
                     var add_epoch = false;
@@ -322,10 +304,12 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                             activities[j]['valid'] = true;
                             number_valid++;
                         }
+
                         activities[j]['unique_vessels'] = 0;
                         activities[j]['number_dense_vessels'] = 0;
                        
                     }
+
                     epochs[i]['unique_vessels'] = epoch_vessels_unique;
                     epochs[i]['unique_number_vessels'] = epoch_number_unique_vessels;
                     if (add_epoch) {
@@ -338,17 +322,23 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                 }
                 if (mmsi_search != null) {
                     var add_epoch = false;
-                    console.log("searching mmsi");
+                    console.log("searching mmsi: " + mmsi_search);
                     var activity_unique_vessels = [];
                     for (var j = 0; j < activities.length; j++) {
                         for (var k = 0; k < activities[j].vessels.length; k++) {
 
                             if (activities[j].vessels[k].mmsi == mmsi_search) {
-                                activity_unique_vessels.push(activities[j].vessels[k]);
-                                add_epoch = true;
-                                epochs[i]['valid'] = true;
-                                activities[j]['valid'] = true;
-                                number_valid++;
+                                console.log('found');
+                                console.log(activities[j].vessels[k].mmsi);
+                                console.log(activities[j].vessels[k].distance);
+
+                                if (activities[j].vessels[k].distance < filter_distance){
+                                    activity_unique_vessels.push(activities[j].vessels[k]);
+                                    add_epoch = true;
+                                    epochs[i]['valid'] = true;
+                                    activities[j]['valid'] = true;
+                                    number_valid++;
+                                }
                             }
                        
 
