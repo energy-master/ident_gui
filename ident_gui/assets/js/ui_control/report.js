@@ -56,7 +56,6 @@ function show_entropy_report(analysis_id){
 
 }
 
-
 function build_entropy_plot(times, energies){
 
     var title = `tile_${Math.floor(Math.random() * 99999)}`;
@@ -110,7 +109,6 @@ function build_entropy_plot(times, energies){
 
 }
 
-
 function show_entropy_f_report(analysis_id){
 
     var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/entropy_freq_profile_${analysis_id}.csv`
@@ -126,7 +124,6 @@ function show_entropy_f_report(analysis_id){
         });
 
 }
-
 
 function build_entropy_f_plot(times, energies){
 
@@ -181,8 +178,6 @@ function build_entropy_f_plot(times, energies){
 
 }
 
-
-
 function show_frequency_report(analysis_id) {
     var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/frequency_profile_${analysis_id}.csv`
     console.log(url);
@@ -209,7 +204,6 @@ function show_frequency_temporal_report(analysis_id){
 
 
 }
-
 
 function build_line_plot(times, energies, plot_title){
 
@@ -263,6 +257,7 @@ function build_line_plot(times, energies, plot_title){
         });
 
 }
+
 function build_multiple_plot(times, data, plot_title){
 
     var title = `tile_${Math.floor(Math.random() * 99999)}`;
@@ -408,17 +403,17 @@ function show_report_downloads(calling_window_id){
     <tr>
     <td>
     <a href="${data_href}" type='text/csv' download='ss_data.csv'><button  class="action-btn">
-<i class="fas fa-file-download"></i>
+<i class="fas fa-file-download" style="color:blue;"></i>
 </button></a>
 </td>
 <td>
     <a href="${application_data.track_analysis.audio_file_url}"  download='custom_wav.wav'><button  class="action-btn">
-<i class="fas fa-file-download"></i>
+<i class="fas fa-file-download" style="color:blue;"></i>
 </button></a>
 </td>
 <td>
     <a href="${application_data.track_analysis.mp3_file_url}" download='custom_mp3.mp3'><button  class="action-btn">
-<i class="fas fa-file-download"></i>
+<i class="fas fa-file-download" style="color:blue;" ></i>
 </button></a>
 </td>
 </tr>
@@ -429,4 +424,32 @@ function show_report_downloads(calling_window_id){
 
 var el = document.getElementById(`download_${calling_window_id}`);
 el.innerHTML = html;
+}
+
+
+function show_dbpower_spectrum(analysis_id) {
+    
+    var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/dbpowerprofile_${analysis_id}.png`;
+    var title = `tile_${Math.floor(Math.random() * 99999)}`;
+    //var title = `${location} | ${time_start} --> ${time_end}`;
+    //var title_s = "Spectrogram"
+    const windowFeatures = "left=200,top=400,width=800,height=400";
+    var w = window.open(url, title, windowFeatures);
+
+  
+
+}
+
+
+function show_power_spectrum(analysis_id) {
+
+  
+
+    var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/powerprofile_${analysis_id}.png`;
+    var title = `tile_${Math.floor(Math.random() * 99999)}`;
+    //var title = `${location} | ${time_start} --> ${time_end}`;
+    //var title_s = "Spectrogram"
+    const windowFeatures = "left=400,top=600,width=800,height=400";
+    const w2 = window.open(url, title, windowFeatures);
+
 }

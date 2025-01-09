@@ -1832,13 +1832,18 @@ function gis_study_select(time_ms) {
                 <tr>
                  <td>
                 
-                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_frequency_report('${analysis_id}')">
-                <i class="fas fa-download fa-sm text-white-50"></i><span> Static F - P Study </span>
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_dbpower_spectrum('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Power Spectrum </span>
+                </div>
+
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_power_spectrum('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Power Spectrum </span>
                 </div>
                   
                 
                 </td>
                 </tr>
+                <!--
                 <tr>
                  <td>
                 
@@ -1849,6 +1854,7 @@ function gis_study_select(time_ms) {
                 
                 </td>
                 </tr>
+                -->
                 <!--
                 <tr>
                  <td>
