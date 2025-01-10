@@ -974,11 +974,58 @@ function BuildVesselData() {
                 
                 html += `
                 <div class="center-message">
-                    <table><tr id="">
+                <table>
+                <tr>
+                    <td>
+            <label>min frequency (Hz)</label>
+            <input  id = "report_min_f" class="form-control" type="text" placeholder="0" value="0">
+
+
+     
+                    </td>
+                      <td>
+
+            <label>max frequency (Hz)</label>
+            <input id = "report_max_f" class="form-control" type="text" placeholder="1000" value="1000">
+
+
+
+                    </td>
+                </tr>
+                 <tr>
+                    <td>
+            <label>FFT window size (int)</label>
+            <input  id = "report_windowsize" class="form-control" type="text" placeholder="2048" value="2048">
+
+
+
+                    </td>
+                     
+                </tr>
+                 <tr>
+                    <td>
+            <label>custom time start (s)</label>
+            <input  id = "report_timestart" class="form-control" type="text" placeholder="-1" value="-1">
+
+
+
+                    </td>
+                      <td>
+
+            <label>custom time end (s)</label>
+            <input id = "report_timeend" class="form-control" type="text" placeholder="30" value="30">
+
+
+
+                    </td>
+                </tr>
+
+
+                <tr id="">
             
 
                 
-                <td>
+                <td colspan="2">
                
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
@@ -1763,8 +1810,12 @@ function gis_study_select(time_ms) {
         var post_data = {
             'source_files': snap_ids,//.slice(0,2),
             'analysis_id': analysis_id,
-            'report_min_f' : 20,
-            'report_max_f' : 1000
+            'report_min_f': 20,
+            'report_max_f': 1000,
+            'window_size': 2048,
+            'start_time': 0,
+            'end_time': 30,
+            'location': application_data.application_setup.setup_data.listener_location
         }
 
 
@@ -1833,11 +1884,15 @@ function gis_study_select(time_ms) {
                  <td>
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_dbpower_spectrum('${analysis_id}')">
-                <i class="fas fa-download fa-sm text-white-50"></i><span> Power Spectrum </span>
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Power Spectrum (log) </span>
                 </div>
 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_power_spectrum('${analysis_id}')">
                 <i class="fas fa-download fa-sm text-white-50"></i><span> Power Spectrum </span>
+                </div>
+
+                <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="show_waveform('${analysis_id}')">
+                <i class="fas fa-download fa-sm text-white-50"></i><span> Waveform </span>
                 </div>
                   
                 

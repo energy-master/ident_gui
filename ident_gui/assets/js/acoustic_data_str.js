@@ -36,7 +36,7 @@ class AcousticData{
             var snap = this.snapshots[this.snapshot_ids[i]];
             //console.log(snap);
             var snap_start_t = snap.timeframe_start_ms;
-            if ((snap_start_t > start_time_ms) && (snap_start_t < end_time_ms)){
+            if ((snap_start_t >= start_time_ms) && (snap_start_t < end_time_ms)){
                 valid_ids.push(this.snapshot_ids[i]);
             }
         }

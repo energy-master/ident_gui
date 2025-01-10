@@ -453,3 +453,16 @@ function show_power_spectrum(analysis_id) {
     const w2 = window.open(url, title, windowFeatures);
 
 }
+
+function show_waveform(analysis_id) {
+
+
+
+    var url = `https://vixen.hopto.org/rs/ident_app/ident/brahma/report/waveform_${analysis_id}.png`;
+    var title = `tile_${Math.floor(Math.random() * 99999)}`;
+    //var title = `${location} | ${time_start} --> ${time_end}`;
+    //var title_s = "Spectrogram"
+    const windowFeatures = "left=100,top=200,width=700,height=300";
+    const w2 = window.open(url, title, windowFeatures);
+
+}
