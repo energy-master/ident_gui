@@ -28,15 +28,16 @@ class AcousticData{
 
     get_snapshots_for_timeframe(start_time_ms, end_time_ms){
 
-
+        
         var valid_ids = [];
         var valid_snapshots = [];
 
         for (var i=0; i<this.snapshot_ids.length; i++){
             var snap = this.snapshots[this.snapshot_ids[i]];
-            //console.log(snap);
+            
             var snap_start_t = snap.timeframe_start_ms;
-            if ((snap_start_t >= start_time_ms) && (snap_start_t < end_time_ms)){
+            if ((snap_start_t >= start_time_ms) && (snap_start_t < end_time_ms)) {
+                console.log(snap);
                 valid_ids.push(this.snapshot_ids[i]);
             }
         }

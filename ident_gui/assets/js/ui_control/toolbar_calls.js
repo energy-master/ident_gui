@@ -9,7 +9,7 @@ BuildToolbar();
 
 
 function BuildToolbar() {
-   
+
     var html = `
     
     
@@ -19,7 +19,8 @@ function BuildToolbar() {
     <div class="list-title" href="#"><i class="fas fa-arrows-alt"></i></div>
 
         <a  href="#"><i class="fa fa-home"></i></a>
-        <a href="#" id="search-data"  onclick="show_data_selection()" ><i class="fas fa-search fa-xs"></i></a>
+        <!--<a href="#" id="search-data"  onclick="show_data_selection()" ><i class="fas fa-search fa-xs"></i></a>-->
+        <a href="#" id="search-data"><i class="fas fa-search"></i></a>
         <a href="#" id="load-data"><i class="fas fa-upload"></i></a>
         <a href="#" id="acoustic-data"><i class="fas fa-headphones-alt"></i></a>
         <a href="#" id="target"><i class="fas fa-bullseye"></i></a>
@@ -30,7 +31,7 @@ function BuildToolbar() {
         <a href="#" id="study-report"><i class="fas fa-file"></i></a>
         <a href="#" id="info-data"><i class="fas fa-info-circle"></i></a>
         <a href="#" id="save-nav"><i class="fas fa-save"></i></a>
-         <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
+        <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
  
     </div>
     
@@ -48,9 +49,9 @@ window_tracker = {};
 
 var setup_action_button = document.getElementById("load-data");
 setup_action_button.onclick = function () {
-    
+
     var result = Load();
-    
+
 
 };
 
@@ -60,10 +61,15 @@ setup_action_button.onclick = function () {
 
 var setup_action_button = document.getElementById("save-nav");
 setup_action_button.onclick = function () {
-    
+
     var result = application_data.Save("");
 
 };
+
+
+
+el = document.getElementById("search-data");
+el.onclick = function () { ToolbarClick('search-data') };
 
 
 el = document.getElementById("study-report");
@@ -79,15 +85,15 @@ el.onclick = function () { ToolbarClick('study-label') };
 
 
 el = document.getElementById("study-tags");
-el.onclick = function(){ToolbarClick('study-tags')};
+el.onclick = function () { ToolbarClick('study-tags') };
 
 
 el = document.getElementById("target");
-el.onclick = function(){ToolbarClick('target')};
+el.onclick = function () { ToolbarClick('target') };
 
 
 el = document.getElementById("info-data");
-el.onclick = function(){ToolbarClick('info-data')};
+el.onclick = function () { ToolbarClick('info-data') };
 ToolbarClick('info-data');
 // el = document.getElementById("sample-upload");
 // el.onclick = function(){ToolbarClick('sample-upload')};
@@ -103,49 +109,47 @@ el = document.getElementById("study-connect");
 el.onclick = function () { ToolbarClick('data-labels') };
 
 function ToolbarClick(data_type) {
-   
-   
+
+
     // create window
     if (data_type == "acoustic-data") {
 
 
-        if ("acoustic-data" in window_tracker)
-        {
-            
+        if ("acoustic-data" in window_tracker) {
+
             var window_id = window_tracker['acoustic-data'];
             console.log('acoustic already built' + window_id);
             showWindow(window_id);
             BuildAppDataAcoustic(`${window_id}_content`);
         }
-        else
-        {
+        else {
             var window_id = createWindow("Acoustic Data", "acoustic-data");
             var el = document.getElementById(window_id);
             el.style.width = '60vw';
             el.style.top = '10vw';
             el.style.left = '10vw';
-             el.style.height = '300px';
+            el.style.height = '300px';
             var content_id = `${window_id}_content`;
             BuildAppDataAcoustic(content_id);
-             
+
         }
-        
-    
-    
+
+
+
     }
     if (data_type == "data-labels") {
 
-            var window_id = createWindow("My Labels", "label-data");
-            var el = document.getElementById(window_id);
-            el.style.width = '60vw';
-            el.style.top = '10vw';
-            el.style.left = '10vw';
-             el.style.height = '400px';
-            var content_id = `${window_id}_content`;
-            BuildAppDataLabels(content_id);
+        var window_id = createWindow("My Labels", "label-data");
+        var el = document.getElementById(window_id);
+        el.style.width = '60vw';
+        el.style.top = '10vw';
+        el.style.left = '10vw';
+        el.style.height = '400px';
+        var content_id = `${window_id}_content`;
+        BuildAppDataLabels(content_id);
 
     }
-   
+
     if (data_type == "study-label") {
         var window_id = createWindow("Study Label", "study-label");
         var el = document.getElementById(window_id);
@@ -186,10 +190,10 @@ function ToolbarClick(data_type) {
         el.style.height = '15vw';
         el.style.top = '15vw';
         el.style.left = '15vw';
-      
+
         var content_id = `${window_id}_content`;
         ShowUpload(content_id);
-        
+
     }
 
     if (data_type == "study-report") {
@@ -201,26 +205,39 @@ function ToolbarClick(data_type) {
         el.style.left = '16vw';
         var content_id = `${window_id}_content`;
         BuildReportStudy(content_id);
-        
+
     }
 
     if (data_type == "info-data") {
-        
+
         var window_id = createWindow("Information", "");
         var el = document.getElementById(window_id);
         el.style.bottom = '0px';
         el.style.right = '0px';
         el.style.width = '400px';
         el.style.height = '200px';
-       
-        
+
+
         var content_id = `${window_id}_content`;
         BuildInfoWindow(content_id);
-        
+
     }
 
- 
+    if (data_type == "search-data") {
+
+        var window_id = createWindow("Data Query", "");
+        var el = document.getElementById(window_id);
+        el.style.top = '100px';
+        el.style.left = '150px';
+        el.style.width = '900px';
+        el.style.height = '700px';
+        var content_id = `${window_id}_content`;
+        BuildSearchWindow(content_id);
+
+    }
+
+
+
+
 }
-
-
 

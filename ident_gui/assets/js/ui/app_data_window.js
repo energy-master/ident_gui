@@ -963,6 +963,189 @@ function BuildVesselData() {
         el.innerHTML = html;
     }
 
+function BuildSearchWindow(content_id) {
+       
+    html = `
+    <form>
+    <br>
+    <div class="container">
+     
+        <div class = "row">
+           <div class="col-6">
+
+           <h4>Data Query</h4>
+           </div>
+        </div>
+      
+        <div class="row">
+        <div class="col-12">
+          
+           `;
+
+    html += `
+    <br>
+
+             <select class="form-select mb-3" aria-label="Data Location" id = "location_select">
+              <option selected value="">Select Acoustic Data Location</option>
+           `;
+    // alert(user.user_uid);
+    for (const [key, value] of Object.entries(marlin_locations)) {
+        var leg_users = location_permissions[key];
+        console.log(leg_users);
+        console.log(user.user_uid);
+        if (leg_users.includes(user.user_uid)) {
+
+            html += `<option  value="${key}">${value}</option>`;
+        }
+
+
+    }
+    //     <option selected value="">Select Acoustic Data Location</option>
+    //     <option value="netley">Netley Test - Debug</option>   
+    //     <option value="so1">Sussex Observatory Test - Debug</option>
+    //     <option value="so1_server">Sussex Observatory [1] Product</option>
+    //     <option value="brixham">Brixham Product</option>
+    //     <option value="67149847">HP [67149847]</option>
+
+    html += `
+             </select>`;
+
+
+    html += `
+
+  </div>
+  `;
+
+    var focus_start = "";
+    var focus_end = "";
+
+
+
+    html += `
+  </div>
+
+        <div class="row">
+         <div class="col-12">
+            
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Start Time" aria-label="Start Time" value="2019-12-13 12:50:00 UTC" id="start_time_input">
+            <span class="input-group-text">-</span>
+            <input type="text" class="form-control" placeholder="End Time" aria-label="End Time" value="2019-12-13 13:20:00 UTC" id="end_time_input">
+            </div>
+            </div>
+
+</div>
+
+<div class="row">
+<div class="col-12">
+
+        <div class="tags">
+            <span class="w3-tag w3-blue w3-large" id="v-30" onclick="toggleVessel(30)" style="cursor:pointer">Fishing </span>
+            <span class="w3-tag w3-blue w3-large" id="v-40" onclick="toggleVessel(40)" style="cursor:pointer">High Speed Craft</span>
+            <span class="w3-tag w3-blue w3-large" id="v-50" onclick="toggleVessel(50)" style="cursor:pointer">Pilot Vessels</span>
+            <span class="w3-tag w3-blue w3-large" id="v-52" onclick="toggleVessel(52)" style="cursor:pointer">Tug</span>
+            <span class="w3-tag w3-blue w3-large" id="v-53" onclick="toggleVessel(53)" style="cursor:pointer">Port Tender</span>
+            <span class="w3-tag w3-blue w3-large" id="v-60" onclick="toggleVessel(60)" style="cursor:pointer">Passenger</span>
+            <span class="w3-tag w3-blue w3-large" id="v-55" onclick="toggleVessel(55)" style="cursor:pointer">Law Enforcement</span>
+            <span class="w3-tag w3-blue w3-large" id="v-33" onclick="toggleVessel(33)" style="cursor:pointer">Dredging or Underwater Ops</span>
+            <span class="w3-tag w3-blue w3-large" id="v-70" onclick="toggleVessel(70)" style="cursor:pointer">Cargo</span>
+            <span class="w3-tag w3-blue w3-large" id="v-37" onclick="toggleVessel(37)" style="cursor:pointer">Pleasure Craft</span>
+            <span class="w3-tag w3-blue w3-large" id="v-36" onclick="toggleVessel(36)" style="cursor:pointer">Sailing</span>
+          
+           
+        </div>
+        <br>
+          <span class="w3-tag w3-green w3-large" id="v-add" onclick="select_all_vessels()" style="cursor:pointer">Select All</span>
+        <span class="w3-tag w3-red w3-large" id="v-remove" onclick="deselect_all_vessels()" style="cursor:pointer">Remove All</span>
+
+</div>
+
+</div>
+<br>
+        <div class="row">
+       
+          <div class="col-3">
+          <label for="mmsi_search">Vessel MMSI </label>
+            <input size="10" type="text" class="form-control mb-3" id="mmsi_search" placeholder="MMSI" value = "000000000">
+              
+          
+            </div>
+            </div>
+
+        <div class="row">
+          <div class="col-3">
+            <label for="search_range">Distance from Hydrophone (m) </label>
+            <input size="10" type="text" class="form-control mb-3" id="search_range" placeholder="Search Range" value = "1500">
+          
+            </div>
+            </div>
+
+
+
+        <div class="row">
+          <div class="col-6">
+            <label for="density_value">Number of hits  </label>
+
+
+            <div class="tags">
+                <span class="w3-tag w3-grey w3-large" id="lt" value="eq" onclick="toggleLogic('lt')">< </span>
+                <span class="w3-tag w3-grey w3-large" id="eq" onclick="toggleLogic('eq')">= </span>
+                <span class="w3-tag w3-grey w3-large" id="gt" onclick="toggleLogic('gt')">></span>
+                <span class="w3-tag w3-grey w3-large" id="lte" onclick="toggleLogic('lte')"><= </span>
+                <span class="w3-tag w3-grey w3-large" id="gte" onclick="toggleLogic('gte')">>= </span>
+
+            </div>
+        
+            <br>
+          
+           
+          
+            <input size="40" maxlength="4" type="text" class="form-control mb-3" id="density_value" placeholder="Number of targets." value = "0">
+         
+            
+          
+            
+  
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+           <button type="button" id="fetch-analyse"class="btn btn-secondary" >Fetch & Analyse</button>
+            <!--<button type="button" id="close" class="btn btn-danger" >Close</button>-->
+            </div>
+         </div>
+       
+
+
+
+
+   </div>
+   </form>
+
+      
+    
+    `;
+
+
+
+
+
+
+
+
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+    
+    var search_el = document.getElementById('fetch-analyse');
+    search_el.addEventListener('click', openSearch);
+
+    toggleLogic(density_logic);
+
+
+    }
+    
+
     function BuildReportStudy(content_id) {
         
         var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
@@ -1810,16 +1993,16 @@ function gis_study_select(time_ms) {
         var post_data = {
             'source_files': snap_ids,//.slice(0,2),
             'analysis_id': analysis_id,
-            'report_min_f': 20,
-            'report_max_f': 1000,
-            'window_size': 2048,
-            'start_time': 0,
-            'end_time': 30,
+            'report_min_f': document.getElementById('report_min_f').value,
+            'report_max_f': document.getElementById('report_max_f').value,
+            'window_size': document.getElementById('report_windowsize').value,
+            'start_time': document.getElementById('report_timestart').value,
+            'end_time': document.getElementById('report_timeend').value,
             'location': application_data.application_setup.setup_data.listener_location
         }
 
 
-        //console.log(JSON.stringify(post_data));
+        console.log(JSON.stringify(post_data));
         $.post(report_run_url, JSON.stringify(post_data), function (data) {
             
            //var html = `<i class="fas fa-plus"></i>`;
