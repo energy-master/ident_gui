@@ -1112,6 +1112,8 @@ function BuildSearchWindow(content_id) {
         <div class="row">
           <div class="col-12">
            <button type="button" id="fetch-analyse"class="btn btn-secondary" >Fetch & Analyse</button>
+           <br>
+           <div id="fetch-analyse-loader"></div>
             <!--<button type="button" id="close" class="btn btn-danger" >Close</button>-->
             </div>
          </div>
@@ -1139,13 +1141,48 @@ function BuildSearchWindow(content_id) {
     
     var search_el = document.getElementById('fetch-analyse');
     search_el.addEventListener('click', openSearch);
+    
+
+    var loc_el = document.getElementById('location_select');
+    loc_el.onchange = function () {
+        var val = loc_el.options[loc_el.selectedIndex].value;
+        if (val == "brixham") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2024-02-24 12:00:00 UTC";
+
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2024-02-24 13:10:00 UTC";
+        }
+
+        if (val == "so1_server") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2023-06-11 12:00:00 UTC";
+
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2023-07-11 13:10:00 UTC";
+        }
+
+
+
+    };
 
     toggleLogic(density_logic);
-
+    select_all_vessels();
 
     }
     
 
+function BuildSavedApplicationsList(content_id) {
+
+    fetchSetups().then((data) => {
+        // hide_loader_div('setup-loader');
+        // console.log(data);
+        buildSetups_new(data, content_id);
+
+    });
+
+    }
+    
     function BuildReportStudy(content_id) {
         
         var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
@@ -1505,7 +1542,7 @@ function upload_data_afterrun(run_id){
             console.log(sigs)
             console.log("Building acoustics");
             var html = `<div class="list-view-holder" >`;
-            html += build_acoustic_header();
+            // html += build_acoustic_header();
             for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
                 var _sid = application_data.acoustic_data.snapshot_ids[i];
                 //console.log(_sid);
@@ -1762,10 +1799,13 @@ function build_acoustic_header() {
             <td colspan="1">
                 <input  id = "max_f_${snapshot.snapshot_id}"class="form-control" type="text" placeholder="10000" value="10000">
             </td>
-            <td>
+            <td></td><td></td>
+                <td colspan="2">
                <!-- <div class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Generate</div>-->
-               <div id="generate_${snapshot.snapshot_id}" class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Generate</div>
-            </td>
+               <!--<div id="generate_${snapshot.snapshot_id}" class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Generate</div>-->
+                <button type="button" class="btn btn-primary" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Build</button>
+            
+               </td>
             </tr>
 
       
@@ -1779,15 +1819,15 @@ function build_acoustic_header() {
          <td colspan=1 class="label_ "id="tag_select${snapshot.snapshot_id}">
         
          </td>
+        <td></td>
         
-             <td>
+             <td colspan="2">
 
             
-             <div class="w3-tag w3-blue w3-large marlin-data-success" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')")">Label</div>
-             <!--<div class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Data</div>-->
-             
-             <!-- <div class="btn_one marlin-data-fail" onclick="send_label('${snapshot.snapshot_id}')")" >Delete</div>-->
-         
+             <!--<div class="w3-tag w3-blue w3-large marlin-data-success" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')")">Label</div>-->
+            
+            
+             <button type="button" class="btn btn-primary" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')">Add Label</button>
          
              </td>
          </tr>
@@ -3296,6 +3336,76 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
     }
 
+function buildSetups_new(data, content_id) {
+
+
+    var html = "";
+    html = `§
+
+    <div class="container">
+
+    <div class="row">
+    <h3>My Data Setups</h3>
+    <br>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover">
+            <thead>
+                <th>
+                Start 
+                </th>
+                <th>
+                End
+                </th>
+                <th>
+                Location
+                </th>
+                <th>
+                Description
+                </th>
+                <th>
+                Load
+                </th>
+            </thead>
+            <tbody>`;
+
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        html += `
+        <tr>
+        <td>${data[i].start_time}</td> 
+        <td>${data[i].end_time}</td>
+        <td>${data[i].location}</td>
+        <td>${data[i].description}</td>
+      
+        <td>
+        <span class="w3-tag w3-blue w3-large" onclick="load_app_setup('${data[i].setup_id}')" style="cursor:pointer">Load Setup</span
+      
+        </tr>`;
+    }
+
+
+    html += `</tbody>
+            
+            </table>
+        </div>
+    </div>
+
+    </div>
+
+    `;
+
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+
+
+
+}
+
+
+
 
 
 
@@ -3556,3 +3666,4 @@ function spawn_sig_app(sig_data_id){
   
 
 }
+

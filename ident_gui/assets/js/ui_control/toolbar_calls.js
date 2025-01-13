@@ -1,13 +1,12 @@
 
 
-
-BuildToolbar();
+// BuildToolbar();
 
 /*
 *   Toolbar logic   
 */
 
-
+//<!---->
 function BuildToolbar() {
 
     var html = `
@@ -19,7 +18,7 @@ function BuildToolbar() {
     <div class="list-title" href="#"><i class="fas fa-arrows-alt"></i></div>
 
         <a  href="#"><i class="fa fa-home"></i></a>
-        <!--<a href="#" id="search-data"  onclick="show_data_selection()" ><i class="fas fa-search fa-xs"></i></a>-->
+       <!--<a href="#" id="search-data"  onclick="show_data_selection()" ><i class="fas fa-search fa-xs"></i></a>-->
         <a href="#" id="search-data"><i class="fas fa-search"></i></a>
         <a href="#" id="load-data"><i class="fas fa-upload"></i></a>
         <a href="#" id="acoustic-data"><i class="fas fa-headphones-alt"></i></a>
@@ -32,11 +31,12 @@ function BuildToolbar() {
         <a href="#" id="info-data"><i class="fas fa-info-circle"></i></a>
         <a href="#" id="save-nav"><i class="fas fa-save"></i></a>
         <a href="#" id="sample-upload"><i class="fas fa-upload"></i></a>
+        <a href="#" id="application-load"><i class="fas fa-upload"></i></a>
  
     </div>
     
     `;
-
+    //load-data
 
     var el = document.getElementById("toolbar");
     el.innerHTML = html;
@@ -66,6 +66,10 @@ setup_action_button.onclick = function () {
 
 };
 
+
+
+el = document.getElementById("application-load");
+el.onclick = function () { ToolbarClick('load-data') };
 
 
 el = document.getElementById("search-data");
@@ -101,8 +105,6 @@ ToolbarClick('info-data');
 
 el = document.getElementById("sample-upload");
 el.onclick = function () { ToolbarClick('sample-upload') };
-
-
 
 //study-connect
 el = document.getElementById("study-connect");
@@ -154,7 +156,7 @@ function ToolbarClick(data_type) {
         var window_id = createWindow("Study Label", "study-label");
         var el = document.getElementById(window_id);
         el.style.width = '40vw';
-        el.style.height = '7vw';
+        el.style.height = '10vw';
         el.style.top = '12vw';
         el.style.left = '12vw';
         var content_id = `${window_id}_content`;
@@ -197,20 +199,31 @@ function ToolbarClick(data_type) {
     }
 
     if (data_type == "study-report") {
-        var window_id = createWindow("IDent Study Analysis", "study-report");
-        var el = document.getElementById(window_id);
-        el.style.width = '400px';
-        el.style.height = '500px';
-        el.style.top = '16vw';
-        el.style.left = '16vw';
-        var content_id = `${window_id}_content`;
-        BuildReportStudy(content_id);
+
+
+
+        if ("study-report" in window_tracker) {
+            var window_id = window_tracker['study-report'];
+            console.log('study-report already built' + window_id);
+            showWindow(window_id);
+            BuildReportStudy(`${window_id}_content`);
+        }
+        else {
+            var window_id = createWindow("IDent Study Analysis", "study-report");
+            var el = document.getElementById(window_id);
+            el.style.width = '400px';
+            el.style.height = '500px';
+            el.style.top = '16vw';
+            el.style.left = '16vw';
+            var content_id = `${window_id}_content`;
+            BuildReportStudy(content_id);
+        }
 
     }
 
     if (data_type == "info-data") {
 
-        var window_id = createWindow("Information", "");
+        var window_id = createWindow("Information", "info-data");
         var el = document.getElementById(window_id);
         el.style.bottom = '0px';
         el.style.right = '0px';
@@ -225,7 +238,7 @@ function ToolbarClick(data_type) {
 
     if (data_type == "search-data") {
 
-        var window_id = createWindow("Data Query", "");
+        var window_id = createWindow("Data Query", "search-data");
         var el = document.getElementById(window_id);
         el.style.top = '100px';
         el.style.left = '150px';
@@ -235,7 +248,19 @@ function ToolbarClick(data_type) {
         BuildSearchWindow(content_id);
 
     }
+    //BuildSavedApplicationsList
+    if (data_type == "load-data") {
 
+        var window_id = createWindow("Load Application", "load-data");
+        var el = document.getElementById(window_id);
+        el.style.top = '100px';
+        el.style.left = '150px';
+        el.style.width = '900px';
+        el.style.height = '700px';
+        var content_id = `${window_id}_content`;
+        BuildSavedApplicationsList(content_id);
+
+    }
 
 
 

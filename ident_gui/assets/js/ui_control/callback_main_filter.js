@@ -74,7 +74,7 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
             }
         }
 
-
+        console.log(v_types)
         // success value of download
         var success = true;
     
@@ -159,7 +159,7 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
 
                 var activities = epochs[i].activity;
                 if ((includesAny(v_types, epoch_vessels)) && (mmsi_search==null)) {
-                    //console.log('here');
+                    console.log('search non mmsi');
                     for (var j = 0; j < epochs[i].vessels.length; j++){
                         var mmsi = epochs[i].vessels[j].mmsi;
                         if (mmsi in epoch_vessels_unique){
@@ -294,7 +294,9 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
                         valid_epochs.push(epochs[i]);
                     }
 
-                } // if correct vessels
+                }
+                
+                // if correct vessels
                 if (v_types.length == 0) {
                     var add_epoch = false;
                     for (var j = 0; j < activities.length; j++) {
@@ -320,6 +322,7 @@ const runFilterLocal = (location, density, density_logic, v_types, filter_start_
 
 
                 }
+
                 if (mmsi_search != null) {
                     var add_epoch = false;
                     console.log("searching mmsi: " + mmsi_search);

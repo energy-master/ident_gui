@@ -125,11 +125,11 @@ function openSearch() {
     // lel.classList.add('open');
     // $('.mysearch-button').click(function () {
     //$('.mysearch-button').toggleClass('open');
-    // console.log("conecgt");
+    // console.log("conect");
     // });
    
     console.log("search starts");
-    show_loader_div('fetch-analyse');
+    show_loader_div('fetch-analyse-loader');
     // var location = document.getElementById('location-data').value;
     // var post_location = location_keys_r[location];
     // var post_density = document.getElementById('density-data').value;
@@ -143,6 +143,15 @@ function openSearch() {
     var filter_start_time = document.getElementById('start_time_input').value;
     var filter_end_time = document.getElementById('end_time_input').value;
     var mmsi_search = document.getElementById('mmsi_search').value;
+
+
+    filter_parms = {
+        'location': location_value,
+        'post_range': post_range,
+        'mmsi' : mmsi_search
+    }
+
+    console.log(filter_parms);
 
     if (mmsi_search == "000000000") {
         mmsi_search = null;
@@ -172,7 +181,7 @@ function openSearch() {
         //console.log(data);
         filtered_data = new DataSearch(data, location_value, location, post_range, filter_start_time, filter_end_time);
         buildFilterDataWindow();
-        hide_loader_div('fetch-analyse');
+        hide_loader_div('fetch-analyse-loader');
     
     }));
 
@@ -484,8 +493,7 @@ html += `
 
 
 function toggleLogic(logic) {
-    //alert(logic);
-    //console.log(density_logic);
+   
     var logic_options = ['eq','lt','gt','lte','gte'];
     density_logic = logic;
     for (var i = 0; i < logic_options.length; i++) {
@@ -704,6 +712,10 @@ function show_data_selection(){
 */
 
 
+//Filetered data window
+
+filtered_data_window_id = ""
+
 function buildFilterDataWindow() {
 
     // hide filter
@@ -721,9 +733,26 @@ function buildFilterDataWindow() {
 
     // html += `</div>`;
     
-    var el = document.getElementById("filter-data-window-holder");
-    el.innerHTML = html;
 
+    // new window
+
+    var window_id = createWindow("Data Query Results", "query-results");
+    var el = document.getElementById(window_id);
+    el.style.width = '450px';
+    el.style.top = '100px';
+    el.style.right = '100px';
+    el.style.height = '60vh';
+    var content_id = `${window_id}_content`;
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+    console.log(content_id)
+    // BuildAppDataLabels(content_id);
+
+    // before new window
+    // *** 
+    // var el = document.getElementById("filter-data-window-holder");
+    // el.innerHTML = html;
+    // ***
     
 
     // update GIS ( GIS Engine needs updating )
@@ -737,7 +766,7 @@ function buildFilterDataWindow() {
     focus_gis_engine(position, filtered_data.location_value, 3000, filtered_data.search_radius);
     removeFilterFlags();
     hideApp();
-    showFilter();
+    // showFilter();
 
     
 }
