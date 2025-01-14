@@ -2,7 +2,7 @@
 //main application data window
 
 function BuildAppDataWindow() {
-    
+
     var html = `
     <div class="accordion" id="data-accordian-holder">
 
@@ -120,7 +120,7 @@ function BuildAppDataWindow() {
 
     var el = document.getElementById("app-data-window");
     el.innerHTML = html;
-    
+
 }
 
 // BuildAppDataWindow();
@@ -133,7 +133,7 @@ function BuildAppDataWindow() {
 
 function BuildSearchDataSetup() {
     if (application_data.search_epoch != null) {
-    
+
 
         var html = `
         <table class="table ">
@@ -200,8 +200,8 @@ function BuildSearchDataSetup() {
 *   AIS 
 */
 function BuildAppDataSetup() {
-    
-  
+
+
     var html = `
         <table class="table ">
         <tbody>
@@ -252,10 +252,9 @@ function ShowAppData() {
 
 }
 
-function UpdateCustomTimestamps(state=1)
-{
+function UpdateCustomTimestamps(state = 1) {
     var el = document.getElementById("custom-data");
-    
+
     var html = 'Study | No data';
     el.style.color = "red";
     if (state == 1) {
@@ -263,13 +262,13 @@ function UpdateCustomTimestamps(state=1)
         var end_t = time_string(custom_end_ms)[1];
         html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}   <div class="list-view"  style="cursor:pointer; font-size:9px;"><button type="button" class="btn-sm btn-primary " onclick="clear_checkboxes()">New Study</button></div>
      </div>`;
-        el.style.color = "green";    
+        el.style.color = "green";
     }
     el.innerHTML = html;
 }
 
 function BuildAppDataAIS() {
-    
+
     var html = `
     <table class="table ">
         <tbody>
@@ -284,7 +283,7 @@ function BuildAppDataAIS() {
  <div class="accordion" id="data-accordian-holder-1">
 
     `;
-//quick_launch
+    //quick_launch
     // build vessel data
     for (var i = 0; i < application_data.ais_vessel_data.number_of_vessels; i++) {
         var vessel_name = application_data.ais_vessel_data.vessels[i].vessel_overview_data.name;
@@ -367,7 +366,7 @@ function BuildAppDataAIS() {
 
     }
 
-     html += `</div>`;// end accordion holder
+    html += `</div>`;// end accordion holder
 
 
     var el = document.getElementById('data-ais-body');
@@ -375,13 +374,13 @@ function BuildAppDataAIS() {
 
     BuildVesselData();
 
-        
+
 }
 
 
 
 function BuildVesselData() {
-    
+
 
     for (var i = 0; i < application_data.ais_vessel_data.number_of_vessels; i++) {
 
@@ -391,7 +390,7 @@ function BuildVesselData() {
 
         var vessel = application_data.ais_vessel_data.vessels[i];
         if (vessel.vessel_overview_data.mmsi == "255806433") {
-           
+
             console.log(vessel.vessel_dynamics.vessel_tracks[0]);
         }
 
@@ -402,7 +401,7 @@ function BuildVesselData() {
             //console.log(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_tracks[j].profile);
             profile_html += build_profile(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_tracks[j].profile, `raw track ${j + 1}`, mmsi, `raw_track_${j}`);
             // console.log(profile_html);
-     
+
             // interpolated tracks
             for (var j = 0; j < application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_interpolated_tracks.length; j++) {
                 //console.log(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_tracks[j].profile);
@@ -415,7 +414,7 @@ function BuildVesselData() {
                 //console.log(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_tracks[j].profile);
                 profile_html += build_profile(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches[j].profile, `raw approach ${j + 1}`, mmsi, `raw_approach_${j}`);
                 // console.log(profile_html);
-            
+
             }
 
             // interpolated approaches
@@ -439,9 +438,9 @@ function BuildVesselData() {
             // charting
             // interpolated approaches
             // for (var j = 0; j < application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom.length; j++){
-            
+
             //     //profile_html += plot_dynamics_html(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom[j].profile, `interpolated approach dynamics ${j+1}`, mmsi, `smooth_approach_plot${j}`);
-           
+
             //     //console.log(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom, vessel_name);
             // }
 
@@ -449,34 +448,34 @@ function BuildVesselData() {
 
 
             var el_tag = `profiles-${mmsi}-profiles`;
-        
+
             var el = document.getElementById(el_tag);
-       
+
             el.innerHTML = profile_html;
 
             // // charting
             // // interpolated approaches
             // for (var j = 0; j < application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom.length; j++){
-            
+
             //     // populate the chart canvas ( should already be added to html )
             //     //plot_dynamics(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom[j].profile, `interpolated approach dynamics${j+1}`, mmsi, `smooth_approach_plot${j}`);
-           
+
             //     //console.log(application_data.ais_vessel_data.vessels[i].vessel_dynamics.vessel_approaches_custom, vessel_name);
             // }
 
-    
+
         }
 
 
-   
+
 
     }
 }
-    
 
-    function build_profile(profile, name, mmsi, tag, type) {
-        //console.log(tag);
-        var html = ` <div class="accordion-item">
+
+function build_profile(profile, name, mmsi, tag, type) {
+    //console.log(tag);
+    var html = ` <div class="accordion-item">
 
             <h2 class="accordion-header" id="panel-header${mmsi}-profile-${tag}">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-b-${mmsi}-profile-${tag}" aria-expanded="false" aria-controls="panel-header${mmsi}-${tag}">
@@ -496,41 +495,41 @@ function BuildVesselData() {
             </thead>
             
         `;
-    
-        if ((mmsi == "255806433") && (type=="inter")) {
-                console.log(profile);
+
+    if ((mmsi == "255806433") && (type == "inter")) {
+        console.log(profile);
+    }
+
+    for (var i = 0; i < profile.length; i++) {
+        //console.log(profile[i]);
+
+        var t_ = "UN";
+        var t_js = "UN";
+        var t_ms = "UN";
+        if ('timestamp' in profile[i]) {
+            t_ = profile[i]['timestamp'];
+        }
+
+        if (type == "inter") {
+            if ('_i' in profile[i]) {
+                t_ = profile[i]['_i'];
+            }
+            if ('_t' in profile[i]) {
+                t_ms = profile[i]['_t'];
+            }
+            if ('_jf' in profile[i]) {
+                t_js = profile[i]['_jf'];
             }
 
-        for (var i = 0; i < profile.length; i++) {
-            //console.log(profile[i]);
-
-            var t_ = "UN";
-            var t_js = "UN";
-            var t_ms = "UN";
-            if ('timestamp' in profile[i]) {
-                t_ = profile[i]['timestamp'];
-            }
-            
-            if (type == "inter") {
-                if ('_i' in profile[i]) {
-                    t_ = profile[i]['_i'];
-                }
-                  if ('_t' in profile[i]) {
-                    t_ms = profile[i]['_t'];
-                  }
-                  if ('_jf' in profile[i]) {
-                    t_js = profile[i]['_jf'];
-                }
-
-            }
+        }
 
 
-           
-          
-            var lat = parseFloat(profile[i]['latitude']).toFixed(5);
-            var long = parseFloat(profile[i]['longitude']).toFixed(5);
 
-            html += `
+
+        var lat = parseFloat(profile[i]['latitude']).toFixed(5);
+        var long = parseFloat(profile[i]['longitude']).toFixed(5);
+
+        html += `
             <tr>
                 <td>${lat}</td>
                 <td>${long}</td>
@@ -540,64 +539,64 @@ function BuildVesselData() {
                     
                
             </tr>`;
-        }
+    }
 
-    
-    
-        html += `</table></div>
+
+
+    html += `</table></div>
             </div>
             
     </div>`;
 
-        return html;
-    }
+    return html;
+}
 
 
-    var chart_options = {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Vessel distance vs time'
-            },
+var chart_options = {
+    responsive: true,
+    plugins: {
+        title: {
+            display: true,
+            text: 'Vessel distance vs time'
         },
-        scales: {
-            yAxes: [
-                { display: false, gridLines: { display: false } }
-            ],
-            xAxes: [
-                { display: false, gridLines: { display: false } }
-            ]
+    },
+    scales: {
+        yAxes: [
+            { display: false, gridLines: { display: false } }
+        ],
+        xAxes: [
+            { display: false, gridLines: { display: false } }
+        ]
+    },
+    legend: {
+        display: false
+    },
+    // title: { display:true},
+    // responsive: true,
+    maintainAspectRatio: false,
+    animation: {
+        duration: 2 // general animation time
+    },
+    hover: {
+        //animationDuration: 2 // duration of animations when hovering an item
+    },
+    elements: {
+        line: {
+            tension: 0.8 // disables bezier curves
         },
-        legend: {
-            display: false
-        },
-        // title: { display:true},
-        // responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-            duration: 2 // general animation time
-        },
-        hover: {
-            //animationDuration: 2 // duration of animations when hovering an item
-        },
-        elements: {
-            line: {
-                tension: 0.8 // disables bezier curves
-            },
-            point: {
-                radius: 0
-            }
-        },
-        showLines: true,
-        fill: false
-    };
-  
+        point: {
+            radius: 0
+        }
+    },
+    showLines: true,
+    fill: false
+};
 
 
-    function plot_dynamics_html(profile, name, mmsi, tag) {
-    
-        var html = ` <div class="accordion-item">
+
+function plot_dynamics_html(profile, name, mmsi, tag) {
+
+    var html = ` <div class="accordion-item">
 
             <h2 class="accordion-header" id="panel-header${mmsi}-profile-${tag}">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panel-b-${mmsi}-profile-${tag}" aria-expanded="false" aria-controls="panel-header${mmsi}-${tag}">
@@ -613,294 +612,294 @@ function BuildVesselData() {
             </div>
             `;
 
-        return html;
+    return html;
 
 
+}
+
+function plot_dynamics(profile, name, mmsi, tag) {
+
+    console.log("Building Dynamics")
+
+    var canvas_id = `vessel-chart`;
+    ctx = document.getElementById(canvas_id).getContext('2d');
+    console.log(`ctx ${ctx}`);
+    var mylabels = [];
+    var colors = [];
+    var plot_data = [];
+    var scatter_date = [];
+
+
+    profile.forEach(function (item, index) {
+        console.log(item, index);
+        mylabels.push(item['_t']);
+        plot_data.push(item['ref_distance']);
+        var color = 'blue';
+        // var color = 'rgba(160, 160, 9, 0.9)';
+        colors.push(color);
+
+
+    });
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: mylabels,
+            datasets: [{
+                label: 'Distance v Time',
+                data: plot_data,
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 1
+
+
+            }
+            ]
+
+        },
+        options: chart_options
+    });
+
+    $(`panel-b-${mmsi}-profile-${tag}`).on('shown.bs.collapse', function () {
+        chart.update();
+    });
+
+
+
+
+
+}
+
+
+
+function plot_vessel_profile_new(profile, mmsi) {
+    if (profile == 0) {
+        return (0);
     }
 
-    function plot_dynamics(profile, name, mmsi, tag) {
-    
-        console.log("Building Dynamics")
-
-        var canvas_id = `vessel-chart`;
-        ctx = document.getElementById(canvas_id).getContext('2d');
-        console.log(`ctx ${ctx}`);
-        var mylabels = [];
-        var colors = [];
-        var plot_data = [];
-        var scatter_date = [];
-    
-
-        profile.forEach(function (item, index) {
-            console.log(item, index);
-            mylabels.push(item['_t']);
-            plot_data.push(item['ref_distance']);
-            var color = 'blue';
-            // var color = 'rgba(160, 160, 9, 0.9)';
-            colors.push(color);
-
-      
-        });
-    
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: mylabels,
-                datasets: [{
-                    label: 'Distance v Time',
-                    data: plot_data,
-                    backgroundColor: colors,
-                    borderColor: colors,
-                    borderWidth: 1
 
 
-                }
-                ]
-     
+    var canvas = document.getElementById("vessel-chart");
+    if (canvas != null) {
+        // Apply multiply blend when drawing datasets
+        var multiply = {
+            beforeDatasetsDraw: function (chart, options, el) {
+                chart.ctx.globalCompositeOperation = 'multiply';
             },
-            options: chart_options
-        });
+            afterDatasetsDraw: function (chart, options) {
+                chart.ctx.globalCompositeOperation = 'source-over';
+            },
+        };
+        // Gradient colors 
+        var gradientThisWeek = canvas.getContext('2d').createLinearGradient(0, 0, 0, 150);
+        gradientThisWeek.addColorStop(0, '#5555FF');
+        gradientThisWeek.addColorStop(1, '#9787FF');
+        // Gradient color - previous week
+        var gradientPrevWeek = canvas.getContext('2d').createLinearGradient(0, 0, 0, 150);
+        gradientPrevWeek.addColorStop(0, '#FF55B8');
+        gradientPrevWeek.addColorStop(1, '#FF8787');
 
-        $(`panel-b-${mmsi}-profile-${tag}`).on('shown.bs.collapse', function () {
-            chart.update();
-        });
-
-
-
-
-
-    }
-
-
-
-    function plot_vessel_profile_new(profile, mmsi) {
-        if (profile == 0) {
-            return (0);
-        }
-
-   
-
-        var canvas = document.getElementById("vessel-chart");
-        if (canvas != null) {
-            // Apply multiply blend when drawing datasets
-            var multiply = {
-                beforeDatasetsDraw: function (chart, options, el) {
-                    chart.ctx.globalCompositeOperation = 'multiply';
-                },
-                afterDatasetsDraw: function (chart, options) {
-                    chart.ctx.globalCompositeOperation = 'source-over';
-                },
-            };
-            // Gradient colors 
-            var gradientThisWeek = canvas.getContext('2d').createLinearGradient(0, 0, 0, 150);
-            gradientThisWeek.addColorStop(0, '#5555FF');
-            gradientThisWeek.addColorStop(1, '#9787FF');
-            // Gradient color - previous week
-            var gradientPrevWeek = canvas.getContext('2d').createLinearGradient(0, 0, 0, 150);
-            gradientPrevWeek.addColorStop(0, '#FF55B8');
-            gradientPrevWeek.addColorStop(1, '#FF8787');
-
-            //first plt
-            var mylabels = [];
-            var _ts = [];
-            var plot_data = [];
-            var plot_data_two = [];
-
-            profile.forEach(function (item, index) {
-                mylabels.push((new Date(item['_t'])));
-                plot_data.push(Math.floor(item['ref_distance']));
-            });
-
-  
-
-            // 2nd plt  if (Math.abs(application_data.application_clock.application_time - item['_t']) < chart_active_interval) {
-            profile.forEach(function (item, index) {
-                mylabels.push((new Date(item['_t'])));
-                if (Math.abs(application_data.application_clock.application_time - item['_t']) < chart_active_interval) {
-                    plot_data_two.push(Math.floor(item['ref_distance']));
-                }
-                else {
-                    plot_data_two.push(0.0);
-                }
-            });
-    
-
-            console.log(plot_data);
-            console.log(plot_data_two);
-
-            var config = {
-                type: 'line',
-                data: {
-                    labels: mylabels,
-                    datasets: [
-                        {
-                            data: plot_data_two,
-                            backgroundColor: gradientThisWeek,
-                            borderColor: 'transparent',
-                            pointBackgroundColor: 'white',
-                            pointBorderColor: 'white',
-                            lineTension: 0.8,
-
-                        },
-                        {
-                            data: plot_data,
-                            backgroundColor: gradientPrevWeek,
-                            borderColor: 'transparent',
-                            pointBackgroundColor: 'white',
-                            pointBorderColor: 'white',
-                            lineTension: 0.70,
-                   
-                    
-                        }
-                
-                    ]
-                },
-                options: {
-                    elements: {
-                        point: {
-                            radius: 1,
-                            hitRadius: 1,
-                            hoverRadius: 5
-                        }
-                    },
-                    animate: false,
-                    legend: {
-                        display: false,
-                    },
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                        }],
-                        yAxes: [{
-                            display: false,
-                            ticks: {
-                                beginAtZero: false,
-                            },
-                        }]
-                    },
-            
-                },
-                plugins: [multiply],
-
-        
-
-
-            };
-
-            window.chart = new Chart(canvas.getContext('2d'), config);
-        }
-    }
-
-    var chart = null;
-
-    function plot_vessel_profile(profile, mmsi) {
-        console.log("Building Dynamics plot")
-
-        if (profile == 0) {
-            profile = [];
-        }
-    
-        var canvas_id = `vessel-chart`;
-        ctx = document.getElementById(canvas_id).getContext('2d');
-        console.log(`ctx ${ctx}`);
+        //first plt
         var mylabels = [];
-        var colors = [];
+        var _ts = [];
         var plot_data = [];
-        var scatter_data = [];
-
+        var plot_data_two = [];
 
         profile.forEach(function (item, index) {
-            //console.log(item, index);
-            // console.log()
-            //mylabels.push(new Date(item['_t']));
             mylabels.push((new Date(item['_t'])));
             plot_data.push(Math.floor(item['ref_distance']));
+        });
 
-        
 
-            var color_active = 'green';
-            var color_inactive = 'white';
-            //console.log(item);
-            //console.log(application_data.application_clock.application_time);
-            //console.log(Math.abs(application_data.application_clock.application_time - item['_t']));
+
+        // 2nd plt  if (Math.abs(application_data.application_clock.application_time - item['_t']) < chart_active_interval) {
+        profile.forEach(function (item, index) {
+            mylabels.push((new Date(item['_t'])));
             if (Math.abs(application_data.application_clock.application_time - item['_t']) < chart_active_interval) {
-                //console.log(application_data.application_clock.application_time, item['_t'])
-                colors.push(color_active);
-                scatter_data.push({ x: item['_t'], y: item['ref_distance'] })
+                plot_data_two.push(Math.floor(item['ref_distance']));
             }
             else {
-                color = color_inactive;
-                // var color = 'rgba(160, 160, 9, 0.9)';
-                colors.push(color);
+                plot_data_two.push(0.0);
             }
-            //colors.push('blue');
-
-      
-
         });
+
+
         console.log(plot_data);
-        //     if (chart!=null)
-        //     {
-        //         chart.destroy();
-        // }
-        //console.log(scatter_data);
-        chart = new Chart(ctx, {
-            type: 'bar',
-        
+        console.log(plot_data_two);
+
+        var config = {
+            type: 'line',
             data: {
                 labels: mylabels,
                 datasets: [
                     {
-                        label: 'Distance v Time',
-                        data: plot_data,
-                        backgroundColor: colors,
-                        borderColor: colors,
-                        borderWidth: 1,
-                        fill: true,
-                        tension: 0.4,
-                        //borderColor: `blue`
-                        // cubicInterpolationMode: 'monotone'
-                
-
+                        data: plot_data_two,
+                        backgroundColor: gradientThisWeek,
+                        borderColor: 'transparent',
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'white',
+                        lineTension: 0.8,
 
                     },
                     {
-                        type: 'scatter',
-                        data: scatter_data
+                        data: plot_data,
+                        backgroundColor: gradientPrevWeek,
+                        borderColor: 'transparent',
+                        pointBackgroundColor: 'white',
+                        pointBorderColor: 'white',
+                        lineTension: 0.70,
+
+
                     }
-                
-    
-    
+
                 ]
-     
             },
-            options: chart_options
-        });
+            options: {
+                elements: {
+                    point: {
+                        radius: 1,
+                        hitRadius: 1,
+                        hoverRadius: 5
+                    }
+                },
+                animate: false,
+                legend: {
+                    display: false,
+                },
+                scales: {
+                    xAxes: [{
+                        display: false,
+                    }],
+                    yAxes: [{
+                        display: false,
+                        ticks: {
+                            beginAtZero: false,
+                        },
+                    }]
+                },
 
-   
+            },
+            plugins: [multiply],
 
 
-   
+
+
+        };
+
+        window.chart = new Chart(canvas.getContext('2d'), config);
+    }
+}
+
+var chart = null;
+
+function plot_vessel_profile(profile, mmsi) {
+    console.log("Building Dynamics plot")
+
+    if (profile == 0) {
+        profile = [];
     }
 
+    var canvas_id = `vessel-chart`;
+    ctx = document.getElementById(canvas_id).getContext('2d');
+    console.log(`ctx ${ctx}`);
+    var mylabels = [];
+    var colors = [];
+    var plot_data = [];
+    var scatter_data = [];
 
 
-    /*
-    *
-    *   Acoustic
-    */
+    profile.forEach(function (item, index) {
+        //console.log(item, index);
+        // console.log()
+        //mylabels.push(new Date(item['_t']));
+        mylabels.push((new Date(item['_t'])));
+        plot_data.push(Math.floor(item['ref_distance']));
 
 
-    function BuildStudyLabel(content_id) {
-        
-        var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
-        
-        if (custom_start_ms < custom_end_ms) {
-            html = "";
-            fetchUserLabels().then((data) => {
+
+        var color_active = 'green';
+        var color_inactive = 'white';
+        //console.log(item);
+        //console.log(application_data.application_clock.application_time);
+        //console.log(Math.abs(application_data.application_clock.application_time - item['_t']));
+        if (Math.abs(application_data.application_clock.application_time - item['_t']) < chart_active_interval) {
+            //console.log(application_data.application_clock.application_time, item['_t'])
+            colors.push(color_active);
+            scatter_data.push({ x: item['_t'], y: item['ref_distance'] })
+        }
+        else {
+            color = color_inactive;
+            // var color = 'rgba(160, 160, 9, 0.9)';
+            colors.push(color);
+        }
+        //colors.push('blue');
 
 
-                html += `
+
+    });
+    console.log(plot_data);
+    //     if (chart!=null)
+    //     {
+    //         chart.destroy();
+    // }
+    //console.log(scatter_data);
+    chart = new Chart(ctx, {
+        type: 'bar',
+
+        data: {
+            labels: mylabels,
+            datasets: [
+                {
+                    label: 'Distance v Time',
+                    data: plot_data,
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: 1,
+                    fill: true,
+                    tension: 0.4,
+                    //borderColor: `blue`
+                    // cubicInterpolationMode: 'monotone'
+
+
+
+                },
+                {
+                    type: 'scatter',
+                    data: scatter_data
+                }
+
+
+
+            ]
+
+        },
+        options: chart_options
+    });
+
+
+
+
+
+}
+
+
+
+/*
+*
+*   Acoustic
+*/
+
+
+function BuildStudyLabel(content_id) {
+
+    var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
+
+    if (custom_start_ms < custom_end_ms) {
+        html = "";
+        fetchUserLabels().then((data) => {
+
+
+            html += `
                 <div class="center-message">
                     <table><tr id="">
             
@@ -930,41 +929,41 @@ function BuildVesselData() {
                 
                 `;
 
-                var el = document.getElementById(content_id);
-                el.innerHTML = html;
-
-                var select_html = buildLabelSelect(data, `group_labelsupplyselect`);
-                var s_el = document.getElementById('study_label_select');
-                s_el.innerHTML = select_html;
-
-
-                
-
-            })
-        }
-        else {
             var el = document.getElementById(content_id);
             el.innerHTML = html;
 
-        }
+            var select_html = buildLabelSelect(data, `group_labelsupplyselect`);
+            var s_el = document.getElementById('study_label_select');
+            s_el.innerHTML = select_html;
 
-       
-           
-        
+
+
+
+        })
     }
-
-
-    function BuildInfoWindow(content_id){
-        var html = `<div class="center-message">`;
-
-        html += `<div style="width:100%; height:100%"><img src="assets/img/rsa_logo.png"  height="50" alt="RSA logo."></div></div> `;
-
+    else {
         var el = document.getElementById(content_id);
         el.innerHTML = html;
+
     }
 
+
+
+
+}
+
+
+function BuildInfoWindow(content_id) {
+    var html = `<div class="center-message">`;
+
+    html += `<div style="width:100%; height:100%"><img src="assets/img/rsa_logo.png"  height="50" alt="RSA logo."></div></div> `;
+
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+}
+
 function BuildSearchWindow(content_id) {
-       
+
     html = `
     <form>
     <br>
@@ -1138,10 +1137,10 @@ function BuildSearchWindow(content_id) {
 
     var el = document.getElementById(content_id);
     el.innerHTML = html;
-    
+
     var search_el = document.getElementById('fetch-analyse');
     search_el.addEventListener('click', openSearch);
-    
+
 
     var loc_el = document.getElementById('location_select');
     loc_el.onchange = function () {
@@ -1169,30 +1168,31 @@ function BuildSearchWindow(content_id) {
     toggleLogic(density_logic);
     select_all_vessels();
 
-    }
-    
+}
+
 
 function BuildSavedApplicationsList(content_id) {
-
+    show_loader(content_id);
     fetchSetups().then((data) => {
         // hide_loader_div('setup-loader');
         // console.log(data);
         buildSetups_new(data, content_id);
+        hide_loader(content_id);
 
     });
 
-    }
-    
-    function BuildReportStudy(content_id) {
-        
-        var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
-        console.log(custom_start_ms,custom_end_ms)
-        if (custom_start_ms < custom_end_ms) {
-            html = "";
-           
+}
 
-                
-                html += `
+function BuildReportStudy(content_id) {
+
+    var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
+    console.log(custom_start_ms, custom_end_ms)
+    if (custom_start_ms < custom_end_ms) {
+        html = "";
+
+
+
+        html += `
                 <div class="center-message">
                 <table>
                 <tr>
@@ -1263,37 +1263,37 @@ function BuildSavedApplicationsList(content_id) {
                 
                 `;
 
-               
 
-                
-                var el = document.getElementById(content_id);
-                el.innerHTML = html;
-        
-        }
-        else {
-            console.log('dsjfskdfjskl');
-            var el = document.getElementById(content_id);
-            el.innerHTML = html;
-            return;
 
-        }
 
-       
-           
-        
+        var el = document.getElementById(content_id);
+        el.innerHTML = html;
+
     }
+    else {
+        console.log('dsjfskdfjskl');
+        var el = document.getElementById(content_id);
+        el.innerHTML = html;
+        return;
+
+    }
+
+
+
+
+}
 
 
 function ShowStudyLabels(target_window_id) {
 
     var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
-    
+
     if (custom_start_ms < custom_end_ms) {
 
         html = '<div class="center-message">';
         label_data_download().then((data) => {
-      
-         
+
+
             var sigs = data['data'];
             console.log(sigs)
             console.log("Building acoustics");
@@ -1307,12 +1307,12 @@ function ShowStudyLabels(target_window_id) {
             //var label = "";
             console.log(application_data.acoustic_data.snapshot_ids.length);
             for (var j = 0; j < sigs.length; j++) {
-                
+
                 var ss_start_ms = custom_start_ms;
                 var ss_end_ms = custom_end_ms;
                 var sig_start_ms = parseFloat(sigs[j].start_time_ms);
                 var sig_end_ms = parseFloat(sigs[j].end_time_ms);
-                
+
                 if ((ss_start_ms <= sig_start_ms) && (ss_end_ms >= sig_end_ms)) {
                     console.log("hit");
                     var time_s = time_string(sig_start_ms)[5];
@@ -1332,7 +1332,7 @@ function ShowStudyLabels(target_window_id) {
 
 
             }
-            
+
             // html += build_snapshot_view(_snapshot, i, label);
 
             //}
@@ -1348,41 +1348,41 @@ function ShowStudyLabels(target_window_id) {
         });
     }
     else {
-         var el = document.getElementById(target_window_id);
-            el.innerHTML = html;
+        var el = document.getElementById(target_window_id);
+        el.innerHTML = html;
     }
-   
 
-    }
+
+}
 
 
 
 function ShowTarget(target_window_id) {
-        
+
 
     // build get request
-    
+
     var get_request = ``;
 
     for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
         var _sid = application_data.acoustic_data.snapshot_ids[i];
         if (i == application_data.acoustic_data.snapshot_ids.length - 1) {
             //get_request += `ss_ids[]=${_sid}`;
-             get_request += `${_sid}`;  
+            get_request += `${_sid}`;
         }
         else {
             //get_request += `ss_ids[]=${_sid}&`;   
-             get_request += `${_sid},`;  
+            get_request += `${_sid},`;
         }
-         
-        
+
+
     }
 
     console.log(get_request);
 
 
-        var html = '<div class="center-message">';
-        html += `
+    var html = '<div class="center-message">';
+    html += `
         
         <div class="container">
         <div class="row">
@@ -1450,14 +1450,14 @@ function ShowTarget(target_window_id) {
         </div>
         </div>
         `;
-//
-        var el = document.getElementById(target_window_id);
-        el.innerHTML = html;
+    //
+    var el = document.getElementById(target_window_id);
+    el.innerHTML = html;
 
-    }
+}
 
-    //m
-function ShowUpload(target_window_id){
+//m
+function ShowUpload(target_window_id) {
 
     var html = `
     <p>
@@ -1495,10 +1495,10 @@ function ShowUpload(target_window_id){
     el = document.getElementById('data-upload');
     el.onclick = function () {
         document.getElementById('data-upload').disabled = true;
-        
-        var file_data = $('#upload_file').prop('files')[0];   
+
+        var file_data = $('#upload_file').prop('files')[0];
         var upload_location_string = document.getElementById('upload_location_string').value;
-        var form_data = new FormData();                  
+        var form_data = new FormData();
         form_data.append('upload_file', file_data);
         form_data.append('upload_location_string', upload_location_string);
         form_data.append('user_uid', user.user_uid);
@@ -1508,99 +1508,99 @@ function ShowUpload(target_window_id){
             cache: false,
             contentType: false,//'multipart/form-data',
             processData: false,
-            data: form_data,                         
+            data: form_data,
             type: 'post',
-            success: function(php_script_response){ 
+            success: function (php_script_response) {
                 document.getElementById('data-upload').disabled = false;
                 alert(php_script_response); // <-- display response from the PHP script, if any
-               
+
             }
-         });
+        });
     };
 
 }
-function upload_data_afterrun(run_id){
+function upload_data_afterrun(run_id) {
     //load game vis
-    window.open(`game/index.php?snapshot_id=${run_id}&location=upload`,`${Math.floor(Math.random() * 99999)}`,'width=1000,height=700');
+    window.open(`game/index.php?snapshot_id=${run_id}&location=upload`, `${Math.floor(Math.random() * 99999)}`, 'width=1000,height=700');
 
 }
 // this is called on update *** live ***
-    function BuildAppDataLabels(target_window_id) {
-        fetchSignatures().then((data) => {
-            //console.log(data);
-            console.log(target_window_id);
-            build_signature_table(data, target_window_id);
+function BuildAppDataLabels(target_window_id) {
+    fetchSignatures().then((data) => {
+        //console.log(data);
+        console.log(target_window_id);
+        build_signature_table(data, target_window_id);
 
-        })
-    }
-    function BuildAppDataAcoustic(target_window_id) {
+    })
+}
+function BuildAppDataAcoustic(target_window_id) {
 
-        label_data_download().then((data) => {
-      
-            
-            var sigs = data['data'];
-            console.log(sigs)
-            console.log("Building acoustics");
-            var html = `<div class="list-view-holder" >`;
-            // html += build_acoustic_header();
-            for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
-                var _sid = application_data.acoustic_data.snapshot_ids[i];
-                //console.log(_sid);
-                var _snapshot = application_data.acoustic_data.get_snapshot(_sid);
-                var label = "";
-                for (var j = 0; j < sigs.length; j++) {
-                    // if (sigs[j].snapshot_id == _sid) {
-                    //     label += `[${sigs[j].user_name}] ${sigs[j].label}`;
-                    //     //console.log(label);
-                    // }
-                    var ss_start_ms = _snapshot.timeframe_start_ms;
-                    var ss_end_ms = _snapshot.timeframe_end_ms;
-                    var sig_start_ms = parseFloat(sigs[j].start_time_ms);
-                    var sig_end_ms = parseFloat(sigs[j].end_time_ms);
-                    listener_location = sigs[j].listener_location;
-                    if (listener_location == '67149847') {
-                        if (_sid == "213547676998594081709676") {
-                            console.log(sigs[j]['id'])
-                            console.log(`${ss_start_ms} >= ${sig_start_ms}`);
-                            console.log(`${ss_end_ms} <= ${sig_end_ms}`);
-                        }
+    label_data_download().then((data) => {
+
+
+        var sigs = data['data'];
+        console.log(sigs)
+        console.log("Building acoustics");
+        var html = `<div class="list-view-holder" >`;
+        // html += build_acoustic_header();
+        for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
+            var _sid = application_data.acoustic_data.snapshot_ids[i];
+            //console.log(_sid);
+            var _snapshot = application_data.acoustic_data.get_snapshot(_sid);
+            var label = "";
+            for (var j = 0; j < sigs.length; j++) {
+                // if (sigs[j].snapshot_id == _sid) {
+                //     label += `[${sigs[j].user_name}] ${sigs[j].label}`;
+                //     //console.log(label);
+                // }
+                var ss_start_ms = _snapshot.timeframe_start_ms;
+                var ss_end_ms = _snapshot.timeframe_end_ms;
+                var sig_start_ms = parseFloat(sigs[j].start_time_ms);
+                var sig_end_ms = parseFloat(sigs[j].end_time_ms);
+                listener_location = sigs[j].listener_location;
+                if (listener_location == '67149847') {
+                    if (_sid == "213547676998594081709676") {
+                        console.log(sigs[j]['id'])
+                        console.log(`${ss_start_ms} >= ${sig_start_ms}`);
+                        console.log(`${ss_end_ms} <= ${sig_end_ms}`);
                     }
-                    // if (_sid == "213547676998594081709676") {
-                    //     console.log("active")
-                    //     console.log(`${ss_start_ms} >= ${sig_start_ms}`);
-                    //     console.log(`${ss_end_ms} <= ${sig_end_ms}`);
-                    // }
+                }
+                // if (_sid == "213547676998594081709676") {
+                //     console.log("active")
+                //     console.log(`${ss_start_ms} >= ${sig_start_ms}`);
+                //     console.log(`${ss_end_ms} <= ${sig_end_ms}`);
+                // }
 
-                    if ((ss_start_ms <= sig_start_ms) && (ss_end_ms >= sig_end_ms)) {
-                        if (_sid == "213547676998594081709676") {
-                            console.log(sigs[j]['id'])
-                            console.log(`${ss_start_ms} >= ${sig_start_ms}`);
-                            console.log(`${ss_end_ms} <= ${sig_end_ms}`);
-                        }
-                        label += `[${sigs[j].user_name}] ${sigs[j].label}`;
-
+                if ((ss_start_ms <= sig_start_ms) && (ss_end_ms >= sig_end_ms)) {
+                    if (_sid == "213547676998594081709676") {
+                        console.log(sigs[j]['id'])
+                        console.log(`${ss_start_ms} >= ${sig_start_ms}`);
+                        console.log(`${ss_end_ms} <= ${sig_end_ms}`);
                     }
-
+                    label += `[${sigs[j].user_name}] ${sigs[j].label}`;
 
                 }
-            
-                html += build_snapshot_view(_snapshot, i, label);
+
 
             }
 
-            html += `</div>`;
+            html += build_snapshot_view(_snapshot, i, label);
 
-            var el = document.getElementById(target_window_id);
-            el.innerHTML = html;
+        }
 
-           
+        html += `</div>`;
 
-             // build tag
+        var el = document.getElementById(target_window_id);
+        el.innerHTML = html;
+
+
+
+        // build tag
         fetchUserLabels().then((data) => {
-       
+
 
             for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
-            
+
                 var _sid = application_data.acoustic_data.snapshot_ids[i];
                 //console.log(_sid);
                 html = buildLabelSelect(data, `labelsupplyselect_${_sid}`);
@@ -1613,48 +1613,48 @@ function upload_data_afterrun(run_id){
                 var _sid = application_data.acoustic_data.snapshot_ids[i];
                 var _snapshot = application_data.acoustic_data.get_snapshot(_sid);
                 // if (!(_sid == "846762002253501575910033")) {
-                    //BuildAcousticSpectrograms(_sid);
-                 //}
+                //BuildAcousticSpectrograms(_sid);
+                //}
 
             }
 
 
 
-            })
-            
-        });
+        })
+
+    });
 
 
-        // // build tag
-        // fetchUserLabels().then((data) => {
-       
-
-        //     for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
-            
-        //         var _sid = application_data.acoustic_data.snapshot_ids[i];
-        //         //console.log(_sid);
-        //         html = buildLabelSelect(data, `labelsupplyselect_${_sid}`);
-
-        //         var s_el = document.getElementById(`tag_select${_sid}`);
-        //         s_el.innerHTML = html;
-        //     }
+    // // build tag
+    // fetchUserLabels().then((data) => {
 
 
+    //     for (var i = 0; i < application_data.acoustic_data.snapshot_ids.length; i++) {
 
-        // })
-    
+    //         var _sid = application_data.acoustic_data.snapshot_ids[i];
+    //         //console.log(_sid);
+    //         html = buildLabelSelect(data, `labelsupplyselect_${_sid}`);
 
-    }
+    //         var s_el = document.getElementById(`tag_select${_sid}`);
+    //         s_el.innerHTML = html;
+    //     }
+
+
+
+    // })
+
+
+}
 
 
 function clear_checkboxes() {
-    
+
     let checkboxes1 = document.querySelectorAll("input[type='checkbox']");
     console.log(checkboxes1);
     let checkboxes = document.querySelectorAll(".cbox");
     console.log(checkboxes);
-    checkboxes.forEach(function(checkbox) {
-      checkbox.checked = false;
+    checkboxes.forEach(function (checkbox) {
+        checkbox.checked = false;
     });
 
     custom_start_ms = 999999999999999999999999;
@@ -1663,7 +1663,7 @@ function clear_checkboxes() {
     custom_end_id = 0;
 
     UpdateCustomTimestamps(0);
-  
+
 
 }
 // $('custom_check_btn').on("click", function () {
@@ -1676,49 +1676,54 @@ function build_acoustic_header() {
      <div class="list-view"  style="cursor:pointer"><button type="button" class="btn btn-primary" onclick="clear_checkboxes()">Reset / Custom Analysis</button>
      </div>
         `;
+}
+
+
+function build_snapshot_view(snapshot, idx, sig_label) {
+
+
+    // get signatures for acoustic view -
+
+
+
+
+    var style = `style="display:none"`
+    if (idx == 0) {
+        style = `style="display:none"`;
+    }
+
+    var checked = "";
+    var selected = "";
+    if (snapshot.snapshot_id == application_data.acoustic_data.active_snapshot_id) {
+        selected = "selected";
+        console.log("selected");
+    }
+    if (snapshot.snapshot_id == custom_end_id) {
+        checked = "checked";
+    }
+    if (snapshot.snapshot_id == custom_start_id) {
+        checked = "checked";
     }
 
 
-    function build_snapshot_view(snapshot, idx, sig_label) {
 
-
-        // get signatures for acoustic view -
-
-   
-
-
-        var style = `style="display:none"`
-        if (idx == 0) {
-            style = `style="display:none"`;
-        }
-
-        var checked = "";
-        var selected = "";
-        if (snapshot.snapshot_id == application_data.acoustic_data.active_snapshot_id) {
-            selected = "selected";
-            console.log("selected");
-        }
-        if (snapshot.snapshot_id == custom_end_id) {
-            checked = "checked";
-        }
-        if (snapshot.snapshot_id == custom_start_id) {
-            checked = "checked";
-        }
-
-        //console.log(snapshot.timeframe_start_js);
-        //.toUTCString()
-        //console.log(snapshot);
-        var spec_filename = snapshot.spec_location;
-        //console.log(spec_filename);
-        var label = "[Annotations]" + sig_label;
-        var html = `
+    console.log(snapshot.timeframe_start_js);
+    //.toUTCString()
+    //console.log(snapshot);
+    var spec_filename = snapshot.spec_location;
+    //console.log(spec_filename);
+    var label = "[Annotations]" + sig_label;
+    var html = `
     <div class="list-view ${selected}" id="list-view-${snapshot.snapshot_id}"  style="cursor:pointer" ${checked} >
         <table style="width:100%; font-size:12px;">
             <tr >
             <td><i class="fas fa-expand-alt"onClick="toggle_acoustic_table('${snapshot.snapshot_id}')" ></i></td>
             <td><input type="checkbox" class = "cbox" id ="check_${snapshot.snapshot_id}" value="${snapshot.snapshot_id}" onclick="ss_select('${snapshot.snapshot_id}')"></td>
             <td onClick="toggle_acoustic_table('${snapshot.snapshot_id}')">${snapshot.timeframe_start_js}</td>
+            
+            
             <td>${snapshot.timeframe_end_js}</td>
+            
             <td>  <button id="play-${snapshot.snapshot_id}" class="action-btn" onclick="playAcousticLabel(${snapshot.timeframe_start_ms})" style="z-index:10000">
                 <i class="fas fa-forward"></i>
             </button></td>
@@ -1842,242 +1847,241 @@ function build_acoustic_header() {
     </div>
    `;
 
-    
-//alt="Loading Spectogram" height="300" width="800"
-      
+
+    //alt="Loading Spectogram" height="300" width="800"
 
 
 
-        return html;
 
-    }
-    function toggle_acoustic_table(ss_id) {
-    
-        
-        // console.log((ss_id.toFixed(100)));
-        // var _snapshot = application_data.acoustic_data.get_snapshot(ss_id);
-        // BuildAcousticSpectrograms(_snapshot);
-        var el_id = `rowspec_${ss_id}`;
-        var lel_id = `labelspec_${ss_id}`;
-        var fft_id = `fft_${ss_id}`;
-        // var spec_id = `row_spec_orig_${ss_id}`;
-        console.log(el_id);
-        var el = document.getElementById(el_id);
-        var lel = document.getElementById(lel_id);
-        var fft = document.getElementById(fft_id);
-        // var spec_el = document.getElementById(spec_id);
-        if (el.style.display != "none") {
+    return html;
 
-            $(el).fadeOut("slow");
-            $(lel).fadeOut("slow");
-             $(fft).fadeOut("slow");
-            
-            //  $(spec_el).fadeOut("slow");
-         
-        
-        }
-        else {
-           
-            $(el).fadeIn("slow");
-            $(lel).fadeIn("slow");
-            $(fft).fadeIn("slow");
-            //  $(spec_el).fadeIn("slow");
-        }
+}
+function toggle_acoustic_table(ss_id) {
+
+
+    // console.log((ss_id.toFixed(100)));
+    // var _snapshot = application_data.acoustic_data.get_snapshot(ss_id);
+    // BuildAcousticSpectrograms(_snapshot);
+    var el_id = `rowspec_${ss_id}`;
+    var lel_id = `labelspec_${ss_id}`;
+    var fft_id = `fft_${ss_id}`;
+    // var spec_id = `row_spec_orig_${ss_id}`;
+    console.log(el_id);
+    var el = document.getElementById(el_id);
+    var lel = document.getElementById(lel_id);
+    var fft = document.getElementById(fft_id);
+    // var spec_el = document.getElementById(spec_id);
+    if (el.style.display != "none") {
+
+        $(el).fadeOut("slow");
+        $(lel).fadeOut("slow");
+        $(fft).fadeOut("slow");
+
+        //  $(spec_el).fadeOut("slow");
 
 
     }
+    else {
+
+        $(el).fadeIn("slow");
+        $(lel).fadeIn("slow");
+        $(fft).fadeIn("slow");
+        //  $(spec_el).fadeIn("slow");
+    }
+
+
+}
 
 
 function gis_study_select(time_ms) {
-         if (time_ms < custom_start_ms) {
-            custom_start_ms = time_ms;
-            // custom_start_id = ss_id;
-        }
-        if (time_ms > custom_end_ms) {
-            custom_end_ms = time_ms;
-            // custom_end_id = ss_id;
-        }
-
-    
-  UpdateCustomTimestamps();
-    
+    if (time_ms < custom_start_ms) {
+        custom_start_ms = time_ms;
+        // custom_start_id = ss_id;
     }
-
-    function ss_select(ss_id) {
-        //alert(ss_id);
-
-        //get snapshot
-
-        var snapshot = application_data.acoustic_data.get_snapshot(ss_id);
-        //console.log(snapshot);
-        //update custom times
-        var _time_start = snapshot.timeframe_start_ms;
-        var _time_end = snapshot.timeframe_end_ms;
-
-        if (_time_start < custom_start_ms) {
-            custom_start_ms = _time_start;
-            custom_start_id = ss_id;
-        }
-        if (_time_end > custom_end_ms) {
-            custom_end_ms = _time_end;
-            custom_end_id = ss_id;
-        }
-
-
-
-
-        //update gui
-        // var el = document.getElementById('custom_start_time_ms');
-        // el.innerHTML = `${custom_start_ms}`;
-
-        // var el = document.getElementById('custom_end_time_ms');
-        // el.innerHTML = `${custom_end_ms}`;
-
-
-        // var el = document.getElementById('custom_start_time');
-        // var _t = time_string(custom_start_ms)[2];
-        // el.innerHTML = `${_t}`;
-
-
-        // _t = time_string(custom_end_ms)[2];
-        // var el = document.getElementById('custom_end_time');
-        // el.innerHTML = `${_t}`;
-
-        // var id = `check_${ss_id}`;
-        // var el = document.getElementById(id);
-       
-        UpdateCustomTimestamps();
-
-
-
+    if (time_ms > custom_end_ms) {
+        custom_end_ms = time_ms;
+        // custom_end_id = ss_id;
     }
 
 
-    function ShowOrigSpec(application_data) {
+    UpdateCustomTimestamps();
 
-    
-    
-        //spec_images_html[0]
-        // for (idx in ss_bulk_data) {
+}
 
-        //     var ss_id = Object.keys(ss_bulk_data[idx])[0]; //key of object
-        //     var filename = ss_bulk_data[idx][ss_id]['spec_images_html'][0];
-        //     //console.log(filename);
-        //     var env_filename = ss_bulk_data[idx][ss_id]['environment_spec_images_html'][0];
-        //     html = `<img src="${filename}" alt="Loading Spectogram"  style="width:100%, height:100%"></img>`;
-        //     // html += `<img src="${env_filename}" alt="Librosa Spectogram"  style="width:100%, height:100%"></img>`;
-        //     console.log(`spec_orig_${ss_id }`);
-        //     var el = document.getElementById(`spec_orig_${ss_id}`);
-        //     el.innerHTML = html;
-        // }
+function ss_select(ss_id) {
+    //alert(ss_id);
 
+    //get snapshot
+
+    var snapshot = application_data.acoustic_data.get_snapshot(ss_id);
+    //console.log(snapshot);
+    //update custom times
+    var _time_start = snapshot.timeframe_start_ms;
+    var _time_end = snapshot.timeframe_end_ms;
+
+    if (_time_start < custom_start_ms) {
+        custom_start_ms = _time_start;
+        custom_start_id = ss_id;
+    }
+    if (_time_end > custom_end_ms) {
+        custom_end_ms = _time_end;
+        custom_end_id = ss_id;
     }
 
-    var custom_start_ms = 999999999999999999999999;
-    var custom_end_ms = 0;
-    var custom_start_id = 0;
-    var custom_end_id = 0;
 
 
-    function run_report(calling_window_id)
-    {
 
-        show_loader_div(`report_run_ticker_${calling_window_id}`);
-        // collect data for call
+    //update gui
+    // var el = document.getElementById('custom_start_time_ms');
+    // el.innerHTML = `${custom_start_ms}`;
 
-        if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
-            alert("need start and end");
-            return (0);
-        }
-
-        var start_t_ms = custom_start_ms;
-        var end_time_ms = custom_end_ms;
-
-        application_data.acoustic_player.set_seeking();
-        if (application_data.acoustic_player.playing == true) {
-            application_data.acoustic_player.pause();
-        }
-
-        application_data.application_clock.application_time = start_t_ms;
-        clock_tick();
-        application_data.acoustic_player.stop_seeking();
+    // var el = document.getElementById('custom_end_time_ms');
+    // el.innerHTML = `${custom_end_ms}`;
 
 
-        var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
-        console.log(valid_snaps);
+    // var el = document.getElementById('custom_start_time');
+    // var _t = time_string(custom_start_ms)[2];
+    // el.innerHTML = `${_t}`;
 
 
-        var vessel = null;
-        var vessel_track = null;
-   
-        application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
-        console.log(application_data.track_analysis);
+    // _t = time_string(custom_end_ms)[2];
+    // var el = document.getElementById('custom_end_time');
+    // el.innerHTML = `${_t}`;
+
+    // var id = `check_${ss_id}`;
+    // var el = document.getElementById(id);
+
+    UpdateCustomTimestamps();
 
 
-        audio_files = [];
-        snap_ids = [];
 
-        for (var $i = 0; $i < valid_snaps.length; $i++) {
-            //console.log(valid_snaps[$i]);
-            audio_files.push(valid_snaps[$i].audio_filepath);
-            console.log(valid_snaps[$i]);
-            snap_ids.push(valid_snaps[$i].snapshot_id)
-        }
-        console.log(audio_files);
-        console.log(snap_ids);
-
-        var report_run_url = "https://vixen.hopto.org/rs/api/v1/data/studyreport";
-
-        var analysis_id = Math.floor(Math.random() * 99999);
-
-        var post_data = {
-            'source_files': snap_ids,//.slice(0,2),
-            'analysis_id': analysis_id,
-            'report_min_f': document.getElementById('report_min_f').value,
-            'report_max_f': document.getElementById('report_max_f').value,
-            'window_size': document.getElementById('report_windowsize').value,
-            'start_time': document.getElementById('report_timestart').value,
-            'end_time': document.getElementById('report_timeend').value,
-            'location': application_data.application_setup.setup_data.listener_location
-        }
+}
 
 
-        console.log(JSON.stringify(post_data));
-        $.post(report_run_url, JSON.stringify(post_data), function (data) {
-            
-           //var html = `<i class="fas fa-plus"></i>`;
-           //el.innerHTML = html;
-           // var el = document.getElementById('custom-analysis-create-button');
-           // el.innterHTML =  `<i class="fas fa-plus"></i>`;
-
-           //console.log("custom build");
-           //we have the output file    
-           //console.log(data['product_filepath']);
-           // save to track analysis
-           //application_data.track_analysis.audio_file_url = data['product_filepath'];
-           //application_data.track_analysis.mp3_file_url = data['mp3'];
-
-           // Build track analysis data view
-            console.log(data)
-            //alert("Audio merge and analysis complete.")
-       
-           //BuildGroupAnalysis();
-            build_report_links(calling_window_id, analysis_id);
-            merge_audio(calling_window_id, analysis_id, audio_files);
-            hide_loader_div(`report_run_ticker_${calling_window_id}`);
-       });
+function ShowOrigSpec(application_data) {
 
 
-        
+
+    //spec_images_html[0]
+    // for (idx in ss_bulk_data) {
+
+    //     var ss_id = Object.keys(ss_bulk_data[idx])[0]; //key of object
+    //     var filename = ss_bulk_data[idx][ss_id]['spec_images_html'][0];
+    //     //console.log(filename);
+    //     var env_filename = ss_bulk_data[idx][ss_id]['environment_spec_images_html'][0];
+    //     html = `<img src="${filename}" alt="Loading Spectogram"  style="width:100%, height:100%"></img>`;
+    //     // html += `<img src="${env_filename}" alt="Librosa Spectogram"  style="width:100%, height:100%"></img>`;
+    //     console.log(`spec_orig_${ss_id }`);
+    //     var el = document.getElementById(`spec_orig_${ss_id}`);
+    //     el.innerHTML = html;
+    // }
+
+}
+
+var custom_start_ms = 999999999999999999999999;
+var custom_end_ms = 0;
+var custom_start_id = 0;
+var custom_end_id = 0;
 
 
+function run_report(calling_window_id) {
+
+    show_loader_div(`report_run_ticker_${calling_window_id}`);
+    // collect data for call
+
+    if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
+        alert("need start and end");
+        return (0);
     }
 
-    function build_report_links(calling_window_id, analysis_id){
-       
-        var el = document.getElementById(`reports_${calling_window_id}`);
+    var start_t_ms = custom_start_ms;
+    var end_time_ms = custom_end_ms;
 
-        var html = `
+    application_data.acoustic_player.set_seeking();
+    if (application_data.acoustic_player.playing == true) {
+        application_data.acoustic_player.pause();
+    }
+
+    application_data.application_clock.application_time = start_t_ms;
+    clock_tick();
+    application_data.acoustic_player.stop_seeking();
+
+
+    var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+    console.log(valid_snaps);
+
+
+    var vessel = null;
+    var vessel_track = null;
+
+    application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
+    console.log(application_data.track_analysis);
+
+
+    audio_files = [];
+    snap_ids = [];
+
+    for (var $i = 0; $i < valid_snaps.length; $i++) {
+        //console.log(valid_snaps[$i]);
+        audio_files.push(valid_snaps[$i].audio_filepath);
+        console.log(valid_snaps[$i]);
+        snap_ids.push(valid_snaps[$i].snapshot_id)
+    }
+    console.log(audio_files);
+    console.log(snap_ids);
+
+    var report_run_url = "https://vixen.hopto.org/rs/api/v1/data/studyreport";
+
+    var analysis_id = Math.floor(Math.random() * 99999);
+
+    var post_data = {
+        'source_files': snap_ids,//.slice(0,2),
+        'analysis_id': analysis_id,
+        'report_min_f': document.getElementById('report_min_f').value,
+        'report_max_f': document.getElementById('report_max_f').value,
+        'window_size': document.getElementById('report_windowsize').value,
+        'start_time': document.getElementById('report_timestart').value,
+        'end_time': document.getElementById('report_timeend').value,
+        'location': application_data.application_setup.setup_data.listener_location
+    }
+
+
+    console.log(JSON.stringify(post_data));
+    $.post(report_run_url, JSON.stringify(post_data), function (data) {
+
+        //var html = `<i class="fas fa-plus"></i>`;
+        //el.innerHTML = html;
+        // var el = document.getElementById('custom-analysis-create-button');
+        // el.innterHTML =  `<i class="fas fa-plus"></i>`;
+
+        //console.log("custom build");
+        //we have the output file    
+        //console.log(data['product_filepath']);
+        // save to track analysis
+        //application_data.track_analysis.audio_file_url = data['product_filepath'];
+        //application_data.track_analysis.mp3_file_url = data['mp3'];
+
+        // Build track analysis data view
+        console.log(data)
+        //alert("Audio merge and analysis complete.")
+
+        //BuildGroupAnalysis();
+        build_report_links(calling_window_id, analysis_id);
+        merge_audio(calling_window_id, analysis_id, audio_files);
+        hide_loader_div(`report_run_ticker_${calling_window_id}`);
+    });
+
+
+
+
+
+}
+
+function build_report_links(calling_window_id, analysis_id) {
+
+    var el = document.getElementById(`reports_${calling_window_id}`);
+
+    var html = `
          <div class="center-message">
              <table>
                 <!--
@@ -2149,246 +2153,246 @@ function gis_study_select(time_ms) {
              </div>
         `;
 
-        el.innerHTML = html;
+    el.innerHTML = html;
 
+}
+
+function merge_audio(calling_window_id, analysis_id, audio_files) {
+
+
+    var post_data = {
+        'source_files': audio_files,//.slice(0,2),
+        'analysis_id': analysis_id
     }
 
-    function merge_audio(calling_window_id, analysis_id, audio_files){
-
-       
-        var post_data = {
-            'source_files': audio_files,//.slice(0,2),
-            'analysis_id': analysis_id
-        }
-    
-        var audio_url = "";
-        if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
-            audio_url = audio_merge_api;
-        }
-        else {
-            audio_url = audio_merge_api_rsa;
-        }
-
-         //console.log(JSON.stringify(post_data));
-         $.post(audio_url, JSON.stringify(post_data), function (data) {
-          
-         
-       
-           application_data.track_analysis.audio_file_url = data['product_filepath'];
-           application_data.track_analysis.mp3_file_url = data['mp3'];
-
-            show_report_downloads(calling_window_id);
-       });
+    var audio_url = "";
+    if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
+        audio_url = audio_merge_api;
+    }
+    else {
+        audio_url = audio_merge_api_rsa;
     }
 
+    //console.log(JSON.stringify(post_data));
+    $.post(audio_url, JSON.stringify(post_data), function (data) {
 
-    function custom_epoch_analysis() {
 
-      
+
+        application_data.track_analysis.audio_file_url = data['product_filepath'];
+        application_data.track_analysis.mp3_file_url = data['mp3'];
+
+        show_report_downloads(calling_window_id);
+    });
+}
+
+
+function custom_epoch_analysis() {
+
+
+    var el = document.getElementById('custom-analysis-create-button');
+    var html = `<h4>merging</h4>`;
+    el.innerHTML = html;
+
+    console.log("custom build");
+
+    if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
+        alert("need start and end");
+        return (0);
+    }
+
+    var start_t_ms = custom_start_ms;
+    var end_time_ms = custom_end_ms;
+
+    // Application clock update
+
+    application_data.acoustic_player.set_seeking();
+    if (application_data.acoustic_player.playing == true) {
+        application_data.acoustic_player.pause();
+    }
+
+    application_data.application_clock.application_time = start_t_ms;
+    clock_tick();
+    application_data.acoustic_player.stop_seeking();
+
+
+
+
+
+    // --- get relavent snapshots
+
+    var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+    console.log(valid_snaps);
+
+
+    var vessel = null;
+    var vessel_track = null;
+
+    application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
+    console.log(application_data.track_analysis);
+
+    //application_data.ais_vessel_data.active_vessel = mmsi;
+
+    audio_files = [];
+    // generate concated wav/mp3 file 
+    for (var $i = 0; $i < valid_snaps.length; $i++) {
+        //console.log(valid_snaps[$i]);
+        audio_files.push(valid_snaps[$i].audio_filepath);
+    }
+    console.log(audio_files);
+
+    var analysis_id = Math.floor(Math.random() * 99999);
+
+    var post_data = {
+        'source_files': audio_files,//.slice(0,2),
+        'analysis_id': analysis_id
+    }
+
+    console.log(application_data.application_setup.setup_data.listener_location);
+    var audio_url = "";
+    if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
+        audio_url = audio_merge_api;
+    }
+    else {
+        audio_url = audio_merge_api_rsa;
+    }
+
+    console.log(audio_url);
+    console.log(JSON.stringify(post_data));
+
+
+    //console.log(JSON.stringify(post_data));
+    $.post(audio_url, JSON.stringify(post_data), function (data) {
         var el = document.getElementById('custom-analysis-create-button');
-        var html = `<h4>merging</h4>`;
+        var html = `<i class="fas fa-plus"></i>`;
         el.innerHTML = html;
+        // var el = document.getElementById('custom-analysis-create-button');
+        // el.innterHTML =  `<i class="fas fa-plus"></i>`;
 
         console.log("custom build");
+        //we have the output file    
+        console.log(data['product_filepath']);
+        // save to track analysis
+        application_data.track_analysis.audio_file_url = data['product_filepath'];
+        application_data.track_analysis.mp3_file_url = data['mp3'];
 
-        if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
-            alert("need start and end");
-            return (0);
-        }
+        // Build track analysis data view
 
-        var start_t_ms = custom_start_ms;
-        var end_time_ms = custom_end_ms;
+        alert("Audio merge and analysis complete.")
 
-        // Application clock update
-
-        application_data.acoustic_player.set_seeking();
-        if (application_data.acoustic_player.playing == true) {
-            application_data.acoustic_player.pause();
-        }
-
-        application_data.application_clock.application_time = start_t_ms;
-        clock_tick();
-        application_data.acoustic_player.stop_seeking();
-
-
-   
-    
-   
-        // --- get relavent snapshots
-    
-        var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
-        console.log(valid_snaps);
-
-
-        var vessel = null;
-        var vessel_track = null;
-   
-        application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
-        console.log(application_data.track_analysis);
-        
-        //application_data.ais_vessel_data.active_vessel = mmsi;
-
-        audio_files = [];
-        // generate concated wav/mp3 file 
-        for (var $i = 0; $i < valid_snaps.length; $i++) {
-            //console.log(valid_snaps[$i]);
-            audio_files.push(valid_snaps[$i].audio_filepath);
-        }
-        console.log(audio_files);
-
-        var analysis_id = Math.floor(Math.random() * 99999);
-
-        var post_data = {
-            'source_files': audio_files,//.slice(0,2),
-            'analysis_id': analysis_id
-        }
-    
-        console.log(application_data.application_setup.setup_data.listener_location);
-        var audio_url = "";
-        if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
-            audio_url = audio_merge_api;
-        }
-        else {
-            audio_url = audio_merge_api_rsa;
-        }
-
-        console.log(audio_url);
-        console.log(JSON.stringify(post_data));
-
-
-        //console.log(JSON.stringify(post_data));
-        $.post(audio_url, JSON.stringify(post_data), function (data) {
-             var el = document.getElementById('custom-analysis-create-button');
-            var html = `<i class="fas fa-plus"></i>`;
-            el.innerHTML = html;
-            // var el = document.getElementById('custom-analysis-create-button');
-            // el.innterHTML =  `<i class="fas fa-plus"></i>`;
-
-            console.log("custom build");
-            //we have the output file    
-            console.log(data['product_filepath']);
-            // save to track analysis
-            application_data.track_analysis.audio_file_url = data['product_filepath'];
-            application_data.track_analysis.mp3_file_url = data['mp3'];
-
-            // Build track analysis data view
-
-            alert("Audio merge and analysis complete.")
-        
-            BuildGroupAnalysis();
-        });
+        BuildGroupAnalysis();
+    });
 
 
 
 
+}
+
+function approach_analysis(start_t_ms, mmsi, track_index) {
+
+    console.log("approach analysis");
+
+
+    // Application clock update
+
+    application_data.acoustic_player.set_seeking();
+    if (application_data.acoustic_player.playing == true) {
+        application_data.acoustic_player.pause();
     }
 
-    function approach_analysis(start_t_ms, mmsi, track_index) {
-
-        console.log("approach analysis");
-
-
-        // Application clock update
-
-        application_data.acoustic_player.set_seeking();
-        if (application_data.acoustic_player.playing == true) {
-            application_data.acoustic_player.pause();
-        }
-
-        application_data.application_clock.application_time = start_t_ms;
-        clock_tick();
-        application_data.acoustic_player.stop_seeking();
+    application_data.application_clock.application_time = start_t_ms;
+    clock_tick();
+    application_data.acoustic_player.stop_seeking();
 
 
-        // Track analysis Data Structure
-        // --- get vessel
-   
-        var vessel = application_data.ais_vessel_data.get_vessel(mmsi);
-        var vessel_track = vessel.get_approach(start_t_ms);
-    
-   
-        // --- get relavent snapshots
-        end_time_ms = vessel_track[vessel_track.length - 1]._t;
-        var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
-        //console.log(valid_snaps);
-        custom_start_id = valid_snaps[0]['snapshot_id'];
-        custom_end_id = valid_snaps[valid_snaps.length - 1]['snapshot_id'];
+    // Track analysis Data Structure
+    // --- get vessel
 
-        application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
-        console.log(application_data.track_analysis);
-    
-        application_data.ais_vessel_data.active_vessel = mmsi;
-
-        audio_files = [];
-        // generate concated wav/mp3 file 
-        for (var $i = 0; $i < valid_snaps.length; $i++) {
-            //console.log(valid_snaps[$i]);
-            audio_files.push(valid_snaps[$i].audio_filepath);
-        }
-        //console.log(audio_files);
-
-        var analysis_id = Math.floor(Math.random() * 99999);
-
-        var post_data = {
-            'source_files': audio_files,//.slice(0,2),
-            'analysis_id': analysis_id
-        }
-
-        console.log(post_data);
-
-        console.log(application_data.application_setup.setup_data.listener_location);
-        var audio_url = "";
-        if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
-            audio_url = audio_merge_api;
-        }
-        else {
-            audio_url = audio_merge_api_rsa;
-        }
-
-        //console.log(JSON.stringify(post_data));
-        $.post(audio_url, JSON.stringify(post_data), function (data) {
-
-            //we have the output file    
-            console.log(data['product_filepath']);
-            // save to track analysis
-            application_data.track_analysis.audio_file_url = data['product_filepath'];
-            // Build track analysis data view
-
-            alert("Audio merge and analysis complete.")
-        
-            BuildGroupAnalysis();
-
-            //update gui
-            // var el = document.getElementById('custom_start_time_ms');
-            // el.innerHTML = `${application_data.track_analysis.start_time_ms}`;
-
-            // var el = document.getElementById('custom_end_time_ms');
-            // el.innerHTML = `${application_data.track_analysis.end_time_ms}`;
+    var vessel = application_data.ais_vessel_data.get_vessel(mmsi);
+    var vessel_track = vessel.get_approach(start_t_ms);
 
 
-            var el = document.getElementById('custom_start_time');
-            var _t = time_string(application_data.track_analysis.start_time_ms)[2];
-            el.innerHTML = `${_t}`;
+    // --- get relavent snapshots
+    end_time_ms = vessel_track[vessel_track.length - 1]._t;
+    var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+    //console.log(valid_snaps);
+    custom_start_id = valid_snaps[0]['snapshot_id'];
+    custom_end_id = valid_snaps[valid_snaps.length - 1]['snapshot_id'];
 
+    application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
+    console.log(application_data.track_analysis);
 
-            _t = time_string(application_data.track_analysis.end_time_ms)[2];
-            var el = document.getElementById('custom_end_time');
-            el.innerHTML = `${_t}`;
+    application_data.ais_vessel_data.active_vessel = mmsi;
 
+    audio_files = [];
+    // generate concated wav/mp3 file 
+    for (var $i = 0; $i < valid_snaps.length; $i++) {
+        //console.log(valid_snaps[$i]);
+        audio_files.push(valid_snaps[$i].audio_filepath);
+    }
+    //console.log(audio_files);
 
+    var analysis_id = Math.floor(Math.random() * 99999);
 
-        });
-
-
-    
+    var post_data = {
+        'source_files': audio_files,//.slice(0,2),
+        'analysis_id': analysis_id
     }
 
-    var acoustic_detail = {};
-    
+    console.log(post_data);
 
-       
-function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="none", custom_sr=96000, min_f=0, max_f=0, n_fft=1, time_start = "", time_end = "", location = "") {
-    
+    console.log(application_data.application_setup.setup_data.listener_location);
+    var audio_url = "";
+    if ((application_data.application_setup.setup_data.listener_location == "netley") || (application_data.application_setup.setup_data.listener_location == "so1")) {
+        audio_url = audio_merge_api;
+    }
+    else {
+        audio_url = audio_merge_api_rsa;
+    }
+
+    //console.log(JSON.stringify(post_data));
+    $.post(audio_url, JSON.stringify(post_data), function (data) {
+
+        //we have the output file    
+        console.log(data['product_filepath']);
+        // save to track analysis
+        application_data.track_analysis.audio_file_url = data['product_filepath'];
+        // Build track analysis data view
+
+        alert("Audio merge and analysis complete.")
+
+        BuildGroupAnalysis();
+
+        //update gui
+        // var el = document.getElementById('custom_start_time_ms');
+        // el.innerHTML = `${application_data.track_analysis.start_time_ms}`;
+
+        // var el = document.getElementById('custom_end_time_ms');
+        // el.innerHTML = `${application_data.track_analysis.end_time_ms}`;
+
+
+        var el = document.getElementById('custom_start_time');
+        var _t = time_string(application_data.track_analysis.start_time_ms)[2];
+        el.innerHTML = `${_t}`;
+
+
+        _t = time_string(application_data.track_analysis.end_time_ms)[2];
+        var el = document.getElementById('custom_end_time');
+        el.innerHTML = `${_t}`;
+
+
+
+    });
+
+
+
+}
+
+var acoustic_detail = {};
+
+
+
+function BuildAcousticSpectrograms_server(ss_id = "", custom = 0, custom_filename = "none", custom_sr = 96000, min_f = 0, max_f = 0, n_fft = 1, time_start = "", time_end = "", location = "") {
+
     console.log("buidling spec on server")
 
     ss_location = ""
@@ -2396,7 +2400,7 @@ function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="n
         var acoustic_snapshot = application_data.acoustic_data.get_snapshot(ss_id);
         var ss_location = acoustic_snapshot.hydrophone_location;
     }
-    
+
 
 
     var identifier = Math.floor(Math.random() * 99999);
@@ -2406,7 +2410,7 @@ function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="n
         var el = document.getElementById(`generate_${ss_id}`);
         el.innerText = "Thinking";
     }
-     if (custom == 1) {
+    if (custom == 1) {
         var el = document.getElementById(`generate_custom`);
         el.innerText = "Thinking";
     }
@@ -2422,9 +2426,9 @@ function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="n
         ss_id = "custom_id";
         ss_location = "custom_location";
         fft_samples = n_fft;
-       // var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
+        // var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
     }
-    
+
     // alert(fft_samples);
 
     var post_data = {
@@ -2436,23 +2440,23 @@ function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="n
         "n_fft": fft_samples,
         "custom": custom,
         "custom_fn": custom_filename,
-        "custom_sr" : custom_sr
+        "custom_sr": custom_sr
     }
 
     if (custom_filename == "") {
         alert("No acoustic source filename passed");
         return ("");
-        
+
     }
 
     var run_spec_url = "";
     if (custom == 0) {
         run_spec_url = "https://vixen.hopto.org/rs/api/v1/run/spec";
-    }   
+    }
     if (custom == 1) {
         //https://marlin-network.hopto.org/api/v1/data/run/spec
         run_spec_url = "https://marlin-network.hopto.org/api/v1/data/run/spec";
-    }   
+    }
     console.log(run_spec_url);
     console.log(JSON.stringify(post_data));
 
@@ -2466,254 +2470,254 @@ function BuildAcousticSpectrograms_server(ss_id="", custom=0, custom_filename="n
 
 
 
-}            
+}
 
-function build_spec_page(identifier,  time_start, time_end, location, custom) {
+function build_spec_page(identifier, time_start, time_end, location, custom) {
     const windowFeatures = "left=100,top=100,width=700,height=500";
     var title = `tile_${Math.floor(Math.random() * 99999)}`;
     var title = `${location} | ${time_start} --> ${time_end}`;
 
 
     var w = window.open(`https://vixen.hopto.org/rs/ident_app/ident/brahma/spec.php?identifier=${identifier}&title=${title}&custom=${custom}`, title, windowFeatures);
-   
 
-    
+
+
     w.title = `${location} | ${time_start} --> ${time_end}`;
     console.log(`${location} | ${time_start} --> ${time_end}`);
-    
+
 
 }
-        
+
 var wavesurfers = {};
 
-    async function BuildAcousticSpectrograms(acoustic_snapshot_id) {
+async function BuildAcousticSpectrograms(acoustic_snapshot_id) {
 
-        var acoustic_snapshot = application_data.acoustic_data.get_snapshot(acoustic_snapshot_id);
-     
-
-        if (acoustic_snapshot.snapshot_id in wavesurfers) {
-            console.log("already built");
-            //return (1);
-        }
-
-        // get parameters
-        var min_f = parseInt(document.getElementById(`min_f_${acoustic_snapshot.snapshot_id}`).value);
-        var max_f = parseInt(document.getElementById(`max_f_${acoustic_snapshot.snapshot_id}`).value);
-        console.log(min_f, max_f);
-
-        var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
-        if (fft_samples == "select") {
-            alert("Please enter number fft samples.")
-            return(1);
-        }
-        //var fft_cm = document.getElementById(`cm_sample_select_${acoustic_snapshot.snapshot_id}`).value;
-        fft_cm = "none";
-        console.log(fft_cm);
-        console.log(fft_samples);
-        var el_id = `#spec_${acoustic_snapshot.snapshot_id}`;
-        var gel = document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`);
-        gel.innerHTML = "<h4>Creating acoustic data...</h4>";
-
-        console.log(`building ${acoustic_snapshot.snapshot_id}`)
-
-        console.log("building spec");
-        console.log(acoustic_detail);
-
-        if ((acoustic_snapshot.snapshot_id in acoustic_detail)) {
-            console.log("already build");
-            //return (1);
-        }
-        
-        console.log(acoustic_snapshot);
-        // get snapshot data
-       
-
-        console.log(document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`));
-
-        var snapshot_filepath = acoustic_snapshot.sound_source;
-        var sample_rate = acoustic_snapshot.sample_rate;
-        // var mycolorMap = colors['jet'];
-       
-
-        wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
-            container: document.querySelector(el_id),
-            waveColor: '#4F4A85',
-            progressColor: '#cc3359',
-            barWidth: 10,
-            barRadius: 10,
-            url: snapshot_filepath,
-            sampleRate: Math.min(sample_rate, 190000),
-            // sampleRate: sample_rate,
-         
-            // sampleRate: Math.min(sample_rate)
-        })
-        // wavesurfers[acoustic_snapshot.snapshot_id].load(snapshot_filepath);
-        console.log(wavesurfers[acoustic_snapshot.snapshot_id]);
-        //190
-        console.log(sample_rate);
-        const Spectrogram = (await import("https://unpkg.com/wavesurfer.js@7/dist/plugins/spectrogram.esm.js")).default;
-        // Initialize the Spectrogram plugin
-        
-        // wavesurfer.addEventListener('ready', (duration) => {
-        //     Spectrogram?.destroy();
-        //     alert('decoded');
-        //     // wavesurfer.registerPlugin(this.spectrogram);
-        //     wavesurfer.registerPlugin(
-        //     Spectrogram.create({
-        //         container: document.querySelector(el_id),
-        //         labels: true,
-        //         height: 400,
-        //         colorMap: colors['jet'],
-        //         splitChannels: true,
-        //         fftSamples: 1024,
-        //     }),
-        // )
-        //     });
-
-        // create spectrogram
-        console.log("new spec routine for : " + acoustic_snapshot.snapshot_id);
-        BuildAcousticSpectrograms_server(ss_id = acoustic_snapshot.snapshot_id, custom = 0, custom_filename = "none", custom_sr = sample_rate, min_f = 0, max_f = 0, n_fft = fft_samples, acoustic_snapshot.timeframe_start, acoustic_snapshot.timeframe_end, acoustic_snapshot.hydrophone_location);
-           
-        wavesurfers[acoustic_snapshot.snapshot_id].on('ready', () => {
-            document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`).getElementsByTagName("h4")[0].textContent = "Custom Analysis Data";
-            wavesurfers[acoustic_snapshot.snapshot_id].setTime(1)
-            console.log("ready");
-            // create spectrogram
-            //BuildAcousticSpectrograms_server(ss_id=acoustic_snapshot.snapshot_id, custom=0, custom_filename="none", custom_sr=sample_rate, min_f=0, max_f=0, n_fft=fft_samples)
-           // toggle_acoustic_table(acoustic_snapshot.snapshot_id);
-        })
-        wavesurfers[acoustic_snapshot.snapshot_id].on('interaction', () => {
-            wavesurfers[acoustic_snapshot.snapshot_id].play()
-            // 
-        })
-        wavesurfers[acoustic_snapshot.snapshot_id].on('error', function(e) {
-            console.error('WaveSurfer error:', e);
-        });
-        wavesurfers[acoustic_snapshot.snapshot_id].on('decode', function(e) {
-            console.log('WaveSurfer decode:', e);
-            console.log('WaveSurfer decode:', sample_rate);
-
-            // wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
-            // container: document.querySelector(el_id),
-            // waveColor: '#4F4A85',
-            // progressColor: '#cc3359',
-            // barWidth: 10,
-            // barRadius: 10,
-            // url: snapshot_filepath,
-            // sampleRate: Math.min(sample_rate, 190000)
-            // sampleRate: Math.min(sample_rate)
-        // })
-
-            
-        });
+    var acoustic_snapshot = application_data.acoustic_data.get_snapshot(acoustic_snapshot_id);
 
 
-        acoustic_detail[acoustic_snapshot.snapshot_id] = "loaded";
+    if (acoustic_snapshot.snapshot_id in wavesurfers) {
+        console.log("already built");
+        //return (1);
     }
 
+    // get parameters
+    var min_f = parseInt(document.getElementById(`min_f_${acoustic_snapshot.snapshot_id}`).value);
+    var max_f = parseInt(document.getElementById(`max_f_${acoustic_snapshot.snapshot_id}`).value);
+    console.log(min_f, max_f);
 
-    //BuildCustomAcousticSpectrograms
+    var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
+    if (fft_samples == "select") {
+        alert("Please enter number fft samples.")
+        return (1);
+    }
+    //var fft_cm = document.getElementById(`cm_sample_select_${acoustic_snapshot.snapshot_id}`).value;
+    fft_cm = "none";
+    console.log(fft_cm);
+    console.log(fft_samples);
+    var el_id = `#spec_${acoustic_snapshot.snapshot_id}`;
+    var gel = document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`);
+    gel.innerHTML = "<h4>Creating acoustic data...</h4>";
+
+    console.log(`building ${acoustic_snapshot.snapshot_id}`)
+
+    console.log("building spec");
+    console.log(acoustic_detail);
+
+    if ((acoustic_snapshot.snapshot_id in acoustic_detail)) {
+        console.log("already build");
+        //return (1);
+    }
+
+    console.log(acoustic_snapshot);
+    // get snapshot data
+
+
+    console.log(document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`));
+
+    var snapshot_filepath = acoustic_snapshot.sound_source;
+    var sample_rate = acoustic_snapshot.sample_rate;
+    // var mycolorMap = colors['jet'];
+
+
+    wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
+        container: document.querySelector(el_id),
+        waveColor: '#4F4A85',
+        progressColor: '#cc3359',
+        barWidth: 10,
+        barRadius: 10,
+        url: snapshot_filepath,
+        sampleRate: Math.min(sample_rate, 190000),
+        // sampleRate: sample_rate,
+
+        // sampleRate: Math.min(sample_rate)
+    })
+    // wavesurfers[acoustic_snapshot.snapshot_id].load(snapshot_filepath);
+    console.log(wavesurfers[acoustic_snapshot.snapshot_id]);
+    //190
+    console.log(sample_rate);
+    const Spectrogram = (await import("https://unpkg.com/wavesurfer.js@7/dist/plugins/spectrogram.esm.js")).default;
+    // Initialize the Spectrogram plugin
+
+    // wavesurfer.addEventListener('ready', (duration) => {
+    //     Spectrogram?.destroy();
+    //     alert('decoded');
+    //     // wavesurfer.registerPlugin(this.spectrogram);
+    //     wavesurfer.registerPlugin(
+    //     Spectrogram.create({
+    //         container: document.querySelector(el_id),
+    //         labels: true,
+    //         height: 400,
+    //         colorMap: colors['jet'],
+    //         splitChannels: true,
+    //         fftSamples: 1024,
+    //     }),
+    // )
+    //     });
+
+    // create spectrogram
+    console.log("new spec routine for : " + acoustic_snapshot.snapshot_id);
+    BuildAcousticSpectrograms_server(ss_id = acoustic_snapshot.snapshot_id, custom = 0, custom_filename = "none", custom_sr = sample_rate, min_f = 0, max_f = 0, n_fft = fft_samples, acoustic_snapshot.timeframe_start, acoustic_snapshot.timeframe_end, acoustic_snapshot.hydrophone_location);
+
+    wavesurfers[acoustic_snapshot.snapshot_id].on('ready', () => {
+        document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`).getElementsByTagName("h4")[0].textContent = "Custom Analysis Data";
+        wavesurfers[acoustic_snapshot.snapshot_id].setTime(1)
+        console.log("ready");
+        // create spectrogram
+        //BuildAcousticSpectrograms_server(ss_id=acoustic_snapshot.snapshot_id, custom=0, custom_filename="none", custom_sr=sample_rate, min_f=0, max_f=0, n_fft=fft_samples)
+        // toggle_acoustic_table(acoustic_snapshot.snapshot_id);
+    })
+    wavesurfers[acoustic_snapshot.snapshot_id].on('interaction', () => {
+        wavesurfers[acoustic_snapshot.snapshot_id].play()
+        // 
+    })
+    wavesurfers[acoustic_snapshot.snapshot_id].on('error', function (e) {
+        console.error('WaveSurfer error:', e);
+    });
+    wavesurfers[acoustic_snapshot.snapshot_id].on('decode', function (e) {
+        console.log('WaveSurfer decode:', e);
+        console.log('WaveSurfer decode:', sample_rate);
+
+        // wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
+        // container: document.querySelector(el_id),
+        // waveColor: '#4F4A85',
+        // progressColor: '#cc3359',
+        // barWidth: 10,
+        // barRadius: 10,
+        // url: snapshot_filepath,
+        // sampleRate: Math.min(sample_rate, 190000)
+        // sampleRate: Math.min(sample_rate)
+        // })
+
+
+    });
+
+
+    acoustic_detail[acoustic_snapshot.snapshot_id] = "loaded";
+}
+
+
+//BuildCustomAcousticSpectrograms
 
 async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
-        //var acoustic_snapshot = application_data.acoustic_data.get_snapshot(acoustic_snapshot_id);
-     
+    //var acoustic_snapshot = application_data.acoustic_data.get_snapshot(acoustic_snapshot_id);
 
-        // if (acoustic_snapshot.snapshot_id in wavesurfers) {
-        //     console.log("already built");
-        //     //return (1);
-        // }
 
-        // get parameters
-        var min_f = parseInt(document.getElementById(`min_f_${acoustic_snapshot_id}`).value);
-        var max_f = parseInt(document.getElementById(`max_f_${acoustic_snapshot_id}`).value);
-        console.log(min_f, max_f);
+    // if (acoustic_snapshot.snapshot_id in wavesurfers) {
+    //     console.log("already built");
+    //     //return (1);
+    // }
 
-        var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot_id}`).value);
-        if (fft_samples == "select") {
-            alert("Please enter number fft samples.")
-            return(1);
-        }
-        var fft_cm = document.getElementById(`cm_sample_select_${acoustic_snapshot_id}`).value;
-        console.log(fft_cm);
-        console.log(fft_samples);
-    
-        var el_id = `#group-visual`;
-        var gel = document.getElementById(`group-visual`);
-        gel.innerHTML = "<h4>Creating acoustic data...</h4>";
+    // get parameters
+    var min_f = parseInt(document.getElementById(`min_f_${acoustic_snapshot_id}`).value);
+    var max_f = parseInt(document.getElementById(`max_f_${acoustic_snapshot_id}`).value);
+    console.log(min_f, max_f);
 
-        console.log(`building ${acoustic_snapshot_id}`)
+    var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot_id}`).value);
+    if (fft_samples == "select") {
+        alert("Please enter number fft samples.")
+        return (1);
+    }
+    var fft_cm = document.getElementById(`cm_sample_select_${acoustic_snapshot_id}`).value;
+    console.log(fft_cm);
+    console.log(fft_samples);
 
-        console.log("building spec");
-        console.log(acoustic_detail);
+    var el_id = `#group-visual`;
+    var gel = document.getElementById(`group-visual`);
+    gel.innerHTML = "<h4>Creating acoustic data...</h4>";
 
-        if ((acoustic_snapshot_id in acoustic_detail)) {
-            console.log("already build");
-            //return (1);
-        }
-        
-        //console.log(acoustic_snapshot);
-        // get snapshot data
-       
+    console.log(`building ${acoustic_snapshot_id}`)
 
-        //console.log(document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`));
+    console.log("building spec");
+    console.log(acoustic_detail);
 
-        // var snapshot_filepath = acoustic_snapshot.sound_source;
-        // var sample_rate = acoustic_snapshot.sample_rate;
+    if ((acoustic_snapshot_id in acoustic_detail)) {
+        console.log("already build");
+        //return (1);
+    }
+
+    //console.log(acoustic_snapshot);
+    // get snapshot data
+
+
+    //console.log(document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`));
+
+    // var snapshot_filepath = acoustic_snapshot.sound_source;
+    // var sample_rate = acoustic_snapshot.sample_rate;
     // var mycolorMap = colors['jet'];
-        var snapshot_filepath = application_data.track_analysis.audio_file_url;
+    var snapshot_filepath = application_data.track_analysis.audio_file_url;
     var sample_rate = application_data.track_analysis.acoustic_snapshots[0].sample_rate;
     var location = application_data.track_analysis.acoustic_snapshots[0].hydrophone_location;
-        var time_start = application_data.track_analysis.start_time_js;
-        var time_end = application_data.track_analysis.end_time_js;
+    var time_start = application_data.track_analysis.start_time_js;
+    var time_end = application_data.track_analysis.end_time_js;
 
-        console.log(snapshot_filepath);
+    console.log(snapshot_filepath);
 
-        wavesurfers[acoustic_snapshot_id] = WaveSurfer.create({
-            container: document.querySelector(el_id),
-            waveColor: '#4F4A85',
-            progressColor: '#cc3359',
-            barWidth: 10,
-            barRadius: 10,
-            url: snapshot_filepath,
-            sampleRate: Math.min(sample_rate, 190000),
-           
-            // sampleRate: Math.min(sample_rate)
-        })
-        // // wavesurfers[acoustic_snapshot.snapshot_id].load(snapshot_filepath);
-        // //console.log(wavesurfers[acoustic_snapshot.snapshot_id]);
-        // //190
-        // console.log(sample_rate);
-        // const Spectrogram = (await import("https://unpkg.com/wavesurfer.js@7/dist/plugins/spectrogram.esm.js")).default;
-        // // Initialize the Spectrogram plugin
-        
-        // // wavesurfer.addEventListener('ready', (duration) => {
-        // //     Spectrogram?.destroy();
-        // //     alert('decoded');
-        // //     // wavesurfer.registerPlugin(this.spectrogram);
-        // //     wavesurfer.registerPlugin(
-        // //     Spectrogram.create({
-        // //         container: document.querySelector(el_id),
-        // //         labels: true,
-        // //         height: 400,
-        // //         colorMap: colors['jet'],
-        // //         splitChannels: true,
-        // //         fftSamples: 1024,
-        // //     }),
-        // // )
-        // //     });
+    wavesurfers[acoustic_snapshot_id] = WaveSurfer.create({
+        container: document.querySelector(el_id),
+        waveColor: '#4F4A85',
+        progressColor: '#cc3359',
+        barWidth: 10,
+        barRadius: 10,
+        url: snapshot_filepath,
+        sampleRate: Math.min(sample_rate, 190000),
+
+        // sampleRate: Math.min(sample_rate)
+    })
+    // // wavesurfers[acoustic_snapshot.snapshot_id].load(snapshot_filepath);
+    // //console.log(wavesurfers[acoustic_snapshot.snapshot_id]);
+    // //190
+    // console.log(sample_rate);
+    // const Spectrogram = (await import("https://unpkg.com/wavesurfer.js@7/dist/plugins/spectrogram.esm.js")).default;
+    // // Initialize the Spectrogram plugin
+
+    // // wavesurfer.addEventListener('ready', (duration) => {
+    // //     Spectrogram?.destroy();
+    // //     alert('decoded');
+    // //     // wavesurfer.registerPlugin(this.spectrogram);
+    // //     wavesurfer.registerPlugin(
+    // //     Spectrogram.create({
+    // //         container: document.querySelector(el_id),
+    // //         labels: true,
+    // //         height: 400,
+    // //         colorMap: colors['jet'],
+    // //         splitChannels: true,
+    // //         fftSamples: 1024,
+    // //     }),
+    // // )
+    // //     });
 
 
-    
+
     //new spec
     console.log("pass url : " + snapshot_filepath);
     BuildAcousticSpectrograms_server(ss_id = "", custom = 1, custom_filename = snapshot_filepath, custom_sr = sample_rate, min_f = min_f, max_f = max_f, n_fft = fft_samples, time_start, time_end, location);
 
-    
-        wavesurfers[acoustic_snapshot_id].on('ready', () => {
-            document.getElementById(`group-visual`).getElementsByTagName("h4")[0].textContent = "Custom Analysis Data";
-            wavesurfers[acoustic_snapshot_id].setTime(1)
-            console.log("ready");
+
+    wavesurfers[acoustic_snapshot_id].on('ready', () => {
+        document.getElementById(`group-visual`).getElementsByTagName("h4")[0].textContent = "Custom Analysis Data";
+        wavesurfers[acoustic_snapshot_id].setTime(1)
+        console.log("ready");
         //     wavesurfers[acoustic_snapshot_id].registerPlugin(
         //     // Spectrogram.create({
         //     //     container: document.querySelector(el_id),
@@ -2726,99 +2730,99 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
         //     //     frequencyMin: min_f
         //     // }),
         // )
-            // toggle_acoustic_table(acoustic_snapshot.snapshot_id);
-            
-            // new spec
-            //BuildAcousticSpectrograms_server(ss_id="", custom=1, custom_filename=snapshot_filepath, custom_sr=sample_rate, min_f=min_f, max_f=max_f, n_fft=fft_samples)
+        // toggle_acoustic_table(acoustic_snapshot.snapshot_id);
 
-        })
-        wavesurfers[acoustic_snapshot_id].on('interaction', () => {
-            wavesurfers[acoustic_snapshot_id].play()
-            // 
-        })
-        wavesurfers[acoustic_snapshot_id].on('error', function(e) {
-            console.error('WaveSurfer error:', e);
-        });
-        wavesurfers[acoustic_snapshot_id].on('decode', function(e) {
-            console.log('WaveSurfer decode:', e);
-            console.log('WaveSurfer decode:', sample_rate);
+        // new spec
+        //BuildAcousticSpectrograms_server(ss_id="", custom=1, custom_filename=snapshot_filepath, custom_sr=sample_rate, min_f=min_f, max_f=max_f, n_fft=fft_samples)
 
-            // wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
-            // container: document.querySelector(el_id),
-            // waveColor: '#4F4A85',
-            // progressColor: '#cc3359',
-            // barWidth: 10,
-            // barRadius: 10,
-            // url: snapshot_filepath,
-            // sampleRate: Math.min(sample_rate, 190000)
-            // sampleRate: Math.min(sample_rate)
+    })
+    wavesurfers[acoustic_snapshot_id].on('interaction', () => {
+        wavesurfers[acoustic_snapshot_id].play()
+        // 
+    })
+    wavesurfers[acoustic_snapshot_id].on('error', function (e) {
+        console.error('WaveSurfer error:', e);
+    });
+    wavesurfers[acoustic_snapshot_id].on('decode', function (e) {
+        console.log('WaveSurfer decode:', e);
+        console.log('WaveSurfer decode:', sample_rate);
+
+        // wavesurfers[acoustic_snapshot.snapshot_id] = WaveSurfer.create({
+        // container: document.querySelector(el_id),
+        // waveColor: '#4F4A85',
+        // progressColor: '#cc3359',
+        // barWidth: 10,
+        // barRadius: 10,
+        // url: snapshot_filepath,
+        // sampleRate: Math.min(sample_rate, 190000)
+        // sampleRate: Math.min(sample_rate)
         // })
 
-            
-        });
+
+    });
 
 
-        acoustic_detail[acoustic_snapshot_id] = "loaded";
+    acoustic_detail[acoustic_snapshot_id] = "loaded";
+}
+
+
+async function BuildGroupAnalysis() {
+
+    var gel = document.getElementById('group-visual');
+    gel.innerHTML = "<h4>No data loaded.</h4>";
+
+    console.log(application_data.track_analysis);
+
+    var test_sound_url = "https://vixen.hopto.org/rs/snapshots/data_ext/snapshots/data/294479/sample_sound_.wav";
+
+    var sample_rate = application_data.track_analysis.acoustic_snapshots[0].sample_rate;
+    console.log(sample_rate);
+
+
+
+
+
+    /*
+    * href for ss_ids
+   */
+    track_analysis_snap_ids = []
+    for (var ij = 0; ij < application_data.track_analysis.acoustic_snapshots.length; ij++) {
+        track_analysis_snap_ids.push(application_data.track_analysis.acoustic_snapshots[ij].snapshot_id);
     }
-    
 
-    async function BuildGroupAnalysis() {
-    
-        var gel = document.getElementById('group-visual');
-        gel.innerHTML = "<h4>No data loaded.</h4>";
+    var ss_link = JSON.stringify(track_analysis_snap_ids);
+    var data = new Blob([ss_link]);
+    // var a = document.getElementById('a');
+    var data_href = URL.createObjectURL(data);
 
-        console.log(application_data.track_analysis);
+    /*
+    * Labelling html
+    */
 
-        var test_sound_url = "https://vixen.hopto.org/rs/snapshots/data_ext/snapshots/data/294479/sample_sound_.wav";
-    
-        var sample_rate = application_data.track_analysis.acoustic_snapshots[0].sample_rate;
-        console.log(sample_rate);
-
-     
-      
+    label_data_download().then((data) => {
 
 
-        /*
-        * href for ss_ids
-       */
-        track_analysis_snap_ids = []
-        for (var ij = 0; ij < application_data.track_analysis.acoustic_snapshots.length; ij++) {
-            track_analysis_snap_ids.push(application_data.track_analysis.acoustic_snapshots[ij].snapshot_id);
-        }
+        var sigs = data['data'];
 
-        var ss_link = JSON.stringify(track_analysis_snap_ids);
-        var data = new Blob([ss_link]);
-        // var a = document.getElementById('a');
-        var data_href = URL.createObjectURL(data);
+        var label = "";
 
-        /*
-        * Labelling html
-        */
-    
-        label_data_download().then((data) => {
-      
-        
-            var sigs = data['data'];
+        for (var j = 0; j < sigs.length; j++) {
 
-            var label = "";
-
-            for (var j = 0; j < sigs.length; j++) {
-                
-                var ss_start_ms = application_data.track_analysis.start_time_ms;
-                var ss_end_ms = application_data.track_analysis.end_time_ms;
-                var sig_start_ms = parseFloat(sigs[j].start_time_ms);
-                var sig_end_ms = parseFloat(sigs[j].end_time_ms);
-                if ((ss_start_ms >= sig_start_ms) && (ss_end_ms <= sig_end_ms)) {
-                    label += `[${sigs[j].user_name}] ${sigs[j].label}`;
-                }
-
-
+            var ss_start_ms = application_data.track_analysis.start_time_ms;
+            var ss_end_ms = application_data.track_analysis.end_time_ms;
+            var sig_start_ms = parseFloat(sigs[j].start_time_ms);
+            var sig_end_ms = parseFloat(sigs[j].end_time_ms);
+            if ((ss_start_ms >= sig_start_ms) && (ss_end_ms <= sig_end_ms)) {
+                label += `[${sigs[j].user_name}] ${sigs[j].label}`;
             }
 
 
+        }
 
-            var el = document.getElementById('group-label');
-            var html = `<br><br>
+
+
+        var el = document.getElementById('group-label');
+        var html = `<br><br>
         <table>
         
         <tr id="fft_${application_data.track_analysis.analysis_id}">
@@ -2903,35 +2907,35 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
            
             </table>
         `;
-            //html = "";
-            el.innerHTML = "";
-            el.innerHTML = html;
+        //html = "";
+        el.innerHTML = "";
+        el.innerHTML = html;
 
-            // build tag
-            fetchUserLabels().then((data) => {
-                html = buildLabelSelect(data, `group_labelsupplyselect_${application_data.track_analysis.start_time_ms}`);
-                var s_el = document.getElementById('tag_select');
-                s_el.innerHTML = html;
-
-
-                // build spectrogram 
-                //BuildCustomAcousticSpectrograms(application_data.track_analysis.analysis_id);
-
-            })
-        });
+        // build tag
+        fetchUserLabels().then((data) => {
+            html = buildLabelSelect(data, `group_labelsupplyselect_${application_data.track_analysis.start_time_ms}`);
+            var s_el = document.getElementById('tag_select');
+            s_el.innerHTML = html;
 
 
+            // build spectrogram 
+            //BuildCustomAcousticSpectrograms(application_data.track_analysis.analysis_id);
 
-    }
+        })
+    });
 
 
-    /*
-    * USER
-    */
 
-    function BuildUserDataWindow() {
-    
-        var html = `
+}
+
+
+/*
+* USER
+*/
+
+function BuildUserDataWindow() {
+
+    var html = `
     <div class="accordion" id="data-accordian-holder" style="display:block">
 
      <div class="accordion-item ">
@@ -3065,94 +3069,145 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
     `;
 
-        var el = document.getElementById("user-data-window");
-        if (el != null) {
-            el.innerHTML = html;
-        }
-
-        // fetchUserLabels((data)=>{
-        //     buildLabelsSetup();
-        // })
-        // fetchUserLabels((data) => {
-        //     buildLabelsSetup();
-        // });
-        fetchUserLabels().then((data) => {
-            console.log(data);
-            buildLabelsSetup(data);
-        })
-
-        show_loader_div('setup-loader');
-        fetchSetups().then((data) => {
-            hide_loader_div('setup-loader');
-            console.log(data);
-            buildSetups(data);
-
-        })
-
-  
-    
-
-        el = document.getElementById("user-data-window-holder");
-       
-        
-        if (el.style.display == "none") {
-            //showDiv(el);
-            // el.style.display = "block";
-            el.style.display = "block";
-        
-        }
-        else {
-            console.log("fds");
-            //hideDiv(el);
-            el.style.display = "none";
-        }
-         el.style.display = "block";
-
-
-        var setup_action_button = document.getElementById("user-save-btn");
-        setup_action_button.onclick = function () {
-            var description = document.getElementById('user-save-description').value;
-            var result = application_data.Save(description);
-        };
-
-   
-    
+    var el = document.getElementById("user-data-window");
+    if (el != null) {
+        el.innerHTML = html;
     }
 
-    // BuildAppDataWindow();
+    // fetchUserLabels((data)=>{
+    //     buildLabelsSetup();
+    // })
+    // fetchUserLabels((data) => {
+    //     buildLabelsSetup();
+    // });
+    fetchUserLabels().then((data) => {
+        console.log(data);
+        buildLabelsSetup(data);
+    })
+
+    show_loader_div('setup-loader');
+    fetchSetups().then((data) => {
+        hide_loader_div('setup-loader');
+        console.log(data);
+        buildSetups(data);
+
+    })
 
 
-    /*
-    *
-    *
-    *   Label selection
-    *
-    */
+
+
+    el = document.getElementById("user-data-window-holder");
+
+
+    if (el.style.display == "none") {
+        //showDiv(el);
+        // el.style.display = "block";
+        el.style.display = "block";
+
+    }
+    else {
+        console.log("fds");
+        //hideDiv(el);
+        el.style.display = "none";
+    }
+    el.style.display = "block";
+
+
+    var setup_action_button = document.getElementById("user-save-btn");
+    setup_action_button.onclick = function () {
+        var description = document.getElementById('user-save-description').value;
+        var result = application_data.Save(description);
+    };
 
 
 
+}
 
-    function buildLabelsSetup(labels) {
 
-    
 
-        console.log("label setup");
+// BuildAppDataWindow();
 
-        var html = `
+
+/*
+*
+*
+*   Label selection
+*
+*/
+
+function BuildSave(content_id) {
+
+    var html = "";
+
+    if (application_data == null) {
+        html = `<div class="center-message">No application to save. Create an application from the toolbar.</div>`;
+
+        var el = document.getElementById(content_id);
+        el.innerHTML = html;
+
+        return;
+    }
+
+    html = `
+    <div style="padding:20px">
+      <div class="containter">
+            <div class="row">
+                <div class="col-12">
+
+                <table>
+                    <tr>
+                        <td>
+                         <div class="input-group">
+                            <span class="input-group-text">Description</span>
+                            <textarea rows="1" class="form-control" aria-label="With textarea" value="" id="user-save-description"></textarea>
+                        </div>
+                        </td>
+                        <td>
+
+                              <button type="button" class="btn btn-primary" id="user-save-btn">Save Application</button>
+                       
+                        </td>
+                    </tr>
+                </table>
+
+                </div>
+            </div>
+           </div></div>`;
+
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+
+    var setup_action_button = document.getElementById("user-save-btn");
+    setup_action_button.onclick = function () {
+        var description = document.getElementById('user-save-description').value;
+        var result = application_data.Save(description);
+    };
+
+
+}
+
+
+function buildLabelsSetup(labels) {
+
+
+
+    console.log("label setup");
+
+    var html = `
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="tags">`;
 
 
-        for (var i = 0; i < labels.length; i++) {
-            html += ` <span class="w3-tag w3-blue w3-large" id="v-30">${labels[i].tag} <span style="cursor:pointer;" onclick="removeLabel('${labels[i].tag}')"> [x] </span></span>
+    for (var i = 0; i < labels.length; i++) {
+        html += ` <span class="w3-tag w3-blue w3-large" id="v-30">${labels[i].tag} <span style="cursor:pointer;" onclick="removeLabel('${labels[i].tag}')"> [x] </span></span>
                 `;
-        }
-                   
-                
-                
-        html += `</div>
+    }
+
+
+
+    html += `</div>
             </div>
         </div>
     </div>
@@ -3179,168 +3234,100 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
             </table>
     `;
 
-        var el = document.getElementById('labels-setup-body');
-        el.innerHTML = html;
+    var el = document.getElementById('labels-setup-body');
+    el.innerHTML = html;
 
 
-    }
+}
 
-    // the are the labels we add use to tag!!!
-    const fetchUserLabels = () => {
+// the are the labels we add use to tag!!!
+const fetchUserLabels = () => {
 
-        return new Promise((resolve, reject) => {
-            var success = true;
-
-
-            var user_uid = user.user_uid;
-            var label_url = label_api_url + `/${user_uid}`;
-            var label_data = null;
-            console.log(label_url);
-            $.getJSON(label_url, function (data) {
-
-                //console.log(data['data']);
-                label_data = data['data'];
-                if (success) {
-                    // console.log(label_data);
-                    resolve(label_data);
-                } else {
-                    eject(Error("Error in data download."));
-                }
-            });
+    return new Promise((resolve, reject) => {
+        var success = true;
 
 
-       
+        var user_uid = user.user_uid;
+        var label_url = label_api_url + `/${user_uid}`;
+        var label_data = null;
+        console.log(label_url);
+        $.getJSON(label_url, function (data) {
+
+            //console.log(data['data']);
+            label_data = data['data'];
+            if (success) {
+                // console.log(label_data);
+                resolve(label_data);
+            } else {
+                eject(Error("Error in data download."));
+            }
         });
 
 
-    };
 
-    function buildLabelSelect(data, id) {
+    });
 
-        var html = `
+
+};
+
+function buildLabelSelect(data, id) {
+
+    var html = `
     <select class="form-control" id="${id}"name="label_supply" onchange="";>
     `;
-        for (var i = 0; i < data.length; i++) {
-            html += `<option value="${data[i].tag}">${data[i].tag}</option>`;
-        }
-      
+    for (var i = 0; i < data.length; i++) {
+        html += `<option value="${data[i].tag}">${data[i].tag}</option>`;
+    }
 
-        html += `  
+
+    html += `  
     </select>
     `;
 
-        return html;
+    return html;
 
-    }
-
-
-
-    /*
-    * Load / Save setups
-    */
+}
 
 
-    const fetchSetups = () => {
 
-        return new Promise((resolve, reject) => {
-            var success = true;
-
-
-            var user_uid = user.user_uid;
-            var label_url = setup_api_url + `/${user_uid}`;
-            var label_data = null;
-            console.log(label_url);
-            $.getJSON(label_url, function (data) {
-
-                //console.log(data['data']);
-                label_data = data['data'];
-                if (success) {
-                    resolve(label_data);
-                } else {
-                    eject(Error("Error in data download."));
-                }
-            });
+/*
+* Load / Save setups
+*/
 
 
-       
+const fetchSetups = () => {
+
+    return new Promise((resolve, reject) => {
+        var success = true;
+
+
+        var user_uid = user.user_uid;
+        var label_url = setup_api_url + `/${user_uid}`;
+        var label_data = null;
+        console.log(label_url);
+        $.getJSON(label_url, function (data) {
+
+            //console.log(data['data']);
+            label_data = data['data'];
+            if (success) {
+                resolve(label_data);
+            } else {
+                eject(Error("Error in data download."));
+            }
         });
 
 
-    };
 
-    function buildSetups(data) {
-
-
-        var html = "";
-        html = `
-
-    <div class="container">
-
-    <div class="row">
-    <h3>My Data Setups</h3>
-    <br>
-    </div>
-    
-    <div class="row">
-        <div class="col-12">
-            <table class="table table-hover">
-            <thead>
-                <th>
-                Start 
-                </th>
-                <th>
-                End
-                </th>
-                <th>
-                Location
-                </th>
-                <th>
-                Description
-                </th>
-                <th>
-                Load
-                </th>
-            </thead>
-            <tbody>`;
-         
-        for (var i = 0; i < data.length; i++) {
-            console.log(data[i]);
-            html += `
-        <tr>
-        <td>${data[i].start_time}</td> 
-        <td>${data[i].end_time}</td>
-        <td>${data[i].location}</td>
-        <td>${data[i].description}</td>
-      
-        <td>
-        <span class="w3-tag w3-blue w3-large" onclick="load_app_setup('${data[i].setup_id}')" style="cursor:pointer">Load Setup</span
-      
-        </tr>`;
-        }
-            
-            
-        html += `</tbody>
-            
-            </table>
-        </div>
-    </div>
-
-    </div>
-
-    `;
-
-        var el = document.getElementById('data-setups-body');
-        el.innerHTML = html;
+    });
 
 
+};
 
-    }
-
-function buildSetups_new(data, content_id) {
+function buildSetups(data) {
 
 
     var html = "";
-    html = `§
+    html = `
 
     <div class="container">
 
@@ -3381,8 +3368,79 @@ function buildSetups_new(data, content_id) {
         <td>${data[i].description}</td>
       
         <td>
-        <span class="w3-tag w3-blue w3-large" onclick="load_app_setup('${data[i].setup_id}')" style="cursor:pointer">Load Setup</span
+
+        <!--<span class="w3-tag w3-blue w3-large" onclick="load_app_setup('${data[i].setup_id}')" style="cursor:pointer">Load Setup</span>-->
+        <button type="button" class="btn btn-primary" onclick="load_app_setup('${data[i].setup_id}')">Load</button>
+         
+        </tr>`;
+    }
+
+
+    html += `</tbody>
+            
+            </table>
+        </div>
+    </div>
+
+    </div>
+
+    `;
+
+    var el = document.getElementById('data-setups-body');
+    el.innerHTML = html;
+
+
+
+}
+
+function buildSetups_new(data, content_id) {
+
+
+    var html = "";
+    html = `<br>
+
+    <div class="container">
+
+    <div class="row">
+    <h3>My Data Setups</h3>
+    <br>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-hover">
+            <thead>
+                <th>
+                Start 
+                </th>
+                <th>
+                End
+                </th>
+                <th>
+                Location
+                </th>
+                <th>
+                Description
+                </th>
+                <th>
+                Load
+                </th>
+            </thead>
+            <tbody>`;
+
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        html += `
+        <tr>
+        <td>${data[i].start_time}</td> 
+        <td>${data[i].end_time}</td>
+        <td>${data[i].location}</td>
+        <td>${data[i].description}</td>
       
+        <td>
+        <!--<span class="w3-tag w3-blue w3-large" onclick="load_app_setup('${data[i].setup_id}')" style="cursor:pointer">Load Setup</span>-->
+         <button type="button" class="btn btn-primary" onclick="load_app_setup('${data[i].setup_id}')">Load</button>
+       
         </tr>`;
     }
 
@@ -3406,19 +3464,130 @@ function buildSetups_new(data, content_id) {
 
 
 
+function BuildGoto(content_id) {
+
+    var html = `
+    <br>
+        <div class="container">
+        <div class="row">
+        <div class="col-12">
+
+        
+           `;
+
+    html += `
+             <select class="form-select mb-3" aria-label="Data Location" id = "location_select">
+              <option selected value="">Select Acoustic Data Location</option>
+           `;
+    // alert(user.user_uid);
+    for (const [key, value] of Object.entries(marlin_locations)) {
+        var leg_users = location_permissions[key];
+        console.log(leg_users);
+        console.log(user.user_uid);
+        if (leg_users.includes(user.user_uid)) {
+
+            html += `<option  value="${key}">${value}</option>`;
+        }
+
+
+    }
+    //     <option selected value="">Select Acoustic Data Location</option>
+    //     <option value="netley">Netley Test - Debug</option>   
+    //     <option value="so1">Sussex Observatory Test - Debug</option>
+    //     <option value="so1_server">Sussex Observatory [1] Product</option>
+    //     <option value="brixham">Brixham Product</option>
+    //     <option value="67149847">HP [67149847]</option>
+
+    html += `
+             </select>`;
+
+
+    html += `
+
+  </div>
+  `;
+
+    var focus_start = "";
+    var focus_end = "";
 
 
 
-    /*
-    * View Signarures
-    *
-    */
+    html += `
+  </div>
+     <div class="row">
+         <div class="col-12">
+           
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Start Time" aria-label="Start Time" value="2019-12-13 12:50:00 UTC" id="start_time_input">
+            <span class="input-group-text">-</span>
+            <input type="text" class="form-control" placeholder="End Time" aria-label="End Time" value="2019-12-13 13:20:00 UTC" id="end_time_input">
+            </div>
+            </div>
+
+</div>
+
+    <div class="row">
+        <div class="col-12">
+             <button type="button" class="btn btn-primary" onclick="goto_app()">Seek</button>
+       
+        </div>
+    </div>
+  
+  
+  </div>
+    `;
 
 
-    function BuildSignatureWindow() {
-    
-        console.log('building signatures');
-        var html = `
+    var el = document.getElementById(content_id);
+    el.innerHTML = html;
+
+      var loc_el = document.getElementById('location_select');
+    loc_el.onchange = function () {
+        var val = loc_el.options[loc_el.selectedIndex].value;
+        if (val == "brixham") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2024-02-24 12:00:00 UTC";
+
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2024-02-24 13:10:00 UTC";
+        }
+
+        if (val == "so1_server") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2023-06-11 12:00:00 UTC";
+
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2023-07-11 13:10:00 UTC";
+        }
+
+        
+
+    };
+
+}
+
+
+function goto_app() {  
+
+    show_loader();
+    start_time = document.getElementById('start_time_input').value;
+    end_time = document.getElementById('end_time_input').value;
+    location_value = document.getElementById('location_select').value;
+    console.log(start_time, end_time, location_value);
+    init_application(3000, start_time, end_time, location_value);
+
+}
+
+/*
+* View Signarures
+*
+*/
+
+
+function BuildSignatureWindow() {
+
+    console.log('building signatures');
+    var html = `
     
     <div class = "container">
     
@@ -3442,76 +3611,77 @@ function buildSetups_new(data, content_id) {
     
     `;
 
-        var el = document.getElementById("signature-data-window");
-        el.innerHTML = html;
+    var el = document.getElementById("signature-data-window");
+    el.innerHTML = html;
 
 
-        el = document.getElementById("signature-data-window-holder");
-   
-        if (el.style.display == "none") {
-            //showDiv(el);
-            // el.style.display = "block";
-            console.log("show")
-            el.style.display = "block";
-        
-        }
-        else {
-            //console.log("fds");
-            //hideDiv(el);
-            el.style.display = "none";
-            return (1);
-        }
+    el = document.getElementById("signature-data-window-holder");
 
-
-        fetchSignatures().then((data) => {
-            console.log(data);
-            build_signature_table(data);
-
-        })
-
-
-
-
-
-
+    if (el.style.display == "none") {
+        //showDiv(el);
+        // el.style.display = "block";
+        console.log("show")
+        el.style.display = "block";
 
     }
-
-    const fetchSignatures = () => {
-
-        return new Promise((resolve, reject) => {
-            var success = true;
-
-
-            var user_uid = user.user_uid;
-            var label_url = signatures_api_url;
-            var label_data = null;
-            console.log(label_url);
-            $.getJSON(label_url, function (data) {
-
-                signature_data = data['data'];
-                if (success) {
-                    resolve(signature_data);
-                } else {
-                    eject(Error("Error in data download."));
-                }
-            });
+    else {
+        //console.log("fds");
+        //hideDiv(el);
+        el.style.display = "none";
+        return (1);
+    }
 
 
-       
+    fetchSignatures().then((data) => {
+        console.log(data);
+        build_signature_table(data);
+
+    })
+
+
+
+
+
+
+
+}
+
+const fetchSignatures = () => {
+
+    return new Promise((resolve, reject) => {
+        var success = true;
+
+
+        var user_uid = user.user_uid;
+        var label_url = signatures_api_url;
+        var label_data = null;
+        console.log(label_url);
+        $.getJSON(label_url, function (data) {
+
+            signature_data = data['data'];
+            console.log(signature_data);
+            if (success) {
+                resolve(signature_data);
+            } else {
+                eject(Error("Error in data download."));
+            }
         });
 
 
-    };
+
+    });
+
+
+};
 
 
 var signature_data = {};
 
 function build_signature_table(data, t_win_id) {
-    
+
     signature_data = {};
 
-  
+
 
     var html = `
      
@@ -3534,7 +3704,7 @@ function build_signature_table(data, t_win_id) {
 `;
     console.log(data);
 
-  
+
     for (var i = 0; i < data.length; i++) {
 
         var valid_now = false;
@@ -3543,34 +3713,34 @@ function build_signature_table(data, t_win_id) {
             var application_end_time = application_data.application_clock.application_focus_end_time;
             var app_location = application_data.application_setup.setup_data.listener_location;
             // check if any labels in app timeframe
-           
 
-                if (app_location == data[i]['listener_location'])
-                {
-                    console.log("location valid now");
-                    if ((data[i]['start_time_ms'] > application_start_time) && (data[i]['start_time_ms'] < application_end_time))
-                    {
-                        console.log("valid now");
-                        valid_now = true;
-                    }
+
+            if (app_location == data[i]['listener_location']) {
+                console.log("location valid now");
+                if ((data[i]['start_time_ms'] > application_start_time) && (data[i]['start_time_ms'] < application_end_time)) {
+                    console.log("valid now");
+                    valid_now = true;
                 }
-                    
+            }
 
-            
+
+
         }
 
         //console.log(data[i]); 
-        signature_data[data[i]['signature_id']] =data[i];
-          
+        signature_data[data[i]['signature_id']] = data[i];
+
 
         var start_ms = parseInt(data[i].start_time_ms);
         var end_ms = parseInt(data[i].end_time_ms);
-        var start_time_js = time_string(start_ms)[2];
-        var end_time_js = time_string(end_ms)[2];
-        
+        // var start_time_js = time_string(start_ms)[2];
+        // var end_time_js = time_string(end_ms)[2];
+        var start_time_js = time_string(start_ms)[6];
+        var end_time_js = time_string(end_ms)[6];
+
         // if (data[i]['user_uid'] == user.user_uid) {
-        if (data[i]['user_uid'] == "001elen") {
-                
+        if (data[i]['user_uid'] == user.user_uid) {
+
             if (valid_now) {
 
                 html += ` <tr class="table-success">`;
@@ -3601,15 +3771,15 @@ function build_signature_table(data, t_win_id) {
             `;
 
             if (valid_now) {
-                
-                  html += `<td><i class="fas fa-forward" style="cursor:pointer"onclick="playAcousticLabel(${data[i]['start_time_ms']})"></i></td>`
+
+                html += `<td><i class="fas fa-forward" style="cursor:pointer"onclick="playAcousticLabel(${data[i]['start_time_ms']})"></i></td>`
             }
             else {
                 html += ` <td> <button type="button"class="btn btn-success" onclick="spawn_sig_app('${data[i]['signature_id']}')">View</button></td>
             `;
             }
-               
-            
+
+
             html += `
             <!--<td>
                <td> <button type="button"class="btn btn-success" onclick="spawn_sig('${data[i]['signature_id']}')" disbled>Summary</button></td>
@@ -3623,47 +3793,47 @@ function build_signature_table(data, t_win_id) {
             
             `;
 
-            
-            
-          
+
+
+
         }
 
-       
+
     }
-     html += `
+    html += `
             </tbody>
         </table>`;
-    
 
-        var el = document.getElementById(t_win_id);
-        el.innerHTML = html;
-    
-    
-        return html;
+
+    var el = document.getElementById(t_win_id);
+    el.innerHTML = html;
+
+
+    return html;
 
 }
 
 
 
-function spawn_sig_app(sig_data_id){
+function spawn_sig_app(sig_data_id) {
     var sig_data = signature_data[sig_data_id];
     var _location_val = sig_data['listener_location'];
     console.log(sig_data['start_time_ms']);
-    var _start_time = time_string(parseInt(sig_data['start_time_ms'])-300000)[6];
+    var _start_time = time_string(parseInt(sig_data['start_time_ms']) - 300000)[6];
     console.log(_start_time);
-    var _end_time = time_string(parseInt(sig_data['end_time_ms'])+300000)[6];
+    var _end_time = time_string(parseInt(sig_data['end_time_ms']) + 300000)[6];
     console.log(_end_time);
     console.log(_location_val);
     // no application loaded yet
 
     if (application_data == null) {
         show_loader();
-          filter_data_download_analyse(_location_val, _start_time, _end_time);
+        filter_data_download_analyse(_location_val, _start_time, _end_time);
     }
     else {
         alert("There is currently an active application. Please close first.");
     }
-  
+
 
 }
 

@@ -12,6 +12,28 @@
 
 }
 
+#messenger {
+  padding:20px;
+}
+
+#loader-messager {
+  padding: 20px;
+}
+
+.loader-messager {
+  padding: 20px;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--background);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.loader{
+  color:green;
+}
 
 .preloader {
   display: flex;

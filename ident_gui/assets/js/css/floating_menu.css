@@ -191,7 +191,8 @@ footer p a:hover {
     margin: 0 12px;
     width: 40px;
     height: 40px;
-    font-family: "Noto Sans", sans-serif;
+    /* font-family: "Noto Sans", sans-serif; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     outline: none;
     border: 0;
     text-decoration: none;
@@ -217,14 +218,14 @@ footer p a:hover {
 }
 
 .fab .fabNav a i {
-    color:var(--navbar-dark-secondary);
-    color:green;
+    color: var(--navbar-dark-secondary);
+    color: green;
     transition: 0.25s;
 }
 
 .fab .fabNav a:hover:before {
     background-color: #000;
-     background-color: var(--navbar-dark-secondary);
+    background-color: var(--navbar-dark-secondary);
 
 }
 
@@ -242,15 +243,16 @@ footer p a:hover {
     z-index: -2;
     padding: 10px;
     color: #0b0000;
+    color: white;
     font-size: 12px;
     border-radius: 5px;
-    /* background: rgba(32, 88, 4, 0.8); */
+    background: rgba(32, 88, 4, 0.8);
     opacity: 0;
     visibility: hidden;
     cursor: default;
     pointer-events: none;
     transition: 0.5s;
-    width:300px;
+    width: 100px;
 }
 
 .fabHorizontal {

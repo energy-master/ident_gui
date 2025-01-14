@@ -1,7 +1,7 @@
 
 
 
-class AcousticData{
+class AcousticData {
 
     // list of snapshot ids in acoustic dataset
     snapshot_ids = [];
@@ -14,7 +14,7 @@ class AcousticData{
 
     // -- raw data
     raw_acoustic_data_source = null;
-    
+
     // -- active snapshot id
     active_snapshot_id = 0;
 
@@ -26,15 +26,15 @@ class AcousticData{
         return this.snapshots[snapshot_id];
     }
 
-    get_snapshots_for_timeframe(start_time_ms, end_time_ms){
+    get_snapshots_for_timeframe(start_time_ms, end_time_ms) {
 
-        
+
         var valid_ids = [];
         var valid_snapshots = [];
 
-        for (var i=0; i<this.snapshot_ids.length; i++){
+        for (var i = 0; i < this.snapshot_ids.length; i++) {
             var snap = this.snapshots[this.snapshot_ids[i]];
-            
+
             var snap_start_t = snap.timeframe_start_ms;
             if ((snap_start_t >= start_time_ms) && (snap_start_t < end_time_ms)) {
                 console.log(snap);
@@ -42,7 +42,7 @@ class AcousticData{
             }
         }
 
-        for (var i=0; i<valid_ids.length;i++){
+        for (var i = 0; i < valid_ids.length; i++) {
             valid_snapshots.push(this.snapshots[valid_ids[i]]);
         }
 
@@ -55,16 +55,16 @@ class AcousticData{
 
 }
 
-class Snapshot{
+class Snapshot {
 
 
     constructor(snapshot_id = isRequired(), timeframe_start = isRequired(), timeframe_end = isRequired(),
-     timeframe_start_js = isRequired(), timeframe_end_js = isRequired(),
-      timeframe_start_ms = isRequired(), timeframe_end_ms = isRequired(),
+        timeframe_start_js = isRequired(), timeframe_end_js = isRequired(),
+        timeframe_start_ms = isRequired(), timeframe_end_ms = isRequired(),
         hydrophone_location = isRequired(), spec_location = isRequired(), density = isRequired(),
-    sample_rate = isRequired()) {
-        
-       
+        sample_rate = isRequired()) {
+
+
         this.snapshot_id = snapshot_id;
         this.timeframe_start = timeframe_start;
         this.timeframe_end = timeframe_end;
@@ -76,11 +76,11 @@ class Snapshot{
         this.spec_location = spec_location;
         this.density = density;
         this.sample_rate = sample_rate;
-        
-        
 
 
-        
+
+
+
     }
     label_data = [];
     delta_t = 0;
@@ -98,14 +98,14 @@ class Snapshot{
     density = 0;
     audio_filepath = "";
     sample_rate = 0;
-   
-    data = null;
-    
 
-    
+    data = null;
+
+
+
 }
 
-class AcousticPlayer{
+class AcousticPlayer {
 
     playing = false;
     audio_source = "";
@@ -113,11 +113,11 @@ class AcousticPlayer{
     audio = null;
     seeking = false;
 
-    constructor() { 
+    constructor() {
         this.audio = document.querySelector('#audio');
         this.audio.addEventListener('timeupdate', this.song_playing);
     }
-    
+
 
     pause() {
 
@@ -133,13 +133,13 @@ class AcousticPlayer{
         this.playing = false;
         this.paused = true;
 
-       
+
 
     }
 
     set_seeking() {
         this.seeking = true;
-      
+
     }
     stop_seeking() {
         this.seeking = false;
@@ -170,7 +170,7 @@ class AcousticPlayer{
 
 
 
-            
+
 
 
                 this.audio.src = this.audio_source;
@@ -178,9 +178,9 @@ class AcousticPlayer{
                 this.audio.currentTime = seek_seconds;
                 console.log(`seek ${seek_seconds}`);
                 this.audio.play();
-                
+
             }
-        
+
             else {
                 this.playing = false;
             }
@@ -188,7 +188,7 @@ class AcousticPlayer{
 
     }
 
-    song_playing = function (e) { 
+    song_playing = function (e) {
 
         //console.log("song playing");
         var snapshot_id = application_data.acoustic_data.active_snapshot_id;
@@ -196,10 +196,10 @@ class AcousticPlayer{
         var ss_start_time = _snapshot.timeframe_start_ms;
         const { duration, currentTime } = e.srcElement;
         console.log(duration, currentTime);
-        application_data.application_clock.application_time =_snapshot.timeframe_start_ms + (currentTime * 1000);
+        application_data.application_clock.application_time = _snapshot.timeframe_start_ms + (currentTime * 1000);
         console.log(application_data.application_clock.application_time);
 
-         //document.dispatchEvent(clockTickEvent);
+        //document.dispatchEvent(clockTickEvent);
 
 
     }

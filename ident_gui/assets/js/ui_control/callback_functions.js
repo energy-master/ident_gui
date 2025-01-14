@@ -141,11 +141,8 @@ function download_analyse( ) {
     var search_range = document.getElementById("search_range").value;
     
 
-
-
     // call the application init and download code.
     init_application(search_range, start_time, end_time, location_value);
-
 
     // display summary of download for analysis
     

@@ -20,7 +20,7 @@ function time_string(time_ms) {
 function set_server_message(messages){
 
     //console.log(messages);
-    var html = `
+    var html = `<br>
     <table>
     `;
 
@@ -38,10 +38,11 @@ function set_server_message(messages){
         html += `
              
             <tr>
-            <td>${print_time}</td>
-            <td> : </td>
-            <td>${msg}</td>
+            <td style="color:red; font-size:16px">${print_time}</td>
+            <td style="color:green; font-size:16px"> : </td>
+            <td style="color:green; font-size:16px">${msg}</td>
             </tr>
+            <tr></tr>
 
         `;
 

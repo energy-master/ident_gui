@@ -59,12 +59,12 @@ setup_action_button.onclick = function () {
 *   Link call to save applicaiton call in menu
 */
 
-var setup_action_button = document.getElementById("save-nav");
-setup_action_button.onclick = function () {
+// var setup_action_button = document.getElementById("save-nav");
+// setup_action_button.onclick = function () {
 
-    var result = application_data.Save("");
+//     var result = application_data.Save("");
 
-};
+// };
 
 
 
@@ -139,6 +139,8 @@ function ToolbarClick(data_type) {
 
 
     }
+
+
     if (data_type == "data-labels") {
 
         var window_id = createWindow("My Labels", "label-data");
@@ -261,6 +263,35 @@ function ToolbarClick(data_type) {
         BuildSavedApplicationsList(content_id);
 
     }
+
+    if (data_type == "save-nav") {
+        
+        var window_id = createWindow("Save Application", "save-nav");
+        var el = document.getElementById(window_id);
+        el.style.top = '300px';
+        el.style.left = '400px';
+        el.style.width = '700px';
+        el.style.height = '200px';
+        var content_id = `${window_id}_content`;
+        BuildSave(content_id);
+        
+
+    }
+
+    if (data_type == "goto-data") {
+
+        var window_id = createWindow("Seek Data", "goto-data");
+        var el = document.getElementById(window_id);
+        el.style.top = '10%';
+        el.style.left = '25%';
+        el.style.width = '700px';
+        el.style.height = '250px';
+        var content_id = `${window_id}_content`;
+        BuildGoto(content_id);
+
+
+    }
+    
 
 
 
