@@ -25,8 +25,9 @@ function build_floating_menu() {
       </a>
     </div>
     <div class="fabNav fabNav--right">
-    <a href="#" style="cursor:pointer" id="acoustic-data"><span class="fabTooltip">View Acoustic Snapshots</span><i class="fas fa-headphones-alt"></i></a>
-     
+
+      <a href="#" style="cursor:pointer" id="acoustic-data"><span class="fabTooltip">View Acoustic Snapshots</span><i class="fas fa-headphones-alt"></i></a>
+      <a href="#" id="study-target"><span class="fabTooltip">Run Search Against Study</span><i class="fas fa-bullseye"></i></a>
       <a href="#" id="study-report"><span class="fabTooltip">Study Analysis</span><i class="fas fa-file"></i></a>
       <a href="#" id="study-tags"><span class="fabTooltip">View Study Labels</span><i class="fas fa-tag"></i></a>
       <a href="#" id="study-label"><span class="fabTooltip">Add a Study Label</span><i class="fas fa-pen"></i></a>
@@ -83,6 +84,9 @@ el.onclick = function () { ToolbarClick('data-labels') };
 
 el = document.getElementById("save-nav");
 el.onclick = function () { ToolbarClick('save-nav') };
+
+el = document.getElementById("study-target");
+el.onclick = function () { ToolbarClick('target') };
 
 
 

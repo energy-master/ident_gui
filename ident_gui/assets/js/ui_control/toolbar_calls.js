@@ -285,7 +285,7 @@ function ToolbarClick(data_type) {
         el.style.top = '10%';
         el.style.left = '25%';
         el.style.width = '700px';
-        el.style.height = '250px';
+        el.style.height = '300px';
         var content_id = `${window_id}_content`;
         BuildGoto(content_id);
 

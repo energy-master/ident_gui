@@ -1186,7 +1186,9 @@ function BuildSavedApplicationsList(content_id) {
 function BuildReportStudy(content_id) {
 
     var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
+    
     console.log(custom_start_ms, custom_end_ms)
+    
     if (custom_start_ms < custom_end_ms) {
         html = "";
 
@@ -1271,7 +1273,7 @@ function BuildReportStudy(content_id) {
 
     }
     else {
-        console.log('dsjfskdfjskl');
+      
         var el = document.getElementById(content_id);
         el.innerHTML = html;
         return;
@@ -1419,13 +1421,17 @@ function ShowTarget(target_window_id) {
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Active Features</div>
-                                            <div id = "start_time-tag" class="h5 mb-0 font-weight-bold text-gray-800">...</div>
+                                                Number Features</div>
+                                            
                                         </div>
                                         <div class="col-auto">
                                             <!-- <i class="fas fa-dollar-sign fa-2x text-gray-300"></i> -->
                                         </div>
                                     </div>
+                                       <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                    <input type="text" class="form-control" placeholder="Number of Features/Bots" aria-label="" value="500" id="forward_number_features">
+                        </div></div>
                                 </div>
                             </div>
                         </div>
@@ -1441,8 +1447,11 @@ function ShowTarget(target_window_id) {
                  
                         <div class="card mb-4">
               <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-               <span id="filter-text" onclick="window.open('game/index.php?snapshot_id=all&location=${application_data.application_setup.setup_data.listener_location}&ss_ids=${get_request}','${Math.floor(Math.random() * 99999)}','width=1000,height=700')">Launch Search</span></div>
-                <div id="filter-command"></div>
+               
+              <!--<span id="filter-text" onclick="window.open('game/index.php?snapshot_id=all&location=${application_data.application_setup.setup_data.listener_location}&ss_ids=${get_request}','${Math.floor(Math.random() * 99999)}','width=1000,height=700')">Search</span></div>-->
+              <span id="filter-text" onclick="run_forward_search('${target_window_id}')">Search</span></div>
+              
+               <div id="filter-command"></div>
                         </div>
          
                         </div>
@@ -1984,13 +1993,56 @@ var custom_start_id = 0;
 var custom_end_id = 0;
 
 
+
+function run_forward_search(calling_window_id){
+
+   // show_loader_div(`report_run_ticker_${calling_window_id}`);
+
+    if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
+        alert("No defined study period.");
+        return (0);
+    }
+
+    // define time window / frame
+    var start_t_ms = custom_start_ms;
+    var end_time_ms = custom_end_ms;
+
+    // set application clock and seek bar
+    application_data.acoustic_player.set_seeking();
+    if (application_data.acoustic_player.playing == true) {
+        application_data.acoustic_player.pause();
+    }
+
+    application_data.application_clock.application_time = start_t_ms;
+    clock_tick();
+    application_data.acoustic_player.stop_seeking();
+
+    // !!! Get list of snapshot ids for defined window frame !!!
+    var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+    console.log(valid_snaps);
+
+    var forward_run_id = Math.floor(Math.random() * 99999);
+
+    // Subit for run
+    // var report_run_url = "https://vixen.hopto.org/rs/api/v1/data/forward_run";
+    // var analysis_id = Math.floor(Math.random() * 99999);
+    // var post_data = {}
+
+    // $.post(report_run_url, JSON.stringify(post_data), function (data) {
+
+   // hide_loader_div(`report_run_ticker_${calling_window_id}`);
+    // });
+
+}
+
+
 function run_report(calling_window_id) {
 
     show_loader_div(`report_run_ticker_${calling_window_id}`);
     // collect data for call
 
     if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
-        alert("need start and end");
+        alert("No defined study period.");
         return (0);
     }
 
@@ -3527,7 +3579,16 @@ function BuildGoto(content_id) {
 </div>
 
     <div class="row">
-        <div class="col-12">
+    <div class="col-6">
+            
+            <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked disabled>
+  <label class="form-check-label" for="flexCheckChecked">
+    Load all GIS layers.
+  </label>
+</div>
+        </div>
+        <div class="col-6">
              <button type="button" class="btn btn-primary" onclick="goto_app()">Seek</button>
        
         </div>
