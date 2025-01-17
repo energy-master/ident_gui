@@ -178,8 +178,8 @@ function ToolbarClick(data_type) {
     if (data_type == "target") {
         var window_id = createWindow("IDent Target", "target");
         var el = document.getElementById(window_id);
-        el.style.width = '25vw';
-        el.style.height = '15vw';
+        el.style.width = '35vw';
+        el.style.height = '20vw';
         el.style.top = '14vw';
         el.style.left = '15vw';
         var content_id = `${window_id}_content`;

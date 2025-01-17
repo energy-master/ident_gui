@@ -129,9 +129,13 @@ function hide_app_screen() {
 }
 
 
-function load_app_setup(load_setup_id){
+function load_app_setup(load_setup_id) {
+    console.log("loading app");
     setup_id = load_setup_id;
+   
     Load();
+   
+    show_play_tools();
 }
 
 function Load(){
@@ -338,7 +342,8 @@ function Load(){
             // alert("Acoustic & vessel data successfully loaded.")
             hide_loader();
             runApp();
-
+            
+            show_play_tools();
         });
 
 

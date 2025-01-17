@@ -260,7 +260,7 @@ function UpdateCustomTimestamps(state = 1) {
     if (state == 1) {
         var start_t = time_string(custom_start_ms)[2];
         var end_t = time_string(custom_end_ms)[1];
-        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t}   <div class="list-view"  style="cursor:pointer; font-size:9px;"><button type="button" class="btn-sm btn-primary " onclick="clear_checkboxes()">New Study</button></div>
+        html = `Study | ${start_t} <i class="fas fa-arrow-circle-right"></i> ${end_t} 
      </div>`;
         el.style.color = "green";
     }
@@ -1039,17 +1039,21 @@ function BuildSearchWindow(content_id) {
 <div class="col-12">
 
         <div class="tags">
-            <span class="w3-tag w3-blue w3-large" id="v-30" onclick="toggleVessel(30)" style="cursor:pointer">Fishing </span>
-            <span class="w3-tag w3-blue w3-large" id="v-40" onclick="toggleVessel(40)" style="cursor:pointer">High Speed Craft</span>
-            <span class="w3-tag w3-blue w3-large" id="v-50" onclick="toggleVessel(50)" style="cursor:pointer">Pilot Vessels</span>
-            <span class="w3-tag w3-blue w3-large" id="v-52" onclick="toggleVessel(52)" style="cursor:pointer">Tug</span>
-            <span class="w3-tag w3-blue w3-large" id="v-53" onclick="toggleVessel(53)" style="cursor:pointer">Port Tender</span>
-            <span class="w3-tag w3-blue w3-large" id="v-60" onclick="toggleVessel(60)" style="cursor:pointer">Passenger</span>
-            <span class="w3-tag w3-blue w3-large" id="v-55" onclick="toggleVessel(55)" style="cursor:pointer">Law Enforcement</span>
-            <span class="w3-tag w3-blue w3-large" id="v-33" onclick="toggleVessel(33)" style="cursor:pointer">Dredging or Underwater Ops</span>
-            <span class="w3-tag w3-blue w3-large" id="v-70" onclick="toggleVessel(70)" style="cursor:pointer">Cargo</span>
-            <span class="w3-tag w3-blue w3-large" id="v-37" onclick="toggleVessel(37)" style="cursor:pointer">Pleasure Craft</span>
-            <span class="w3-tag w3-blue w3-large" id="v-36" onclick="toggleVessel(36)" style="cursor:pointer">Sailing</span>
+        
+        <span class="w3-tag w3-blue w3-small" id="v-89" onclick="toggleVessel(89)" style="cursor:pointer">Tanker []</span>
+             <span class="w3-tag w3-blue w3-small" id="v-80" onclick="toggleVessel(80)" style="cursor:pointer">Tanker</span>
+
+            <span class="w3-tag w3-blue w3-small" id="v-30" onclick="toggleVessel(30)" style="cursor:pointer">Fishing </span>
+            <span class="w3-tag w3-blue w3-small" id="v-40" onclick="toggleVessel(40)" style="cursor:pointer">High Speed Craft</span>
+            <span class="w3-tag w3-blue w3-lsmall" id="v-50" onclick="toggleVessel(50)" style="cursor:pointer">Pilot Vessels</span>
+            <span class="w3-tag w3-blue w3-small" id="v-52" onclick="toggleVessel(52)" style="cursor:pointer">Tug</span>
+            <span class="w3-tag w3-blue w3-small" id="v-53" onclick="toggleVessel(53)" style="cursor:pointer">Port Tender</span>
+            <span class="w3-tag w3-blue w3-small" id="v-60" onclick="toggleVessel(60)" style="cursor:pointer">Passenger</span>
+            <span class="w3-tag w3-blue w3-small" id="v-55" onclick="toggleVessel(55)" style="cursor:pointer">Law Enforcement</span>
+            <span class="w3-tag w3-blue w3-small" id="v-33" onclick="toggleVessel(33)" style="cursor:pointer">Dredging or Underwater Ops</span>
+            <span class="w3-tag w3-blue w3-small" id="v-70" onclick="toggleVessel(70)" style="cursor:pointer">Cargo</span>
+            <span class="w3-tag w3-blue w3-small" id="v-37" onclick="toggleVessel(37)" style="cursor:pointer">Pleasure Craft</span>
+            <span class="w3-tag w3-blue w3-small" id="v-36" onclick="toggleVessel(36)" style="cursor:pointer">Sailing</span>
           
            
         </div>
@@ -1161,6 +1165,14 @@ function BuildSearchWindow(content_id) {
             t_el.value = "2023-07-11 13:10:00 UTC";
         }
 
+        if (val == "milford_haven") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2024-09-11 12:00:00 UTC";
+
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2024-11-15 13:10:00 UTC";
+        }
+
 
 
     };
@@ -1186,9 +1198,9 @@ function BuildSavedApplicationsList(content_id) {
 function BuildReportStudy(content_id) {
 
     var html = `<div class="center-message">Study times are invalid. Select your study time frame in the acoustic snapshots table.</div>`;
-    
+
     console.log(custom_start_ms, custom_end_ms)
-    
+
     if (custom_start_ms < custom_end_ms) {
         html = "";
 
@@ -1252,6 +1264,10 @@ function BuildReportStudy(content_id) {
                 
                 <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="run_report('${content_id}')">
                 <i class="fas fa-download fa-sm text-white-50" id = "run_button"></i><span id="run-text"> Build Study Report </span></div>
+              
+               <div class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="report_merge_audio('${content_id}')">
+              <span id="run-text"> Merge Audio </span></div>
+               
                 </td>   
                 <td>
                 <div id="report_run_ticker_${content_id}"></div>
@@ -1273,7 +1289,7 @@ function BuildReportStudy(content_id) {
 
     }
     else {
-      
+
         var el = document.getElementById(content_id);
         el.innerHTML = html;
         return;
@@ -1380,7 +1396,7 @@ function ShowTarget(target_window_id) {
 
     }
 
-    console.log(get_request);
+    // console.log(get_request);
 
 
     var html = '<div class="center-message">';
@@ -1398,9 +1414,10 @@ function ShowTarget(target_window_id) {
                                             <div id = "delta_t-tag" class="h5 mb-0 font-weight-bold text-gray-800">
                                             
                                             
-                                              <select id="environment_selector" class="form-select text-primary" aria-label="Default select example">
-                
+                                              <select id="forward_environment_selector" class="form-select text-primary" aria-label="Default select example">
+                     <option value ="50_hz_spike">50Hz Spike</option>
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
+           
                 <!-- <option value ="vixen_bot179733">vixen_bot179733_DAVE</option>
                 <option value="vixen_bot179733">vixen_bot179733</option>
                 <option value="vixen_bot318806">vixen_bot318806</option> -->
@@ -1451,13 +1468,14 @@ function ShowTarget(target_window_id) {
               <!--<span id="filter-text" onclick="window.open('game/index.php?snapshot_id=all&location=${application_data.application_setup.setup_data.listener_location}&ss_ids=${get_request}','${Math.floor(Math.random() * 99999)}','width=1000,height=700')">Search</span></div>-->
               <span id="filter-text" onclick="run_forward_search('${target_window_id}')">Search</span></div>
               
-               <div id="filter-command"></div>
+               <div  id="forward_run_ticker_${target_window_id}"></div>
+               </div>
                         </div>
          
                         </div>
         </div>
         </div>
-        </div>
+       
         `;
     //
     var el = document.getElementById(target_window_id);
@@ -1994,9 +2012,10 @@ var custom_end_id = 0;
 
 
 
-function run_forward_search(calling_window_id){
+function run_forward_search(calling_window_id) {
 
-   // show_loader_div(`report_run_ticker_${calling_window_id}`);
+    // show the loader gif
+    show_loader_div(`forward_run_ticker_${calling_window_id}`);
 
     if ((custom_start_ms == 0) || (custom_end_ms == 0)) {
         alert("No defined study period.");
@@ -2024,17 +2043,120 @@ function run_forward_search(calling_window_id){
     var forward_run_id = Math.floor(Math.random() * 99999);
 
     // Subit for run
-    // var report_run_url = "https://vixen.hopto.org/rs/api/v1/data/forward_run";
-    // var analysis_id = Math.floor(Math.random() * 99999);
-    // var post_data = {}
+    var forward_run_url = "https://vixen.hopto.org/rs/api/v1/data/forward_sim";
+    var run_id = Math.floor(Math.random() * 99999);
 
-    // $.post(report_run_url, JSON.stringify(post_data), function (data) {
+    var number_features = document.getElementById('forward_number_features').value;
+    var forward_target = document.getElementById('forward_environment_selector').value;
 
-   // hide_loader_div(`report_run_ticker_${calling_window_id}`);
-    // });
+    var valid_sim_ids = ``;
+
+    for (var i = 0; i < valid_snaps.length; i++) {
+        var _sid = valid_snaps[i].snapshot_id;
+
+        //get_request += `ss_ids[]=${_sid}`;
+        valid_sim_ids += ` ${_sid} `;
+
+    }
+
+
+    var post_data = {
+
+        "location": application_data.application_setup.setup_data.listener_location,
+        "run_id": run_id,
+        "target": forward_target,
+        "user_uid": application_data.user.user_uid,
+        "sim_ids": valid_sim_ids,
+        "number_features": number_features
+
+    }
+
+    console.log(post_data);
+
+
+    $.post(forward_run_url, JSON.stringify(post_data), function (data) {
+        console.log(data);
+
+        //show spectrogram with(out) hits
+
+
+        image_fp = `https://vixen.hopto.org/rs/ident_app/ident/brahma/out/spec/${application_data.user.user_uid}_${run_id}.png`
+        show_image_in_window(image_fp);
+        show_forward_decisions(run_id);
+
+        hide_loader_div(`forward_run_ticker_${calling_window_id}`);
+    });
 
 }
 
+
+function show_forward_decisions(run_id) {
+
+
+    var path = `https://vixen.hopto.org/rs/ident_app/ident/brahma/out/decisions_${application_data.user.user_uid}_${run_id}.json`;
+
+    // load json
+    $.getJSON(path, function (data) {
+        build_decisions_table(data);
+    });
+
+}
+
+function build_decisions_table(data) {
+
+    var html = "";
+    html += `<table class="table">`;
+
+    for (var i = 0; i < data.length; i++) {
+        decision = data[i];
+        html += "<tr>";
+        html += `<td>${decision['time']}</td><td>${decision['target']}</td>`;
+        // for (const [key, value] of Object.entries(decision)) {
+        //     console.log(`${key}: ${value}`);
+
+        // }
+        html += "</tr>";
+
+    }
+
+    html += "</table>";
+
+    console.log(html);
+
+    var window_id = createMessageWindow("Targets", "target-data");
+    var el = document.getElementById(window_id);
+    el.style.top = '10%';
+    el.style.left = '25%';
+    el.style.width = '700px';
+    el.style.height = '300px';
+    var content_id = `${window_id}_content`;
+    el = document.getElementById(content_id);
+    el.innerHTML = html;
+
+}
+
+
+function report_merge_audio(calling_window_id) {
+    show_loader_div(`report_run_ticker_${calling_window_id}`);
+    var start_t_ms = custom_start_ms;
+    var end_time_ms = custom_end_ms;
+    var valid_snaps = application_data.acoustic_data.get_snapshots_for_timeframe(start_t_ms, end_time_ms);
+    var analysis_id = Math.floor(Math.random() * 99999);
+    audio_files = [];
+    for (var $i = 0; $i < valid_snaps.length; $i++) {
+        //console.log(valid_snaps[$i]);
+        audio_files.push(valid_snaps[$i].audio_filepath);
+    }
+
+    var vessel = null;
+    var vessel_track = null;
+
+    application_data.track_analysis = new TrackAnalysis(start_t_ms, end_time_ms, valid_snaps, vessel, vessel_track);
+
+
+    merge_audio(calling_window_id, analysis_id, audio_files);
+    //hide_loader_div(`report_run_ticker_${calling_window_id}`);
+}
 
 function run_report(calling_window_id) {
 
@@ -2120,7 +2242,7 @@ function run_report(calling_window_id) {
         //BuildGroupAnalysis();
         build_report_links(calling_window_id, analysis_id);
         merge_audio(calling_window_id, analysis_id, audio_files);
-        hide_loader_div(`report_run_ticker_${calling_window_id}`);
+        // hide_loader_div(`report_run_ticker_${calling_window_id}`);
     });
 
 
@@ -2234,6 +2356,9 @@ function merge_audio(calling_window_id, analysis_id, audio_files) {
         application_data.track_analysis.mp3_file_url = data['mp3'];
 
         show_report_downloads(calling_window_id);
+
+        hide_loader_div(`report_run_ticker_${calling_window_id}`);
+
     });
 }
 
@@ -2519,6 +2644,26 @@ function BuildAcousticSpectrograms_server(ss_id = "", custom = 0, custom_filenam
         build_spec_page(identifier, time_start, time_end, location, custom);
 
     });
+
+
+
+}
+
+
+
+function show_image_in_window(image_fp) {
+    const windowFeatures = "left=100,top=100,width=700,height=500";
+    var title = `Live Run${Math.floor(Math.random() * 99999)}`;
+    // var title = `Live Run`;
+
+
+    var w = window.open(image_fp, title, windowFeatures);
+
+
+
+    w.title = title;
+
+
 
 
 
@@ -3602,7 +3747,7 @@ function BuildGoto(content_id) {
     var el = document.getElementById(content_id);
     el.innerHTML = html;
 
-      var loc_el = document.getElementById('location_select');
+    var loc_el = document.getElementById('location_select');
     loc_el.onchange = function () {
         var val = loc_el.options[loc_el.selectedIndex].value;
         if (val == "brixham") {
@@ -3620,15 +3765,22 @@ function BuildGoto(content_id) {
             t_el = document.getElementById('end_time_input');
             t_el.value = "2023-07-11 13:10:00 UTC";
         }
+        if (val == "milford_haven") {
+            var t_el = document.getElementById('start_time_input');
+            t_el.value = "2024-09-11 23:00:00 UTC";
 
-        
+            t_el = document.getElementById('end_time_input');
+            t_el.value = "2024-09-12 01:10:00 UTC";
+        }
+
+
 
     };
 
 }
 
 
-function goto_app() {  
+function goto_app() {
 
     show_loader();
     start_time = document.getElementById('start_time_input').value;
@@ -3637,6 +3789,7 @@ function goto_app() {
     console.log(start_time, end_time, location_value);
     init_application(3000, start_time, end_time, location_value);
 
+    show_play_tools();
 }
 
 /*
@@ -3890,6 +4043,7 @@ function spawn_sig_app(sig_data_id) {
     if (application_data == null) {
         show_loader();
         filter_data_download_analyse(_location_val, _start_time, _end_time);
+        build_floating_menu('play');
     }
     else {
         alert("There is currently an active application. Please close first.");

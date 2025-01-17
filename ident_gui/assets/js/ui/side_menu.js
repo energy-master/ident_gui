@@ -231,6 +231,42 @@ function createWindow(title, data_type) {
 
 }
 
+// Create Window
+function createMessageWindow(title, data_type) {
+
+    var win_id = makeid(10);
+    var html = `
+    
+    
+        <div id = "${win_id}" class = "draggable_window" style="position:absolute">
+            <div id="${win_id}_hdr" class = "draggable_window_hdr"><span style="color:green">IDent</span> Data Window [ ${title} ]<div class="close-icon" onClick="closeWindow('${win_id}')">X</div></div>
+            <div id="${win_id}_content" class="window-message-content"></div>
+            <div class="window-bottom-border"></div>
+        </div>
+    
+    `;
+
+    var el = document.getElementById("windows");
+    el.innerHTML += html;
+
+    active_window_ids.push(win_id);
+    window_tracker[data_type] = win_id;
+    dragElement(document.getElementById(win_id));
+
+
+
+    var draggableElements = document.getElementsByClassName("draggable_window");
+
+    for (var i = 0; i < draggableElements.length; i++) {
+        dragElement(draggableElements[i]);
+    }
+
+
+    return win_id;
+
+
+}
+
 function showWindow(win_id){
     var el = document.getElementById(win_id);
     el.style.display = "block";

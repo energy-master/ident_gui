@@ -4,7 +4,7 @@
 
 
 // search_el.addEventListener('click', function(){ 
-    
+
 //     alert("Hello World!"); 
 
 
@@ -12,11 +12,11 @@
 // }); 
 var vessels_all = [];
 
-function select_all_vessels(){
+function select_all_vessels() {
 
     //let genders = Object.keys(population);
     vessels_all = Object.keys(vessel_types);
-    for (var i = 0; i < vessels_all.length; i++){
+    for (var i = 0; i < vessels_all.length; i++) {
         vessels_all[i] = parseInt(vessels_all[i]);
     }
     // console.log(vessels_all);
@@ -24,7 +24,7 @@ function select_all_vessels(){
 
 
     //css
-    for (var i = 0; i < vessels_all.length; i++){
+    for (var i = 0; i < vessels_all.length; i++) {
         var v_type = vessels_all[i];
         var v_id = `v-${v_type}`;
         // console.log(v_id);
@@ -33,7 +33,7 @@ function select_all_vessels(){
             if (e.classList.contains('w3-grey')) {
                 e.classList.remove('w3-grey');
                 e.classList.add('w3-blue');
-            
+
             }
             else {
                 e.classList.add('w3-blue');
@@ -46,44 +46,44 @@ function select_all_vessels(){
 }
 
 
-function toggleVessel(vessel_type){
+function toggleVessel(vessel_type) {
     // alert("toggle");
     var v_type = vessel_type;
     var v_id = `v-${v_type}`;
     var e = document.getElementById(v_id);
 
-   
+
     if (e.classList.contains('w3-grey')) {
-            
+
         e.classList.remove('w3-grey');
         e.classList.add('w3-blue');
-        
+
         //add 
         vessels_all.push(vessel_type);
-            
-        }
-        else {
-        
+
+    }
+    else {
+
         var index = vessels_all.indexOf(vessel_type);
         if (index !== -1) {
             vessels_all.splice(index, 1);
         }
         e.classList.remove('w3-blue');
         e.classList.add('w3-grey');
-        }
+    }
 
-        //console.log(vessels_all , vessels_all.length);
+    //console.log(vessels_all , vessels_all.length);
 
 }
 
 
-function deselect_all_vessels(){
+function deselect_all_vessels() {
 
     //let genders = Object.keys(population);
-    
+
 
     //css
-    for (var i = 0; i < vessels_all.length; i++){
+    for (var i = 0; i < vessels_all.length; i++) {
         var v_type = vessels_all[i];
         var v_id = `v-${v_type}`;
         // console.log(v_id);
@@ -94,7 +94,7 @@ function deselect_all_vessels(){
             if (e.classList.contains('w3-blue')) {
                 e.classList.remove('w3-blue');
                 e.classList.add('w3-grey');
-            
+
             }
             else {
                 e.classList.add('w3-grey');
@@ -127,17 +127,17 @@ function openSearch() {
     //$('.mysearch-button').toggleClass('open');
     // console.log("conect");
     // });
-   
+
     console.log("search starts");
     show_loader_div('fetch-analyse-loader');
     // var location = document.getElementById('location-data').value;
     // var post_location = location_keys_r[location];
     // var post_density = document.getElementById('density-data').value;
-    
+
 
     var location_value = document.getElementById('location_select').value;
     var index = document.getElementById('location_select').selectedIndex;
-    var location_str= document.getElementById('location_select').options[index].text;
+    var location_str = document.getElementById('location_select').options[index].text;
     var post_density = parseFloat(document.getElementById('density_value').value);
     var post_range = parseFloat(document.getElementById('search_range').value);
     var filter_start_time = document.getElementById('start_time_input').value;
@@ -148,7 +148,7 @@ function openSearch() {
     filter_parms = {
         'location': location_value,
         'post_range': post_range,
-        'mmsi' : mmsi_search
+        'mmsi': mmsi_search
     }
 
     console.log(filter_parms);
@@ -158,7 +158,7 @@ function openSearch() {
     }
 
     console.log(location_value, location_str, post_density, post_range, filter_start_time, filter_end_time, mmsi_search);
-   
+
     if (location_value == "") {
         alert("Please enter a valid location");
         return (0);
@@ -170,19 +170,19 @@ function openSearch() {
     if (location_value == "netley") {
         valid_distance_nm = post_range;
     }
-    else{
+    else {
         valid_distance_m = post_range;
     }
-  
+
     // alert(post_location);
     console.log(vessels_all);
-    var filtered_epochs = runFilterLocal(location_value, post_density, density_logic ,vessels_all, filter_start_time, filter_end_time, mmsi_search).then((data => {
-        
+    var filtered_epochs = runFilterLocal(location_value, post_density, density_logic, vessels_all, filter_start_time, filter_end_time, mmsi_search).then((data => {
+
         //console.log(data);
         filtered_data = new DataSearch(data, location_value, location, post_range, filter_start_time, filter_end_time);
         buildFilterDataWindow();
         hide_loader_div('fetch-analyse-loader');
-    
+
     }));
 
 }
@@ -227,6 +227,8 @@ function build_filter_page() {
         <br>
         <br>
         <br>
+        <span class="w3-tag w3-blue w3-xlarge" id="v-89" onclick="toggleVessel(89)">Tanker []</span>
+        <span class="w3-tag w3-blue w3-xlarge" id="v-80" onclick="toggleVessel(80)">Tanker</span>
         <span class="w3-tag w3-blue w3-xlarge" id="v-30" onclick="toggleVessel(30)">Fishing </span>
         <span class="w3-tag w3-blue w3-xlarge" id="v-40" onclick="toggleVessel(40)">High Speed Craft</span>
         <span class="w3-tag w3-blue w3-xlarge" id="v-50" onclick="toggleVessel(50)">Pilot Vessels</span>
@@ -237,6 +239,7 @@ function build_filter_page() {
         <span class="w3-tag w3-blue w3-xlarge" id="v-33" onclick="toggleVessel(33)">Dredging or Underwater Ops</span>
         <span class="w3-tag w3-blue w3-xlarge" id="v-70" onclick="toggleVessel(70)">Cargo</span>
         <span class="w3-tag w3-blue w3-xlarge" id="v-37" onclick="toggleVessel(37)">Pleasure Craft</span>
+
        
         <span class="w3-tag w3-blue w3-xlarge" id="v-36" onclick="toggleVessel(36)">Sailing</span>
         <span class="w3-tag w3-grey w3-xlarge" >Harbour Porpoise</span>
@@ -315,45 +318,45 @@ function build_filter_page() {
         
             <div id="nav-title-working-window">Acoustic Data Location</div>
            `;
-    
+
     html += `
              <select class="form-select mb-3" aria-label="Data Location" id = "location_select">
               <option selected value="">Select Acoustic Data Location</option>
            `;
     // alert(user.user_uid);
-   for (const [key, value] of Object.entries(marlin_locations)) {
-       var leg_users = location_permissions[key];
-       console.log(leg_users);
-       console.log(user.user_uid);
-       if (leg_users.includes(user.user_uid) ){
-          
-          html +=  `<option  value="${key}">${value}</option>`;
-       }
-     
-       
-        }
-            //     <option selected value="">Select Acoustic Data Location</option>
-            //     <option value="netley">Netley Test - Debug</option>   
-            //     <option value="so1">Sussex Observatory Test - Debug</option>
-            //     <option value="so1_server">Sussex Observatory [1] Product</option>
-            //     <option value="brixham">Brixham Product</option>
-            //     <option value="67149847">HP [67149847]</option>
+    for (const [key, value] of Object.entries(marlin_locations)) {
+        var leg_users = location_permissions[key];
+        console.log(leg_users);
+        console.log(user.user_uid);
+        if (leg_users.includes(user.user_uid)) {
 
-            html += `
+            html += `<option  value="${key}">${value}</option>`;
+        }
+
+
+    }
+    //     <option selected value="">Select Acoustic Data Location</option>
+    //     <option value="netley">Netley Test - Debug</option>   
+    //     <option value="so1">Sussex Observatory Test - Debug</option>
+    //     <option value="so1_server">Sussex Observatory [1] Product</option>
+    //     <option value="brixham">Brixham Product</option>
+    //     <option value="67149847">HP [67149847]</option>
+
+    html += `
              </select>`;
 
-    
-html += `
+
+    html += `
 
   </div>
   `;
-    
+
     var focus_start = "";
     var focus_end = "";
 
-   
 
-html += `
+
+    html += `
   </div>
 
         <div class="row">
@@ -372,8 +375,10 @@ html += `
 <div class="col-12">
   <div id="nav-title-working-window">Target Types</div>
         <div class="tags">
+            <span class="w3-tag w3-blue w3-xlarge" id="v-89" onclick="toggleVessel(89)">Tanker []</span>
+             <span class="w3-tag w3-blue w3-xlarge" id="v-80" onclick="toggleVessel(80)">Tanker</span>
             <span class="w3-tag w3-blue w3-large" id="v-30" onclick="toggleVessel(30)" style="cursor:pointer">Fishing </span>
-            <span class="w3-tag w3-blue w3-large" id="v-40" onclick="toggleVessel(40)" style="cursor:pointer">High Speed Craft</span>
+            <span class="w3-tag w3-blue w3-large" id="v-40" onclick="toggleVessel(40)" style="cursor:pointer">dHigh Speed Craft</span>
             <span class="w3-tag w3-blue w3-large" id="v-50" onclick="toggleVessel(50)" style="cursor:pointer">Pilot Vessels</span>
             <span class="w3-tag w3-blue w3-large" id="v-52" onclick="toggleVessel(52)" style="cursor:pointer">Tug</span>
             <span class="w3-tag w3-blue w3-large" id="v-53" onclick="toggleVessel(53)" style="cursor:pointer">Port Tender</span>
@@ -450,7 +455,7 @@ html += `
     
     `;
 
-  
+
     var el = document.getElementById('main-filter');
     el.innerHTML = html;
     $(el).fadeIn("fast");
@@ -458,7 +463,7 @@ html += `
 
     var search_el = document.getElementById('fetch-analyse');
     search_el.addEventListener('click', openSearch);
-    
+
     var search_el = document.getElementById('close');
     search_el.addEventListener('click', close);
 
@@ -481,7 +486,7 @@ html += `
             t_el.value = "2023-07-11 13:10:00 UTC";
         }
 
-        
+
 
     };
 
@@ -493,8 +498,8 @@ html += `
 
 
 function toggleLogic(logic) {
-   
-    var logic_options = ['eq','lt','gt','lte','gte'];
+
+    var logic_options = ['eq', 'lt', 'gt', 'lte', 'gte'];
     density_logic = logic;
     for (var i = 0; i < logic_options.length; i++) {
         var logic_el = document.getElementById(`${logic_options[i]}`);
@@ -516,7 +521,7 @@ function toggleLogic(logic) {
         var el = document.getElementById(`${density_logic}`);
         el.classList.add('w3-blue');
         el.classList.remove('w3-grey');
-        
+
     }
 
 
@@ -542,20 +547,20 @@ function build_filter_second_page() {
 
     var search_el = document.querySelector('.mysearch-button');
     search_el.addEventListener('click', openSearch);
-    
+
 
 
 }
 
 
 function buildResults(data) {
- 
+
     html = `<div class="filter-results-view">`;
-    
+
 
     // build resulsts and attach on click
 
-    for (var i=0; i<data['epochs'].length; i++){
+    for (var i = 0; i < data['epochs'].length; i++) {
         // console.log(data['epochs'][i]);
         var epoch = data['epochs'][i];
         html += build_filtered_data_view(epoch);
@@ -568,7 +573,7 @@ function buildResults(data) {
 
     // var filter_analyse_action_button = document.getElementById("filter-fetch-analyse");
     // filter_analyse_action_button.onclick = function () {
-        
+
     //     // // show loader
     //     // show_loader();
 
@@ -582,13 +587,13 @@ function buildResults(data) {
     // };
     hideApp();
     showFilter();
-    
+
 
 }
 
 // fetch / start app with location and time
-function fetch_data(location_value, start_time, end_time, selected_epoch_id, name, uid, position,level) {
-   
+function fetch_data(location_value, start_time, end_time, selected_epoch_id, name, uid, position, level) {
+
     // var html = $(id).html();
     // var newWindow = window.open('');
     // newWindow.document.body.innerHTML =  '<html><head><title>Hi</title>  <script src="js/myScript.js"></script> </head>' + html;
@@ -597,7 +602,7 @@ function fetch_data(location_value, start_time, end_time, selected_epoch_id, nam
     // 1. show loader
     //show_loader();
     var application_id = Math.floor(Math.random() * 9999);
-    
+
     // console.log("application id " + application_id);
     var href = `https://vixen.hopto.org/rs/ident_app/ident_gui/index.php?application_id=${application_id}&location_value=${location_value}&start_time=${start_time}&end_time=${end_time}&name=${name}&uid=${uid}&position=${position}&level=${level}`;
     console.log(href);
@@ -615,7 +620,7 @@ function fetch_data(location_value, start_time, end_time, selected_epoch_id, nam
 }
 
 //${epoch.location_value}, ${epoch.start_time}, ${epoch.end_time}
-function build_filtered_data_view(epoch){
+function build_filtered_data_view(epoch) {
 
     epoch.start_time = `${epoch.start_time} UTC`;
     epoch.end_time = `${epoch.end_time} UTC`;
@@ -626,7 +631,7 @@ function build_filtered_data_view(epoch){
     // if (snapshot.snapshot_id == application_data.acoustic_data.active_snapshot_id) {
     //     selected = "selected"
     // }
-// id="data-filter-view-${epoch.id}"
+    // id="data-filter-view-${epoch.id}"
     var html = `<br><br>
     <div class="filter-list-view ${selected}">
         <table>
@@ -648,19 +653,17 @@ function build_filtered_data_view(epoch){
         </table>
     </div>
    `;
-   
+
 
     html += `<div id="data-filter-view-${epoch.id}" style="display:none;">`;
-    for (var i = 0;i<epoch.activity.length; i++)
-    {
+    for (var i = 0; i < epoch.activity.length; i++) {
         var start_time_ms = epoch.activity[i].time_s * 1000;
         var unique_number_vessels = epoch.activity[i].unique_vessels.length;
         var time_str = time_string(start_time_ms)[2];
         var number_dense_vessels = epoch.activity[i].number_dense_vessels;
-        if ('valid' in epoch.activity[i])
-        {
+        if ('valid' in epoch.activity[i]) {
             selected = "selected";
-        
+
             html += `
                 <div class="filter-list-view ${selected}" >
                     <table>
@@ -678,28 +681,28 @@ function build_filtered_data_view(epoch){
             `;
         }
 
-    }   
-    
-    html += `</div>`;
-    
-    
+    }
 
-    
+    html += `</div>`;
+
+
+
+
 
     return html;
 }
 
 
-function show_data_selection(){
-     build_filter_page();
-     select_all_vessels();
+function show_data_selection() {
+    build_filter_page();
+    select_all_vessels();
 }
 
 // if (application_data == null) {
 //     //console.log("here");
 //     build_filter_page();
 //     select_all_vessels();
-    
+
 
 // }
 
@@ -727,12 +730,12 @@ function buildFilterDataWindow() {
     var epochs = filtered_data.filter_data;
     // console.log(epochs);
 
-    for (var i = 0; i < epochs.length; i++){
+    for (var i = 0; i < epochs.length; i++) {
         html += build_filtered_data_view(epochs[i]);
     }
 
     // html += `</div>`;
-    
+
 
     // new window
 
@@ -753,7 +756,7 @@ function buildFilterDataWindow() {
     // var el = document.getElementById("filter-data-window-holder");
     // el.innerHTML = html;
     // ***
-    
+
 
     // update GIS ( GIS Engine needs updating )
     var position = {
@@ -768,5 +771,5 @@ function buildFilterDataWindow() {
     hideApp();
     // showFilter();
 
-    
+
 }

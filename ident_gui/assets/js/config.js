@@ -80,7 +80,8 @@ location_keys = {
     'so1_server': "SO1 Server",
     'brixham': 'Brixham',
     '67149847' : 'HP [67149847]',
-    '8639' : 'NU | Bermuda [8639]'
+    '8639': 'NU | Bermuda [8639]',
+    'milford_haven' : 'Milford Haven'
 
 };
 
@@ -92,7 +93,8 @@ location_keys_r = {
     'so1_server': 'so1_server',
     'Brixham': 'brixham',
     'HP [67149847]': '67149847',
-    'NU | Bermuda [8639]' : '8639'
+    'NU | Bermuda [8639]': '8639',
+    'Milford Haven' : 'milford_haven'
 
 };
 
@@ -103,7 +105,8 @@ location_geo_lat = {
     'so1_server': 50.719344,
     'brixham': 50.417133,
     '67149847': 55.66,
-     '8639' :55.66 
+     '8639' :55.66 ,
+     'milford_haven' : 51.69
     
 
 };
@@ -115,7 +118,8 @@ location_geo_long = {
     'so1_server': -0.548028,
     'brixham': -3.5145,
     '67149847': -4.972341,
-     '8639': -4.972341,
+    '8639': -4.972341,
+     'milford_haven' : -5.1368
     
 
 };
@@ -145,7 +149,7 @@ var gis_max_data_count = 1000;
 */
 
 
-var setup_id = 59611;//7070;// 1156; //38128; //28140 28140;//1156;//
+var setup_id = 28671;//7070;// 1156; //38128; //28140 28140;//1156;//
 
 
 /*
@@ -179,7 +183,8 @@ var marlin_locations = {
     'so1_server': 'Sussex Observatory [1]',
     'brixham': 'Brixham',
     '67149847': 'HP [67149847]',
-    '8639' : ' NU | Bermuda'
+    '8639': ' NU | Bermuda',
+    'milford_haven' : 'Milford Haven'
     
 }
 
@@ -189,7 +194,8 @@ var location_permissions = {
     'so1_server': ['0001vixen'],
     'brixham': ['0001vixen'],
     '67149847': ['0001vixen'],
-    '8639' : ['0001vixen']
+    '8639': ['0001vixen'],
+    'milford_haven': ['0001vixen']
 }
 
 

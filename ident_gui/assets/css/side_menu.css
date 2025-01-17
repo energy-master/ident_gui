@@ -549,12 +549,13 @@ label[for=nav-footer-toggle] {
   left: 0px;
   top: 0px;
   width: 100%;
-  height:50px;
-  padding: 10px;
+  height:30px;
+  padding: 5px;
   cursor: move;
   z-index: 10;
   background-color: var(--navbar-dark-primary);
-  color: #fff;
+  color: #fbf9f9;
+  font-size: 12px;
 }
 
 
@@ -587,6 +588,7 @@ label[for=nav-footer-toggle] {
   z-index: 10;
   background-color: var(--navbar-dark-primary);
   color: #fff;
+  font-size: 10px;
 }
 
 .close-icon{
@@ -594,8 +596,8 @@ label[for=nav-footer-toggle] {
   position: absolute;
   /* vertical-align: middle; */
   right:20px;
-  font-size: 18px;
-  top: 10px;
+  font-size: 16px;
+  top:5px;
   cursor: pointer;
 }
 
@@ -615,6 +617,23 @@ label[for=nav-footer-toggle] {
   /* border: red solid; */
   overflow: scroll;
 }
+.window-message-content {
+  font-size: 10px;
+  position: relative;
+  top: 50px;
+  height: calc(100% - 100px);
+  width: 100%;
+  /* border: red solid; */
+  overflow: scroll;
+  background-color: green;
+  color: #f6f4f4;
+  opacity: 80%;
+}
+
+.window-message-content .table {
+  color:white;
+}
+
 
 .window-bottom-border{
   position: absolute;
