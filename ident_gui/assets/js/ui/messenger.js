@@ -3,41 +3,36 @@
 
 function build_messenger(){
     
-    var el = document.getElementById("messenger");
-    
-    
+    var el = document.getElementById(app_message_content_id);
     var dt = Date.now();
-    
-    
 
-    var html = `
-    
-        <table>
+    var html = ` <div class="container">
+    <h5>IDent Messages</h5>
+    <div class = "messenger">
+        <table class="table">`;
+  
+    for (var i = messages.length-1; i > -1 ; i--) {
+        var msg_time = messages[i].msg_time;
+        var dt = new Date(msg_time);
+        var print_time = dt.toLocaleTimeString();
+        var msg = messages[i].message;
+        html += `
+   
             <tr>
-            <td>${dt}</td>
-            <td> : </td>
-            <td>MARLIN Ident messaging service.</td>
+            <td>${print_time}</td>
+            <td>  </td>
+            <td>${msg}</td>
             </tr>
-             <tr>
-            <td>${dt}</td>
-            <td> : </td>
-            <td>No data loaded and no live streams.</td>
-            </tr>
-             <tr>
-            <td>${dt}</td>
-            <td> : </td>
-            <td>Load data or connect to a live stream.</td>
-            </tr>
-        </table>
-    
+         
+       
     `;
+    }
 
-
-
-    
+    html += `</table></div ></div >`;
     el.innerHTML = html;
 
 }
 
 
-build_messenger();
+// console.log(dt);
+// get readable message time.

@@ -1796,46 +1796,24 @@ function build_snapshot_view(snapshot, idx, sig_label) {
          <td colspan=3><input class="form-control" type="text" placeholder="${snapshot.snapshot_id}" disabled></td>
        </tr>-->
             <tr id="fft_${snapshot.snapshot_id}" ${style}>
+            <!--<tr id="label_specs${snapshot.snapshot_id}" ${style}>-->
                <!--<td><span class="input-group-text">Sample Rate</span></td>-->
                 <!--<td colspan="2"><input class="form-control" type="text" placeholder="${snapshot.sample_rate}Hz" disabled></td>-->
                 <td>
-                <div class="form-group">
-   
-                    <select class="form-control" id="fft_sample_select_${snapshot.snapshot_id}">
-                    <option value="select">- FFT SAMPLES -</option>
-                    <option value="512">512</option>
-                    <option value="1024" selected="selected">1024</option>
-                    <option value="2048">2048</option>
-                      <option value="4096">4096</option>
-                        <option value="8192">8192</option>
-                          <option value="16384">16384</option>
-                     <option value="32768">32768</option>
-                    </select>
-                  </div>
-                  </td>
-                  <!--<td>
-                    <div class="form-group">
-                    <select class="form-control" id="cm_sample_select_${snapshot.snapshot_id}">
-                    <option value="jet">Jet</option>
-                    <option value="cool">Cool</option>
-                    <option value="greys">Greys</option>
-                    <option value="hot">Hot</option>
-
-                    </select>
-                    </div>
-              
-            </td>-->
+               start / end time (s)
+                </td>
+                 
             <td colspan="2">
-                <input id = "min_f_${snapshot.snapshot_id}" class="form-control" type="text" placeholder="0" value="0">
+                <input id = "min_f_${snapshot.snapshot_id}" class="form-control" type="text" placeholder="start time ( delta s)" value="-1">
             </td>
             <td colspan="1">
-                <input  id = "max_f_${snapshot.snapshot_id}"class="form-control" type="text" placeholder="10000" value="10000">
+                <input  id = "max_f_${snapshot.snapshot_id}"class="form-control" type="text" placeholder="end time (deltas)" value="-1">
             </td>
             <td></td><td></td>
                 <td colspan="2">
                <!-- <div class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Generate</div>-->
                <!--<div id="generate_${snapshot.snapshot_id}" class="w3-tag w3-blue w3-large marlin-data-success" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Generate</div>-->
-                <button type="button" class="btn btn-primary" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Build</button>
+                <button type="button" class="btn btn-primary" onclick="BuildAcousticSpectrograms('${snapshot.snapshot_id}')">Listen</button>
             
                </td>
             </tr>
@@ -1859,8 +1837,8 @@ function build_snapshot_view(snapshot, idx, sig_label) {
              <!--<div class="w3-tag w3-blue w3-large marlin-data-success" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')")">Label</div>-->
             
             
-             <button type="button" class="btn btn-primary" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')">Add Label</button>
-         
+             <!--<button type="button" class="btn btn-primary" onclick="send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')">Add Label</button>-->
+             <button type="button" class="btn btn-primary" onclick="broker_send_label('${snapshot.snapshot_id}','${snapshot.timeframe_start_ms}','${snapshot.timeframe_end_ms}','${snapshot.hydrophone_location}','${snapshot.audio_filepath}','${snapshot.raw_acoustic_data_source}')">Add Label</button>
              </td>
          </tr>
          <tr>
@@ -1883,6 +1861,31 @@ function build_snapshot_view(snapshot, idx, sig_label) {
     return html;
 
 }
+
+function broker_send_label(snapshot_id, tf_start_ms, tf_end_ms, hydrophone_location, audio_fp, raw_data_fp) {
+    
+    console.log(tf_start_ms, tf_end_ms)
+    //get start time
+    // console.log(snapshot_id);
+    l_delta_start_time = document.getElementById(`min_f_${snapshot_id}`).value;
+    // console.log(l_start_time);
+    if (l_delta_start_time != "-1") {
+        l_delta_end_time = document.getElementById(`max_f_${snapshot_id}`).value;
+        l_start_time = parseFloat(tf_start_ms) + parseFloat(l_delta_start_time * 1000);
+        l_end_time = parseFloat(tf_start_ms) + parseFloat(l_delta_end_time * 1000);
+        console.log('here1', l_start_time, l_end_time );
+        // console.log(snapshot_id, tf_start_ms, tf_end_ms, hydrophone_location, audio_fp, raw_data_fp);
+        send_label(snapshot_id, parseFloat(l_start_time), parseFloat(l_end_time), hydrophone_location, audio_fp, raw_data_fp);
+    }
+    else {
+        console.log('here2');
+        console.log(snapshot_id, tf_start_ms, tf_end_ms, hydrophone_location, audio_fp, raw_data_fp);
+        send_label(snapshot_id, parseFloat(tf_start_ms), parseFloat(tf_end_ms), hydrophone_location, audio_fp, raw_data_fp);
+    }
+
+}
+
+
 function toggle_acoustic_table(ss_id) {
 
 
@@ -2242,7 +2245,7 @@ function run_report(calling_window_id) {
         //BuildGroupAnalysis();
         build_report_links(calling_window_id, analysis_id);
         merge_audio(calling_window_id, analysis_id, audio_files);
-        // hide_loader_div(`report_run_ticker_${calling_window_id}`);
+        hide_loader_div(`report_run_ticker_${calling_window_id}`);
     });
 
 
@@ -2702,18 +2705,22 @@ async function BuildAcousticSpectrograms(acoustic_snapshot_id) {
     var max_f = parseInt(document.getElementById(`max_f_${acoustic_snapshot.snapshot_id}`).value);
     console.log(min_f, max_f);
 
-    var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
-    if (fft_samples == "select") {
-        alert("Please enter number fft samples.")
-        return (1);
-    }
+    // var fft_samples = parseInt(document.getElementById(`fft_sample_select_${acoustic_snapshot.snapshot_id}`).value);
+    // if (fft_samples == "select") {
+    //     alert("Please enter number fft samples.")
+    //     return (1);
+    // }
+
+
+
     //var fft_cm = document.getElementById(`cm_sample_select_${acoustic_snapshot.snapshot_id}`).value;
     fft_cm = "none";
-    console.log(fft_cm);
-    console.log(fft_samples);
+    fft_samples = 1024;
+    // console.log(fft_cm);
+    // console.log(fft_samples);
     var el_id = `#spec_${acoustic_snapshot.snapshot_id}`;
     var gel = document.getElementById(`spec_${acoustic_snapshot.snapshot_id}`);
-    gel.innerHTML = "<h4>Creating acoustic data...</h4>";
+    // gel.innerHTML = "<h4>Creating acoustic data...</h4>";
 
     console.log(`building ${acoustic_snapshot.snapshot_id}`)
 
@@ -2841,7 +2848,7 @@ async function BuildCustomAcousticSpectrograms(acoustic_snapshot_id) {
 
     var el_id = `#group-visual`;
     var gel = document.getElementById(`group-visual`);
-    gel.innerHTML = "<h4>Creating acoustic data...</h4>";
+    // gel.innerHTML = "<h4>Creating acoustic data...</h4>";
 
     console.log(`building ${acoustic_snapshot_id}`)
 
@@ -4043,7 +4050,7 @@ function spawn_sig_app(sig_data_id) {
     if (application_data == null) {
         show_loader();
         filter_data_download_analyse(_location_val, _start_time, _end_time);
-        build_floating_menu('play');
+        show_play_tools();
     }
     else {
         alert("There is currently an active application. Please close first.");

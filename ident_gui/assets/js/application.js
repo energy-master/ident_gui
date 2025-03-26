@@ -50,15 +50,15 @@ function init_application(search_range=isRequired(), start_time= isRequired(), e
 
     application_data.add_message({ msg_time: Date.now(), message: `Application clock created from ${application_data.application_clock.application_focus_start_time} (${human_time_start_str}) to ${application_data.application_clock.application_focus_end_time} (${human_time_end_str})`, level: 1 });
     set_server_message(application_data.server_messages);
-
+    build_messenger(application_data.server_messages);
     // init application messages
     application_data.add_message({ msg_time:  Date.now(), message: "Initialising Application.", level: 1 });
     set_server_message(application_data.server_messages);
-
+    build_messenger(application_data.server_messages);
 
     application_data.add_message({ msg_time: Date.now(), message: "Fetching vessel AIS data.", level: 1 });
     set_server_message(application_data.server_messages);
-
+    build_messenger(application_data.server_messages);
     // return (0);
 
     /*
@@ -100,7 +100,7 @@ function init_application(search_range=isRequired(), start_time= isRequired(), e
                 console.log(ais_data);
                 application_data.add_message({ msg_time: Date.now(), message: `Number of unique vessels in dataset : ${ais_data.number_of_vessels}`, level: 1 });
                 set_server_message(application_data.server_messages);
-
+                build_messenger(application_data.server_messages);
                 load_tracker.vessels = ais_data.number_of_vessels;
                 // // if (ais_data.number_of_vessels==0){}s
                 for (j = 0; j < ais_data.number_of_vessels; j++) {
@@ -108,7 +108,7 @@ function init_application(search_range=isRequired(), start_time= isRequired(), e
                     console.log(`Grabbing vessel tracks for : ${ais_data.vessels[j].vessel_overview_data.mmsi} vessel ${j+1} of${ais_data.number_of_vessels} `);
                     application_data.add_message({ msg_time: Date.now(), message: `Generating tracks and approaches for vessel ${ais_data.vessels[j].vessel_overview_data.mmsi}`, level: 1 });
                     set_server_message(application_data.server_messages);
-
+                    build_messenger(application_data.server_messages);
                     //promises_made++;
                     generate_vessel_tracks(ais_data.vessels[j], app_setup)
                         .then((vessel) => {
@@ -126,8 +126,10 @@ function init_application(search_range=isRequired(), start_time= isRequired(), e
                             // console.log(vessel);
                             application_data.add_message({ msg_time: Date.now(), message: `Interpolating approaches for smoother data.`, level: 1 });
                             set_server_message(application_data.server_messages);
+                            build_messenger(application_data.server_messages);
                             application_data.add_message({ msg_time: Date.now(), message: `Cross referencing approaches with available acoustic data.`, level: 1 });
                             set_server_message(application_data.server_messages);
+                            build_messenger(application_data.server_messages);
                             //console.log(`Iterating over approaches for data xr and interpolation. ${vessel.vessel_overview_data.mmsi}`);
                             number_approaches = vessel.vessel_dynamics.number_approaches;
                             //console.log(`number of approaches : ${number_approaches} for mmsi : ${vessel.vessel_overview_data.mmsi}`);

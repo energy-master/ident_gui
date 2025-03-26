@@ -50,8 +50,8 @@ function set_server_message(messages){
 
     html += '</table>';
 
-    var el = document.getElementById("messenger");
-    el.innerHTML = html;
+    // var el = document.getElementById("messenger");
+    // el.innerHTML = html;
 
     var el2 = document.getElementById("loader-messager");
     //console.log(el2);
@@ -146,18 +146,15 @@ function Load(){
         var url = load_app_api_url + `/${setup_id}`;
         //console.log(url);
 
-    var messages = [];
+    // var messages = [];
     var m =  { msg_time: Date.now(), message: `Loading application`, level: 1
     };
-     messages.push(m);
+    messages.push(m);
     set_server_message(messages);
-
-   
-
-
+    build_messenger();
+    
         $.getJSON(url, function (data) {
 
-          
             var load_setup = data['data'][0]['data_raw'];
             
             
@@ -165,7 +162,8 @@ function Load(){
              m =  { msg_time: Date.now(), message: `Loading setup data.`, level: 1
              };
                 messages.push(m);
-                set_server_message(messages);
+            set_server_message(messages);
+            build_messenger();
 
             var app_setup = load_setup['application_setup']['setup_data'];
             _app_setup = new ApplicationSetup(app_setup.approach_radius, app_setup.track_radius,
@@ -203,7 +201,7 @@ function Load(){
                 messages.push(m);
                 //console.log(messages);
                 set_server_message(messages);
-
+                build_messenger();
 
                 for (var j=0; j<_vessel.vessel_dynamics.vessel_approaches_custom.length; j++){
                     //vessel tracks
@@ -334,7 +332,7 @@ function Load(){
             );
             application_data.add_message({ msg_time: Date.now(), message: `Application data loaded.`, level: 1 });
             set_server_message(application_data.server_messages);
-
+            build_messenger();
 
           
             // Run App
@@ -460,6 +458,8 @@ function hideFilter() {
 
 function send_label(ss_id, start_ms, end_ms, listener_location, acoustic_filepath, data_filepath) {
     
+    console.log(start_ms, end_ms);
+
     var el_id = `labelsupplyselect_${ ss_id }`;
     var el = document.getElementById(el_id);
     var label = el.value;

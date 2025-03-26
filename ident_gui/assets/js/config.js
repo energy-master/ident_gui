@@ -81,7 +81,8 @@ location_keys = {
     'brixham': 'Brixham',
     '67149847' : 'HP [67149847]',
     '8639': 'NU | Bermuda [8639]',
-    'milford_haven' : 'Milford Haven'
+    'milford_haven': 'Milford Haven',
+    'sh_1' : 'Shoreham'
 
 };
 
@@ -94,7 +95,8 @@ location_keys_r = {
     'Brixham': 'brixham',
     'HP [67149847]': '67149847',
     'NU | Bermuda [8639]': '8639',
-    'Milford Haven' : 'milford_haven'
+    'Milford Haven': 'milford_haven',
+    'Shoreham' : 'sh_1'
 
 };
 
@@ -106,7 +108,8 @@ location_geo_lat = {
     'brixham': 50.417133,
     '67149847': 55.66,
      '8639' :55.66 ,
-     'milford_haven' : 51.69
+    'milford_haven': 51.69,
+     'sh_1' : 50.783
     
 
 };
@@ -119,7 +122,8 @@ location_geo_long = {
     'brixham': -3.5145,
     '67149847': -4.972341,
     '8639': -4.972341,
-     'milford_haven' : -5.1368
+    'milford_haven': -5.1368,
+     'sh_1' : -0.23
     
 
 };
@@ -168,7 +172,7 @@ var density_logic = "gte";
 /*
 max snapshots. valid API returns all snapshots AFTER start timestamp. This var limits number. Circa 1hr at 1 min intervals
 */
-var max_acoustic_snapshots = 70;
+var max_acoustic_snapshots = 1000;
 
 var chart_active_interval = 60000;
 
@@ -184,18 +188,21 @@ var marlin_locations = {
     'brixham': 'Brixham',
     '67149847': 'HP [67149847]',
     '8639': ' NU | Bermuda',
-    'milford_haven' : 'Milford Haven'
+    'milford_haven': 'Milford Haven',
+    'sh_1' : 'Shoreham'
     
 }
+
 
 var location_permissions = {
     'netley': ['0001vixen'],
     'so1': ['0001vixen'],
-    'so1_server': ['0001vixen'],
-    'brixham': ['0001vixen'],
-    '67149847': ['0001vixen'],
-    '8639': ['0001vixen'],
-    'milford_haven': ['0001vixen']
+    'so1_server': ['0001vixen', 'rmowat'],
+    'brixham': ['0001vixen', , '001elen', 'rmowat'],
+    '67149847': ['0001vixen', 'rmowat'],
+    '8639': ['0001vixen', 'rmowat'],
+    'milford_haven': ['0001vixen', '001elen', 'rmowat'],
+    'sh_1': ['0001vixen', 'rmowat']
 }
 
 
