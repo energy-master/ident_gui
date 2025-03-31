@@ -542,6 +542,7 @@ echo "<script>var snapshot_id = '$snapshot_id';</script>";
                 <option value ="vixen_bot179733">vixen_bot179733_DAVE</option>
                 <option value="vixen_bot179733">vixen_bot179733</option>
                 <option value="vixen_bot318806">vixen_bot318806</option>
+                <option value="vixen_bot549507940713_11">50_hz_spike</option>
             </select>
     </div>
            
@@ -555,6 +556,7 @@ echo "<script>var snapshot_id = '$snapshot_id';</script>";
                 <option value="none" selected>Select Target</option>
                 <option value ="harbour_porpoise">Harbour Porpoise</option>
                 <option value ="vessel_alpha">Vessel Alpha</option>
+                <option value ="50_hz_spike">[50Hz] Energy Spike</option>
                 <!-- <option value ="vixen_bot179733">vixen_bot179733_DAVE</option>
                 <option value="vixen_bot179733">vixen_bot179733</option>
                 <option value="vixen_bot318806">vixen_bot318806</option> -->

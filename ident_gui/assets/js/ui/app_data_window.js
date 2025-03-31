@@ -1,6 +1,6 @@
 
 //main application data window
-
+// v1.3
 function BuildAppDataWindow() {
 
     var html = `
@@ -1771,9 +1771,11 @@ function build_snapshot_view(snapshot, idx, sig_label) {
                 </td>
                 <td>
     
-                 <a href="${snapshot.sound_source}" download><button id="next" class="action-btn">
-                    <i class="fas fa-music"></i>
-                </button></a>
+                 <a href="${snapshot.sound_source}" download>
+                   <!-- <button id="next" class="action-btn">-->
+                        <i class="fas fa-music"></i>
+                   <!-- </button> -->
+                </a>
 
             </td>
              <td>

@@ -110,9 +110,9 @@ console.log("Building Data");
 grab_toplevel_data();
 function grab_toplevel_data(){
 
-    // get_games().then((value) => {
-    //     console.log(value); 
-    // });
+    get_games().then((value) => {
+        console.log(value); 
+    });
 
     get_all_bots().then((value) => {
         console.log(value); 
