@@ -33,7 +33,7 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
     <style>
     
     body{
-        background-color:black;
+        /* background-color:black; */
         /* border: solid red 1px; */
     }
     .center {
@@ -202,7 +202,8 @@ echo "<script>var ss_ids = '$ss_ids';</script>";
     <option value="none">-select target-</option>
     <option value="harbour_porpoise">harbour porpoise</option>
     <option value="vessel_alpha">vessel alpha</option>
-  
+    <option value="50_hz_spike">50 Hz spike</option>
+    
   </select>
 
 
