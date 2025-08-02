@@ -988,6 +988,7 @@ function BuildSearchWindow(content_id) {
               <option selected value="">Select Acoustic Data Location</option>
            `;
     // alert(user.user_uid);
+    console.log(marlin_locations);
     for (const [key, value] of Object.entries(marlin_locations)) {
         var leg_users = location_permissions[key];
         console.log(leg_users);
@@ -3688,8 +3689,8 @@ function BuildGoto(content_id) {
     // alert(user.user_uid);
     for (const [key, value] of Object.entries(marlin_locations)) {
         var leg_users = location_permissions[key];
-        console.log(leg_users);
-        console.log(user.user_uid);
+        // console.log(leg_users);
+        // console.log(user.user_uid);
         if (leg_users.includes(user.user_uid)) {
 
             html += `<option  value="${key}">${value}</option>`;
@@ -3796,6 +3797,7 @@ function goto_app() {
     end_time = document.getElementById('end_time_input').value;
     location_value = document.getElementById('location_select').value;
     console.log(start_time, end_time, location_value);
+    
     init_application(3000, start_time, end_time, location_value);
 
     show_play_tools();

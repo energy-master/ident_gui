@@ -32,7 +32,6 @@ const ais_download = (application_setup, ais_hits) => {
         // success value of download
         var success = true;
     
-    
         var start_time_ms = new Date(application_setup.setup_data.data_start_time).getTime();
         var end_time_ms = new Date(application_setup.setup_data.data_end_time).getTime();
 
@@ -41,7 +40,7 @@ const ais_download = (application_setup, ais_hits) => {
 
         post_data = {
             //"dlimit": application_setup.setup_data.track_radius,
-            "dlimit":5000,
+            "dlimit":10000,
             "src_lat": application_setup.setup_data.data_latitude,
             "src_long": application_setup.setup_data.data_longitude,
             "src_time": application_setup.setup_data.data_start_time,
@@ -69,7 +68,8 @@ const ais_download = (application_setup, ais_hits) => {
                     
                 
                     console.log("adding vessel to ais data structure...")
-                    console.log(data['data']);
+                    // console.log(data['data']);
+                    console.log(v);
                     vessel = new VesselHit(v['mmsi'], v['call_sign'], v['destination'], v['draught'], v['flag'], v['imo'], v['name'], v['vessel_type']);
                     ais_hits.add_vessel(vessel);
                 

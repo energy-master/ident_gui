@@ -87,6 +87,10 @@ function init_application(search_range=isRequired(), start_time= isRequired(), e
             //console.log(`Fetch Data Result -> ${success}`);
 
             //console.log(ais_data);
+            console.log("Downloading AIS");
+            console.log(app_setup);
+            console.log(ais_data);
+            
             ais_download(app_setup, ais_data).then((ais_data) => {
                 // no vessels
                 if (ais_data.number_of_vessels == 0) {

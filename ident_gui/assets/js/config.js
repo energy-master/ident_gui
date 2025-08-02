@@ -109,7 +109,8 @@ location_geo_lat = {
     '67149847': 55.66,
      '8639' :55.66 ,
     'milford_haven': 51.69,
-     'sh_1' : 50.783
+    'sh_1': 50.783,
+    'Nita_Maria': 49.155
     
 
 };
@@ -123,7 +124,8 @@ location_geo_long = {
     '67149847': -4.972341,
     '8639': -4.972341,
     'milford_haven': -5.1368,
-     'sh_1' : -0.23
+    'sh_1': -0.23,
+    'Nita_Maria': -124.805
     
 
 };
@@ -189,7 +191,8 @@ var marlin_locations = {
     '67149847': 'HP [67149847]',
     '8639': ' NU | Bermuda',
     'milford_haven': 'Milford Haven',
-    'sh_1' : 'Shoreham'
+    'sh_1': 'Shoreham',
+    'Nita_Maria' : 'Nita_Maria'
     
 }
 
@@ -199,10 +202,11 @@ var location_permissions = {
     'so1': ['0001vixen'],
     'so1_server': ['0001vixen', 'rmowat'],
     'brixham': ['0001vixen', , '001elen', 'rmowat'],
-    '67149847': ['0001vixen', 'rmowat'],
+    '67149847': ['0001vixen', 'rmowat', '001elen'],
     '8639': ['0001vixen', 'rmowat'],
     'milford_haven': ['0001vixen', '001elen', 'rmowat'],
-    'sh_1': ['0001vixen', 'rmowat']
+    'sh_1': ['0001vixen', 'rmowat', '001elen'],
+    'Nita_Maria': ['0001vixen']
 }
 
 

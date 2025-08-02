@@ -241,6 +241,7 @@ class VesselHit{
         this.vessel_overview_data.imo = imo;
         this.vessel_overview_data.name = name;
         this.vessel_overview_data.vessel_type = vessel_type;
+        this.vessel_overview_data.vessel_type_str = vessel_type;
         var v_str = "";
         if (!Number.isNaN(vessel_type)) {
             var x = GetVesselTypeInt(vessel_type);
@@ -253,9 +254,13 @@ class VesselHit{
         }
 
         //this.vessel_overview_data.vessel_type_str = vessel_types[vessel_type];
+        
+        if (mmsi == "316013198"){
+            console.log(this.vessel_overview_data.vessel_type)
 
+            }
 
-
+        
         this.vessel_dynamics = new VesselDynamics();
         
     }

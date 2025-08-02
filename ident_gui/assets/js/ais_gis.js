@@ -234,7 +234,7 @@ const fetchAcousticData = (app_setup, acoustic_data) => {
                     var timeframe_end = `${ss_batch_data[i][ss_id]['data_frame_end']} UTC`;
                     var timeframe_end_js = time_to_js(timeframe_end);
                     var timeframe_end_ms = timeframe_end_js.getTime();
-                    console.log(timeframe_start + " " + timeframe_start_js + " " + timeframe_start_ms);
+                   // console.log(timeframe_start + " " + timeframe_start_js + " " + timeframe_start_ms);
                     var hydrophone_location = location_keys[ss_batch_data[i][ss_id]['data_receiver_location_name']];
                     hydrophone_location = listener_location;
                     if (ss_batch_data[i][ss_id]['spec_images_html'].length < 1) {

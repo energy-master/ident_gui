@@ -690,6 +690,7 @@ function GetVesselTypeStr(vessel_type_int) {
     return vessel_types[vessel_type_int];
 }
 function GetVesselTypeInt(vessel_type_string) {
+    
      if (vessel_type_string == "Sailing Vessel") {
             vessel_type_string = "Sailing";
         }

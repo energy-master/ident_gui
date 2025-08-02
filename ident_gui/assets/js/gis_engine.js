@@ -106,7 +106,7 @@ class MarlinGISLayer {
 */
 
 function create_mark(position, description, color_, mmsi, time_ms) {
-
+    
     var lat = position.latitude;
     var long = position.longitude;
     var circle = L.circle([lat, long], {

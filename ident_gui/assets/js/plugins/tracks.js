@@ -33,7 +33,7 @@ class ShowTracksPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
                 var iter_step = 0;
@@ -52,7 +52,7 @@ class ShowTracksPlugin{
                     k += iter_step;
 
                 }
-                var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type_str})`, "green");
+                var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type})`, "green");
                 plugin_gis_layer.add_layer(track_layer);
                
 
@@ -110,7 +110,7 @@ class ShowApproachesPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_approaches_custom.length; j++) {
                 var track_positions = [];
                 var iter_step = 0;
@@ -128,7 +128,7 @@ class ShowApproachesPlugin{
                     k += iter_step;
 
                 }
-                var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type_str})`, "green");
+                var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type})`, "green");
                 plugin_gis_layer.add_layer(track_layer);
                
 
@@ -191,7 +191,7 @@ class ShowVesselTracksPlugin{
        
         var vessel_name = vessel.vessel_overview_data.name;
         var vessel_mmsi = vessel.vessel_overview_data.mmsi;
-        var vessel_type_str = vessel.vessel_overview_data.vessel_type_str;
+        var vessel_type = vessel.vessel_overview_data.vessel_type;
         for (var j = 0; j < vessel.vessel_dynamics.vessel_tracks.length; j++) {
             var track_positions = [];
             //console.log(vessel.vessel_dynamics.vessel_tracks[j]);
@@ -214,7 +214,7 @@ class ShowVesselTracksPlugin{
             
             //("creating track");
             //console.log(track_positions);
-            var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type_str})`, "purple");
+            var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type})`, "purple");
             plugin_gis_layer.add_layer(track_layer);
             
 
@@ -277,7 +277,7 @@ class ShowVesselApproachesPlugin{
        
         var vessel_name = vessel.vessel_overview_data.name;
         var vessel_mmsi = vessel.vessel_overview_data.mmsi;
-        var vessel_type_str = vessel.vessel_overview_data.vessel_type_str;
+        var vessel_type = vessel.vessel_overview_data.vessel_type;
         //console.log(vessel.vessel_dynamics.vessel_approaches.length);
         
         for (var j = 0; j < vessel.vessel_dynamics.vessel_approaches_custom.length; j++) {
@@ -303,7 +303,7 @@ class ShowVesselApproachesPlugin{
 
             //console.log("creating approach");
             //console.log(`app ${track_positions.length}`);
-            var track_layer = create_track(track_positions, `Approach -> ${vessel_name} (${vessel_type_str})`, "purple");
+            var track_layer = create_track(track_positions, `Approach -> ${vessel_name} (${vessel_type})`, "purple");
             plugin_gis_layer.add_layer(track_layer);
             
 
@@ -362,8 +362,10 @@ class OverlayInterpolatedAISHitsPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
             var mmsi = vessels[i].vessel_overview_data.mmsi;
+            console.log(vessels[i]);
+            console.log(vessels[i].vessel_overview_data);
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_interpolated_tracks.length; j++) {
                 var track_positions = [];
                 var iter_step = 0;
@@ -401,7 +403,7 @@ class OverlayInterpolatedAISHitsPlugin{
                     var c_ratio = k / vessels[i].vessel_dynamics.vessel_interpolated_tracks[j].profile.length;
                     var ratio_color = color_interpolated(c_ratio, colors['jet']);
                     //console.log(ratio_color);
-                    var pos_layer = create_mark(position, `${vessel_name} (${vessel_type_str}) [${plot_time}]`, rgbToHex(ratio_color[0], ratio_color[1], ratio_color[2]), mmsi, time_ms);
+                    var pos_layer = create_mark(position, `${vessel_name} (${vessel_type}) [${plot_time}]`, rgbToHex(ratio_color[0], ratio_color[1], ratio_color[2]), mmsi, time_ms);
                     if (mmsi == "235080084") {
                         // console.log(route);
                         // console.log(pos_layer);
@@ -458,11 +460,13 @@ class OverlayAISHitsPlugin{
         
         // create a gis layer group
         var plugin_gis_layer = new MarlinGISLayer();
-
-
+        
+    
         for (var i = 0; i < vessels.length; i++) {
+            console.log(vessels[i]);
+            console.log(vessels[i].vessel_overview_data);
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
@@ -481,7 +485,7 @@ class OverlayAISHitsPlugin{
                     var position = { 'latitude': lat, 'longitude': long };
                     //track_positions.push(position)
                     //var track_layer = create_track(track_positions, `${vessel_name} (${vessel_type_str})`, "green");
-                    var pos_layer = create_mark(position, `${vessel_name} (${vessel_type_str}) | ${time}`, "blue", mmsi);
+                    var pos_layer = create_mark(position, `${vessel_name} (${vessel_type}) | ${time}`, "blue", mmsi);
                     
                     
                     
@@ -549,7 +553,7 @@ class DynamicOverlayAISHitsPlugin{
         
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type= vessels[i].vessel_overview_data.vessel_type;
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
@@ -583,7 +587,7 @@ class DynamicOverlayAISHitsPlugin{
                         num_active++;
                         // console.log("yes!");
                         var ais_time_str = time_string(ais_time);
-                        var pos_layer = create_mark(position, `${vessel_name} (${vessel_type_str}) (${ais_time_str})`, "red", mmsi);
+                        var pos_layer = create_mark(position, `${vessel_name} (${vessel_type}) (${ais_time_str})`, "red", mmsi);
                         // plugin_gis_layer.add_layer(pos_layer);
                         final_marks[mmsi] = pos_layer;
                     }   
@@ -651,7 +655,7 @@ class DynamicOverlayInterpolatedAISHitsPlugin{
         for (var i = 0; i < vessels.length; i++) {
             var delta_t = null;
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type_str = vessels[i].vessel_overview_data.vessel_type_str;
+            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_interpolated_tracks.length; j++) {
                 var track_positions = [];
@@ -731,12 +735,12 @@ class DynamicOverlayInterpolatedAISHitsPlugin{
                             speed = Math.floor(speed);
                             
                             var time_p = time_string(vessels[i].vessel_dynamics.vessel_interpolated_tracks[j].profile[k]['_t'])[2];
-                            var pos_layer = create_mark(position, `${vessel_name} (${vessel_type_str}) [${time_p}][${speed} @ ${distance}]`, "green", mmsi, ais_time);
+                            var pos_layer = create_mark(position, `${vessel_name} (${vessel_type}) [${time_p}][${speed} @ ${distance}]`, "green", mmsi, ais_time);
                             // **** update vessel huds ***
 
                             if (mmsi in vessel_huds) {
                                 vessel_huds[mmsi].name = vessel_name;
-                                vessel_huds[mmsi].type_str = vessel_type_str;
+                                vessel_huds[mmsi].type_str = vessel_type;
                                 vessel_huds[mmsi].mmsi = mmsi;
                                 vessel_huds[mmsi].speed = speed;
                                 vessel_huds[mmsi].heading = heading;
@@ -749,7 +753,7 @@ class DynamicOverlayInterpolatedAISHitsPlugin{
                                 hud.heading = heading;
                                 hud.distance = distance;
                                 hud.name = vessel_name;
-                                hud.type_str = vessel_type_str;
+                                hud.type_str = vessel_type;
                                 hud.mmsi = mmsi;
 
                                 vessel_huds[mmsi] = hud;
