@@ -1,15 +1,24 @@
 <?php
 
+$result = array();
+$result['api-service'] = 'Upload acoustic file.';
+$result['api-version'] = '1.1';
+$result['error'] = False;
 
-if ( !empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST) )
-echo 'The uploaded zip was too large. You must upload a file smaller than ' . ini_get("upload_max_filesize");
+// echo json_encode($result);
+// return json_encode($result);
+
+if (!empty($_SERVER['CONTENT_LENGTH']) && empty($_FILES) && empty($_POST))
+    $result['error'] = True;
+    $result['error-message'] = 'The uploaded zip was too large. You must upload a file smaller than ' . ini_get("upload_max_filesize");
 
 $base_id = $_POST['base_id'];
 
 $file_size = $_FILES["upload_file"]["size"];
 //if ($file_size > 8428800){
 if ($file_size > 209715200){
-  echo "File too large! max [200MB]";
+    $result['error'] = True;
+  $result['error-message'] = "File too large! max [200MB]";
   return;
 }
 
@@ -32,6 +41,12 @@ switch( $_FILES['upload_file']['error'] ) {
         $message .= ' - internal error #'.$_FILES['newfile']['error'];
         break;
 }
+
+if ($message){
+    $result['error'] = True;
+    $result['error-message'] = $message;
+}
+
 if( !$message ) {
     if( !is_uploaded_file($_FILES['upload_file']['tmp_name']) ) {
         $message = 'Error uploading file - unknown error.';
@@ -44,6 +59,11 @@ if( !$message ) {
             $message = 'File uploaded okay.';
         }
     }
+}
+
+if ($message){
+    $result['error'] = True;
+    $result['error-message'] = $message;
 }
 
 $target_dir = "/home/vixen/rs/dev/marlin_hp/marlin_hp/ext_data/";
@@ -140,6 +160,8 @@ if ($uploadOk == 0) {
     $result = "none";
     $result = exec($cmd);
     echo "Run complete.";
+        $result['cmd'] = $cmd;
+        $result['log'] = 'run complete';
     return;
     //echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded & now running";
 
