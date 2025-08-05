@@ -982,9 +982,23 @@ function simple_linear_time_interpolate(start_pt, end_pt, iter, track_type, mmsi
         // }
         if ('timestamp' in start_pt) {
             //console.log(start_pt.timestamp);
-            var tmp = new Date((start_pt.timestamp));
+            console.log(start_pt);
+            // var tmp_str = new Date((start_pt.timestamp)).toUTCString();
+
+
+            var tmp = new Date(start_pt.timestamp);
+            var regExp = /[a-zA-Z]/g;
+            if(regExp.test(start_pt.timestamp) == false){
+                tmp = new Date(start_pt.timestamp + 'Z');
+            }
+            
+           
+            console.log(tmp);
             var tmp_ms = tmp.getTime();
+            
+            console.log(tmp_ms);
             interpolated_time = time_string(tmp_ms)[5];
+            console.log(interpolated_time);
             if (mmsi == "235080084") {
                 console.log(start_pt.timestamp, track_type);
                 console.log(interpolated_time, track_type);

@@ -35,8 +35,10 @@ const ais_download = (application_setup, ais_hits) => {
         var start_time_ms = new Date(application_setup.setup_data.data_start_time).getTime();
         var end_time_ms = new Date(application_setup.setup_data.data_end_time).getTime();
 
-        var search_start = time_string(parseInt(start_time_ms) - 3600000)[6];
-        var search_end = time_string(parseInt(end_time_ms) + 3600000)[6];
+        // var search_start = time_string(parseInt(start_time_ms) - 3600000)[6];
+        // var search_end = time_string(parseInt(end_time_ms) + 3600000)[6];
+        var search_start = time_string(parseInt(start_time_ms) )[6];
+        var search_end = time_string(parseInt(end_time_ms) )[6];
 
         post_data = {
             //"dlimit": application_setup.setup_data.track_radius,

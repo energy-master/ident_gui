@@ -33,7 +33,14 @@ class ShowTracksPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
                 var iter_step = 0;
@@ -110,7 +117,14 @@ class ShowApproachesPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_approaches_custom.length; j++) {
                 var track_positions = [];
                 var iter_step = 0;
@@ -191,7 +205,14 @@ class ShowVesselTracksPlugin{
        
         var vessel_name = vessel.vessel_overview_data.name;
         var vessel_mmsi = vessel.vessel_overview_data.mmsi;
-        var vessel_type = vessel.vessel_overview_data.vessel_type;
+        var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
         for (var j = 0; j < vessel.vessel_dynamics.vessel_tracks.length; j++) {
             var track_positions = [];
             //console.log(vessel.vessel_dynamics.vessel_tracks[j]);
@@ -277,7 +298,16 @@ class ShowVesselApproachesPlugin{
        
         var vessel_name = vessel.vessel_overview_data.name;
         var vessel_mmsi = vessel.vessel_overview_data.mmsi;
-        var vessel_type = vessel.vessel_overview_data.vessel_type;
+        var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
+
+       
         //console.log(vessel.vessel_dynamics.vessel_approaches.length);
         
         for (var j = 0; j < vessel.vessel_dynamics.vessel_approaches_custom.length; j++) {
@@ -362,7 +392,14 @@ class OverlayInterpolatedAISHitsPlugin{
 
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             console.log(vessels[i]);
             console.log(vessels[i].vessel_overview_data);
@@ -466,7 +503,14 @@ class OverlayAISHitsPlugin{
             console.log(vessels[i]);
             console.log(vessels[i].vessel_overview_data);
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
@@ -553,7 +597,14 @@ class DynamicOverlayAISHitsPlugin{
         
         for (var i = 0; i < vessels.length; i++) {
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type= vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_tracks.length; j++) {
                 var track_positions = [];
@@ -655,7 +706,14 @@ class DynamicOverlayInterpolatedAISHitsPlugin{
         for (var i = 0; i < vessels.length; i++) {
             var delta_t = null;
             var vessel_name = vessels[i].vessel_overview_data.name;
-            var vessel_type = vessels[i].vessel_overview_data.vessel_type;
+            var vessel_type = 'Type not defined.';
+        if (!Number.isNaN(vessel.vessel_overview_data.vessel_type)) {
+        console.log('This string is numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type_str;
+        } else {
+        console.log('This string is not numeric')
+        vessel_type = vessel.vessel_overview_data.vessel_type;
+        }
             var mmsi = vessels[i].vessel_overview_data.mmsi;
             for (var j = 0; j < vessels[i].vessel_dynamics.vessel_interpolated_tracks.length; j++) {
                 var track_positions = [];

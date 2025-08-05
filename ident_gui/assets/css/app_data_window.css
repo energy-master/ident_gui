@@ -210,3 +210,7 @@ table{
     color: #848184;
     /* border: red 1px solid; */
 }
+
+.filter-list-view .selected {
+    border: green 1px solid; 
+}

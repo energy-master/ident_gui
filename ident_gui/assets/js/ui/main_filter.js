@@ -181,7 +181,7 @@ function openSearch() {
         //console.log(data);
         filtered_data = new DataSearch(data, location_value, location, post_range, filter_start_time, filter_end_time);
         buildFilterDataWindow();
-        hide_loader_div('fetch-analyse-loader');
+        
 
     }));
 
@@ -555,6 +555,8 @@ function build_filter_second_page() {
 
 function buildResults(data) {
 
+    console.log("here1");
+
     html = `<div class="filter-results-view">`;
 
 
@@ -620,10 +622,20 @@ function fetch_data(location_value, start_time, end_time, selected_epoch_id, nam
 }
 
 //${epoch.location_value}, ${epoch.start_time}, ${epoch.end_time}
-function build_filtered_data_view(epoch) {
+function build_filtered_data_view(epoch, ais_start_seconds, ais_end_seconds) {
+    // active filter builder
 
+    // get start and end time 
+
+    ais_available = false;
     epoch.start_time = `${epoch.start_time} UTC`;
     epoch.end_time = `${epoch.end_time} UTC`;
+
+    // get seconds from start and end time
+    jst_start = Date.parse(`${epoch.start_time} UTC`)/1000;
+    jst_end = Date.parse(`${epoch.end_time} UTC`)/1000;
+
+
     var selected = "";
 
     //console.log(application_data);
@@ -632,8 +644,14 @@ function build_filtered_data_view(epoch) {
     //     selected = "selected"
     // }
     // id="data-filter-view-${epoch.id}"
+
+    box_style = "";
+    if ((ais_start_seconds < jst_start) && (ais_end_seconds >jst_end))
+    {
+        box_style = "selected";
+    }
     var html = `<br><br>
-    <div class="filter-list-view ${selected}">
+    <div class="filter-list-view ${box_style}">
         <table>
             <tr>
             
@@ -721,55 +739,82 @@ filtered_data_window_id = ""
 
 function buildFilterDataWindow() {
 
-    // hide filter
-    hide_filter();
+    // active code
 
-    // build data window
-    var html = ``;
-    // html = `<div class="filter-results-view">`;
-    var epochs = filtered_data.filter_data;
-    // console.log(epochs);
-
-    for (var i = 0; i < epochs.length; i++) {
-        html += build_filtered_data_view(epochs[i]);
-    }
-
-    // html += `</div>`;
-
-
-    // new window
-
-    var window_id = createWindow("Data Query Results", "query-results");
-    var el = document.getElementById(window_id);
-    el.style.width = '450px';
-    el.style.top = '100px';
-    el.style.right = '100px';
-    el.style.height = '60vh';
-    var content_id = `${window_id}_content`;
-    var el = document.getElementById(content_id);
-    el.innerHTML = html;
-    console.log(content_id)
-    // BuildAppDataLabels(content_id);
-
-    // before new window
-    // *** 
-    // var el = document.getElementById("filter-data-window-holder");
-    // el.innerHTML = html;
-    // ***
-
-
-    // update GIS ( GIS Engine needs updating )
-    var position = {
-        'latitude': filtered_data.data_latitude,
-        'longitude': filtered_data.data_longitude
-    };
-    // console.log(filtered_data.location_value);
-    // console.log(filtered_data.location_str);
     console.log(filtered_data);
-    focus_gis_engine(position, filtered_data.location_value, 3000, filtered_data.search_radius);
-    removeFilterFlags();
-    hideApp();
-    // showFilter();
+    var url = "https://vixen.hopto.org/rs/api/v1/data/ais_analyse";
+    post_data = {
+
+        "dlimit": 10000,
+        "src_lat": filtered_data.data_latitude,
+        "src_long": filtered_data.data_longitude,
+        
+    }
+    console.log(JSON.stringify(post_data));
+    $.post(url, JSON.stringify(post_data), function (data)
+    {
+        // console.log('received');
+        // console.log(data);
+
+        start_s = data['earliest_time'];
+        end_s = data['latest_time'];
+        // show data
+
+        // hide filter
+        hide_filter();
+
+        // build data window
+        var html = ``;
+        // html = `<div class="filter-results-view">`;
+        var epochs = filtered_data.filter_data;
+        // console.log(epochs);
+
+        for (var i = 0; i < epochs.length; i++) {
+            html += build_filtered_data_view(epochs[i], start_s, end_s);
+        }
+
+
+        // new window
+
+        var window_id = createWindow("Data Query Results", "query-results");
+        var el = document.getElementById(window_id);
+        el.style.width = '450px';
+        el.style.top = '100px';
+        el.style.right = '100px';
+        el.style.height = '60vh';
+        var content_id = `${window_id}_content`;
+        var el = document.getElementById(content_id);
+        el.innerHTML = html;
+        console.log(content_id)
+        // BuildAppDataLabels(content_id);
+
+        // before new window
+        // *** 
+        // var el = document.getElementById("filter-data-window-holder");
+        // el.innerHTML = html;
+        // ***
+
+
+        // update GIS ( GIS Engine needs updating )
+        var position = {
+            'latitude': filtered_data.data_latitude,
+            'longitude': filtered_data.data_longitude
+        };
+        // console.log(filtered_data.location_value);
+        // console.log(filtered_data.location_str);
+        console.log(filtered_data);
+        focus_gis_engine(position, filtered_data.location_value, 3000, filtered_data.search_radius);
+        removeFilterFlags();
+        hideApp();
+        hide_loader_div('fetch-analyse-loader');
+        // showFilter();
+
+
+
+
+
+    }
+    )
 
 
 }

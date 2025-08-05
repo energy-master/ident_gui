@@ -991,10 +991,9 @@ function BuildSearchWindow(content_id) {
     console.log(marlin_locations);
     for (const [key, value] of Object.entries(marlin_locations)) {
         var leg_users = location_permissions[key];
-        console.log(leg_users);
-        console.log(user.user_uid);
+        // console.log(leg_users);
+        // console.log(user.user_uid);
         if (leg_users.includes(user.user_uid)) {
-
             html += `<option  value="${key}">${value}</option>`;
         }
 

@@ -6,10 +6,19 @@ var map=null;
 function init_gis_engine(){
 
     map = L.map('gis_engine', { attributionControl: false }).setView([50.71714333, -0.09], 9);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // }).addTo(map);
+
+    // L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.{ext}', {
+    //     minZoom: 1,
+    //     maxZoom: 16,
+    //     attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    //     ext: 'jpg'
+    // }).addTo(map);
+
+    L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
 }
 
 
@@ -403,11 +412,20 @@ function ResetMap() {
         map.removeControl(all_map_controls[i]);
     }
     
-     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-     }).addTo(map);
+    //  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    //  }).addTo(map);
 
+    // L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.{ext}', {
+    //     minZoom: 1,
+    //     maxZoom: 16,
+    //     attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    //     ext: 'jpg'
+    // }).addTo(map);
+
+    L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
+    
     GroupControl = null;
     DynamicGroupControl = null;
     DynamicOverlay = null;

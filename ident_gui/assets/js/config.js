@@ -82,7 +82,10 @@ location_keys = {
     '67149847' : 'HP [67149847]',
     '8639': 'NU | Bermuda [8639]',
     'milford_haven': 'Milford Haven',
-    'sh_1' : 'Shoreham'
+    'sh_1': 'Shoreham',
+    'Nita_Maria': 'Nita Maria'
+
+
 
 };
 
@@ -96,7 +99,8 @@ location_keys_r = {
     'HP [67149847]': '67149847',
     'NU | Bermuda [8639]': '8639',
     'Milford Haven': 'milford_haven',
-    'Shoreham' : 'sh_1'
+    'Shoreham': 'sh_1',
+    'Nita Maria': 'Nita_Maria'
 
 };
 
@@ -127,7 +131,6 @@ location_geo_long = {
     'sh_1': -0.23,
     'Nita_Maria': -124.805
     
-
 };
 
 
@@ -192,7 +195,7 @@ var marlin_locations = {
     '8639': ' NU | Bermuda',
     'milford_haven': 'Milford Haven',
     'sh_1': 'Shoreham',
-    'Nita_Maria' : 'Nita_Maria'
+    'Nita_Maria' : 'Nita Maria'
     
 }
 
