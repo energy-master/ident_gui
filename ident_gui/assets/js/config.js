@@ -83,7 +83,14 @@ location_keys = {
     '8639': 'NU | Bermuda [8639]',
     'milford_haven': 'Milford Haven',
     'sh_1': 'Shoreham',
-    'Nita_Maria': 'Nita Maria'
+    'Nita_Maria': 'Nita Maria',
+    'StoerHead' : 'StoerHead',
+    'Hyskier' : 'Hyskier',
+    'Tolsta' : 'Tolsta (Compass)',
+    'Stanton' : 'Stanton',
+    'Skerries' : 'Skerries',
+    'MiddleBank' : 'MiddleBank'
+
 
 
 
@@ -100,7 +107,16 @@ location_keys_r = {
     'NU | Bermuda [8639]': '8639',
     'Milford Haven': 'milford_haven',
     'Shoreham': 'sh_1',
-    'Nita Maria': 'Nita_Maria'
+    'Nita Maria': 'Nita_Maria',
+    'StoerHead' : 'StoerHead',
+    'Hyskier' : 'Hyskier',
+    'Tolsta' : 'Tolsta (Compass)',
+    'Stanton' : 'Stanton',
+    'Skerries' : 'Skerries',
+    'MiddleBank' : 'MiddleBank'
+
+
+
 
 };
 
@@ -114,7 +130,16 @@ location_geo_lat = {
      '8639' :55.66 ,
     'milford_haven': 51.69,
     'sh_1': 50.783,
-    'Nita_Maria': 49.155
+    'Nita_Maria': 49.155,
+    'StoerHead' : 58.257475,
+    'Hyskier' : 57.0354,
+    'Tolsta' : 58.392183,
+    'Stanton' : 56.070815,
+    'Skerries' : 55.1967,
+    'MiddleBank' : 55.46748,
+    'Garv' : 56.23425
+   
+
     
 
 };
@@ -129,7 +154,15 @@ location_geo_long = {
     '8639': -4.972341,
     'milford_haven': -5.1368,
     'sh_1': -0.23,
-    'Nita_Maria': -124.805
+    'Nita_Maria': -124.805,
+    'StoerHead' : -5.536933,
+    'Hyskier' : -6.752803,
+    'Tolsta' : -6.008683,
+    'Stanton' : -8.054,
+    'Skerries' : -6.725,
+    'MiddleBank' : -6.448067,
+    'Garv' : -5.757383
+   
     
 };
 

@@ -6,6 +6,13 @@ var map=null;
 function init_gis_engine(){
 
     map = L.map('gis_engine', { attributionControl: false }).setView([50.71714333, -0.09], 9);
+
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+	maxZoom: 13
+    }).addTo(map);
+
     // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //     maxZoom: 19,
     //     attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -18,7 +25,7 @@ function init_gis_engine(){
     //     ext: 'jpg'
     // }).addTo(map);
 
-    L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
+    // L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
 }
 
 
@@ -424,8 +431,14 @@ function ResetMap() {
     //     ext: 'jpg'
     // }).addTo(map);
 
-    L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
+    // L.tileLayer.provider('Stadia.StamenWatercolor').addTo(map);
     
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+	maxZoom: 13
+    }).addTo(map);
+
     GroupControl = null;
     DynamicGroupControl = null;
     DynamicOverlay = null;

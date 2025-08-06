@@ -306,7 +306,10 @@ function runApp() {
     console.log(`NUMBER OF VESSELS IN DATA: ${application_data.ais_vessel_data.vessels.length}`);
 
     for (var i=0; i<application_data.ais_vessel_data.vessels.length; i++){
+        console.log(application_data.ais_vessel_data.vessels[i]);
+
         var gis_layer_ = application_data.application_plugins.marlin_gis_plugins[2].run_function(application_data.ais_vessel_data.vessels[i]);
+        console.log(gis_layer_);
         if (gis_layer_ != null) {
             gis_layers.push({ name: application_data.ais_vessel_data.vessels[i].vessel_overview_data.name, data: gis_layer_ });
         }

@@ -35,10 +35,37 @@ function grab_approach_profile(mmsi){
 *
 */
 
+
+function addHours(date, hours) {
+  const hoursToAdd = hours * 60 * 60 * 1000;
+  date.setTime(date.getTime() + hoursToAdd);
+  return date;
+}
+
+function minusHours(date, hours) {
+  const hoursToAdd = hours * 60 * 60 * 1000;
+  date.setTime(date.getTime() - hoursToAdd);
+  return date;
+}
+
 const generate_vessel_tracks = (vessel, app_setup) => {
 
     return new Promise((resolve, reject) => {
-
+        var regExp = /[a-zA-Z]/g;
+        
+        
+        if(regExp.test(app_setup.setup_data.data_start_time) == false){
+            // tmp = new Date(start_pt.timestamp + 'Z');
+            app_setup.setup_data.data_start_time = app_setup.setup_data.data_start_time + 'Z';
+        }
+        
+        if(regExp.test(app_setup.setup_data.data_end_time) == false){
+            // tmp = new Date(start_pt.timestamp + 'Z');
+            app_setup.setup_data.data_end_time = app_setup.setup_data.data_end_time + 'Z';
+        }
+        
+       
+        
         // success value of download
         var success = true;
         mmsi = vessel.vessel_overview_data.mmsi;
@@ -48,15 +75,40 @@ const generate_vessel_tracks = (vessel, app_setup) => {
         start_time          = app_setup.setup_data.data_start_time;
         end_time            = app_setup.setup_data.data_end_time;
 
+        console.log(start_time);
+        console.log(end_time);
+
         // string manipulation to pass times in URL
         start_time_url = start_time.replace(" ", "_");
         end_time_url = end_time.replace(" ", "_");
         start_time_url = start_time_url.replace(" UTC", "");
         end_time_url = end_time_url.replace(" UTC", "");
-        // console.log(start_time_url);
+
+        start_time_url_arr = start_time_url.split('_');
+        start_time_split = start_time_url_arr[1].split(':');
+        start_time_hr = start_time_split[0];
+        start_time_hr = start_time_hr - 1;
+        
+        if (start_time_hr < 0)
+        {
+            start_time_hr = 23;
+        }
+        console.log(start_time_hr);
+        if (start_time_hr < 10){
+            start_time_hr = `0${start_time_hr}`;
+        }
+        else
+        {
+            start_time_hr = `${start_time_hr}`;
+        }
+        console.log(start_time_hr);
+
+        start_time_url = start_time_url_arr[0] + "_" + `${start_time_hr}:${start_time_split[1]}:${start_time_split[2]}`; 
+
+        console.log(start_time_url);
         // console.log(end_time_url);
         var track_api_url = `${tracks_api_url}/${mmsi}/target_known/${listener_lat}/${listener_long}/${approach_radius}/${start_time_url}/${end_time_url}`;
-        //console.log(track_api_url);
+        console.log(track_api_url);
         
         $.getJSON(track_api_url, function (data) {
 
